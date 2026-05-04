@@ -74,7 +74,7 @@ export function getPersonalizedAdvice(
       title: "Del det med din partner",
       text: "Fortæl din partner præcis hvordan du har det — de vil gerne hjælpe, men de kan ikke gætte det.",
       bg: "hsl(var(--stone-lighter))",
-      action: { label: "Se samarbejde", path: "/samen" },
+      action: { label: "Se samarbejde", path: "/sammen" },
     });
   }
   if (mood >= 4) {
@@ -205,7 +205,7 @@ export function getPersonalizedAdvice(
       title: "Fødselsforberedelse",
       text: `I er i uge ${week} — mange hold starter tilmeldingen nu. Gør det til en fælles oplevelse.`,
       bg: "hsl(var(--sage-light))",
-      action: { label: "Tilføj som opgave", path: "/samen" },
+      action: { label: "Tilføj som opgave", path: "/sammen" },
     });
   }
 

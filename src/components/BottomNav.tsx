@@ -21,7 +21,7 @@ export function BottomNav() {
     { label: "Hjem",        icon: Home,      path: "/",        center: false },
     { label: "Graviditet",  icon: Baby,      path: "/barn",    center: false },
     { label: "MELO",        icon: Sparkles,  path: "/chat",    center: true  },
-    { label: "Samarbejde",  icon: Users,     path: "/samen",   center: false },
+    { label: "Samarbejde",  icon: Users,     path: "/sammen",   center: false },
     { label: "Menu",        icon: Menu,      path: "/mere",    center: false },
   ];
 
@@ -29,7 +29,7 @@ export function BottomNav() {
     { label: t("nav.home"),    icon: Home,          path: "/",      center: false },
     { label: t("nav.child"),   icon: Baby,          path: "/barn",  center: false },
     { label: t("nav.chat"),    icon: MessageCircle, path: "/chat",  center: false },
-    { label: t("nav.together"),icon: Users,         path: "/samen", center: false },
+    { label: t("nav.together"),icon: Users,         path: "/sammen", center: false },
     { label: "Mere",           icon: Menu,          path: "/mere",  center: false },
   ];
 

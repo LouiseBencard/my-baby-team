@@ -61,8 +61,10 @@ export default function IndstillingerPage() {
     const monthsOld = Math.floor(weeksOld / 4.33);
     const newPhase: LifePhase = isFuture ? "pregnant" : monthsOld < 3 ? "newborn" : "baby";
 
-    const updatedChildren = !isFuture && profile.children.length > 0
-      ? [{ ...profile.children[0], birthDate: dateValue }]
+    const updatedChildren = !isFuture
+      ? profile.children.length > 0
+        ? [{ ...profile.children[0], birthDate: dateValue }]
+        : [{ id: Math.random().toString(36).slice(2), name: babyName.trim() || "", birthDate: dateValue }]
       : profile.children;
 
     const prevPhase = profile.phase;

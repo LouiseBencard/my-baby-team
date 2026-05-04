@@ -299,7 +299,7 @@ export default function DashboardPregnantFar() {
         <div className="section-fade-in" style={{ animationDelay: "120ms" }}>
           <div className="flex items-center justify-between mb-3">
             <p className="text-[0.82rem] font-semibold">Dine opgaver</p>
-            <Link to="/samen" className="text-[0.72rem] font-medium" style={{ color: "hsl(var(--moss))" }}>
+            <Link to="/sammen" className="text-[0.72rem] font-medium" style={{ color: "hsl(var(--moss))" }}>
               Se alle <ChevronRight className="w-3 h-3 inline" />
             </Link>
           </div>
