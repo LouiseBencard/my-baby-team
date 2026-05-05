@@ -4,7 +4,7 @@ import { MeloWordmark } from "@/components/MeloWordmark";
 import { NotificationBell } from "@/components/NotificationCenter";
 import { WeekUnlockModal } from "@/components/WeekUnlockModal";
 import { CheckInCard } from "@/components/PregnancyCheckIn";
-import { User, ArrowRight, Check, ChevronRight } from "lucide-react";
+import { User, ArrowRight, Check, ChevronRight, Timer, FileText, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
@@ -45,14 +45,14 @@ function getWeeklyGuides(week: number, trimester: number): Guide[] {
       bgColor: "hsl(var(--clay-light))",
       title: "Træning og bevægelse",
       desc: "Hvad der er godt for dig og din baby",
-      path: "/chat",
+      path: "/raad",
     },
     {
       emoji: "❤️",
       bgColor: "hsl(var(--sand-light))",
       title: "Hvad er normalt lige nu?",
       desc: "Symptomer og forandringer i denne tid",
-      path: "/chat",
+      path: "/graviditet/uge",
     },
   ];
 }

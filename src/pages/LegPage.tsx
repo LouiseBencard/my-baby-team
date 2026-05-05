@@ -29,7 +29,6 @@ export default function LegPage() {
             {t("play.playAheadDesc")}
           </p>
         </div>
-  
       </div>
     );
   }
@@ -77,12 +76,8 @@ export default function LegPage() {
 
       {/* AI suggestions */}
       <div className="section-fade-in" style={{ animationDelay: "80ms" }}>
-        <AIActivitySuggestions
-          category={activeCategory}
-        />
+        <AIActivitySuggestions category={activeCategory} />
       </div>
-
-
     </div>
   );
 }

@@ -58,6 +58,7 @@ export default function OnboardingPage() {
 
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
 
   // Account step state
   const [email, setEmail] = useState("");
@@ -166,7 +167,7 @@ export default function OnboardingPage() {
     }
 
     if (needsConfirmation) {
-      setSaveError("Tjek din e-mail for et bekræftelseslink, og kom tilbage for at logge ind.");
+      setSaveSuccess("Vi har sendt en bekræftelsesmail til " + email.trim() + ". Klik på linket i mailen og log derefter ind.");
       setSaving(false);
       return;
     }
@@ -559,6 +560,27 @@ export default function OnboardingPage() {
           <div className="rounded-xl px-4 py-3 text-[0.78rem] text-center" style={{ background: "hsl(0 70% 95%)", color: "hsl(0 60% 40%)" }}>
             {saveError}
           </div>
+        )}
+
+        {saveSuccess && (
+          <div className="rounded-xl px-4 py-3 text-[0.78rem] text-center leading-relaxed" style={{ background: "hsl(var(--sage-light))", color: "hsl(var(--moss))" }}>
+            ✅ {saveSuccess}
+          </div>
+        )}
+
+        {/* Log ind link — account step only */}
+        {step === "account" && !saveSuccess && (
+          <p className="text-center text-[0.72rem] text-muted-foreground">
+            Har du allerede en konto?{" "}
+            <a
+              href="/"
+              onClick={e => { e.preventDefault(); localStorage.setItem("lille-family", JSON.stringify({ onboarded: true })); window.location.reload(); }}
+              className="font-medium underline"
+              style={{ color: "hsl(var(--moss))" }}
+            >
+              Log ind her
+            </a>
+          </p>
         )}
 
         {/* Skip button for sensitive steps */}
