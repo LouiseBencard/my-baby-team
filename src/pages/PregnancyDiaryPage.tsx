@@ -200,7 +200,7 @@ export default function PregnancyDiaryPage() {
             <ChevronLeft className="w-5 h-5 text-muted-foreground" />
           </Link>
           <div>
-            <h1 className="text-[1.9rem] font-normal leading-tight">Din dagbog</h1>
+            <h1 className="font-serif text-[1.9rem] font-normal leading-tight">Din dagbog</h1>
             <p className="text-[0.72rem] text-muted-foreground">{entries.length} indlæg · under graviditeten</p>
           </div>
         </div>

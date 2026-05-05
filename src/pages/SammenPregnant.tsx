@@ -124,7 +124,7 @@ export default function SammenPregnant() {
       {/* ── A. Header ────────────────────────────────────────────────────────── */}
       <div className="section-fade-in flex items-start justify-between">
         <div>
-          <h1 className="text-[1.9rem]">Samarbejde</h1>
+          <h1 className="font-serif text-[1.9rem]">Samarbejde</h1>
           <p className="text-[0.82rem] text-muted-foreground mt-0.5">Vi klarer det bedst sammen ♡</p>
         </div>
         <div className="flex items-center gap-2.5 mt-1">

@@ -117,7 +117,7 @@ function LeapCard({ leap, index, status, onMarkCompleted, ageWeeks }: {
                 <p className="text-[0.58rem] tracking-[0.16em] uppercase text-muted-foreground">
                   {isActive ? "AKTIVT TIGERSPRING" : isCompleted ? "GENNEMFØRT" : `OM ${weeksUntil} UGER`}
                 </p>
-                <h2 className="text-[1.3rem] font-semibold leading-tight">{leap.title}</h2>
+                <h2 className="font-serif text-[1.3rem] font-medium leading-tight">{leap.title}</h2>
               </div>
             </div>
             {isCompleted && (
@@ -227,7 +227,7 @@ export default function KalenderPage() {
     return (
       <div className="space-y-5">
         <div className="section-fade-in">
-          <h1 className="text-[1.9rem] font-normal">Kalender</h1>
+          <h1 className="font-serif text-[1.9rem] font-normal">Kalender</h1>
           <p className="label-upper mt-1">MILEPÆLE I GRAVIDITETEN</p>
         </div>
         <div className="space-y-2">
@@ -280,7 +280,7 @@ export default function KalenderPage() {
   return (
     <div className="space-y-5">
       <div className="section-fade-in">
-        <h1 className="text-[1.9rem] font-normal">Tigerspring</h1>
+        <h1 className="font-serif text-[1.9rem] font-normal">Tigerspring</h1>
         <p className="label-upper mt-1">UDVIKLING OG MILEPÆLE</p>
       </div>
 
@@ -481,7 +481,7 @@ export default function KalenderPage() {
               <Zap className="w-8 h-8 text-white" />
             </div>
             <p className="text-[0.6rem] tracking-[0.2em] uppercase text-muted-foreground mb-1">LEVEL UP!</p>
-            <h2 className="text-[1.6rem] font-bold mb-1">Level {levelUpInfo.level}</h2>
+            <h2 className="font-serif text-[1.6rem] font-medium mb-1">Level {levelUpInfo.level}</h2>
             <p className="text-[1rem] font-medium mb-1" style={{ color: "hsl(var(--moss))" }}>
               {levelUpInfo.title}
             </p>

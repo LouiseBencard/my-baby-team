@@ -106,7 +106,7 @@ export default function SovnPage() {
     return (
       <div className="space-y-5">
         <div className="section-fade-in">
-          <h1 className="text-[1.9rem] font-normal">{t("sleep.title")}</h1>
+          <h1 className="font-serif text-[1.9rem] font-normal">{t("sleep.title")}</h1>
           <p className="label-upper mt-1">{t("sleep.availableAfterBirth")}</p>
         </div>
         <div className="card-soft text-center py-12 section-fade-in" style={{ animationDelay: "80ms" }}>
@@ -124,7 +124,7 @@ export default function SovnPage() {
   return (
     <div className="space-y-5">
       <div className="section-fade-in">
-        <h1 className="text-[1.9rem] font-normal">{t("sleep.title")}</h1>
+        <h1 className="font-serif text-[1.9rem] font-normal">{t("sleep.title")}</h1>
         <p className="label-upper mt-1">{childName.toUpperCase()} · {ageKey} {t("sleep.months")}</p>
       </div>
 

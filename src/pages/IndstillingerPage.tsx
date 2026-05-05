@@ -100,7 +100,7 @@ export default function IndstillingerPage() {
         <button onClick={() => navigate("/mere")} className="flex items-center gap-1 text-muted-foreground text-[0.78rem] mb-2 active:scale-95 transition-transform">
           <ChevronLeft className="w-4 h-4" /> {t("settingsPage.back")}
         </button>
-        <h1 className="text-[1.9rem]">{t("settings.settingsMenu")}</h1>
+        <h1 className="font-serif text-[1.9rem]">{t("settings.settingsMenu")}</h1>
       </div>
 
       {/* Due date / birth date */}

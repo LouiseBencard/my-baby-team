@@ -141,7 +141,7 @@ export default function DashboardPregnant() {
           </div>
         </div>
 
-        <h1 className="text-[1.9rem] leading-tight">
+        <h1 className="font-serif text-[1.9rem] leading-tight">
           {getGreeting()}, {profile.parentName}
         </h1>
         <p className="text-[0.9rem] text-muted-foreground mt-1">Ét skridt ad gangen.</p>
@@ -249,7 +249,7 @@ export default function DashboardPregnant() {
       >
         <div className="flex items-center justify-between px-5 pt-4 pb-3">
           <div>
-            <p className="text-[0.95rem] font-semibold">Ugens råd og guides</p>
+            <p className="font-serif text-[1.1rem] font-medium">Ugens råd og guides</p>
             <p className="text-[0.68rem] text-muted-foreground">Tilpasset uge {currentWeek}</p>
           </div>
           <Link

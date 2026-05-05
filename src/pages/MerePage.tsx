@@ -76,7 +76,7 @@ export default function MerePage() {
   return (
     <div className="space-y-5">
       <div className="section-fade-in">
-        <h1 className="text-[1.9rem] font-normal">{t("settings.title")}</h1>
+        <h1 className="font-serif text-[1.9rem] font-normal">{t("settings.title")}</h1>
       </div>
 
       {/* Family */}

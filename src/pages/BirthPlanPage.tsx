@@ -204,7 +204,7 @@ export default function BirthPlanPage() {
           <ChevronLeft className="w-5 h-5 text-muted-foreground" />
         </Link>
         <div className="text-center">
-          <p className="text-[1rem] font-semibold">Vores fødselsplan</p>
+          <p className="font-serif text-[1.1rem] font-medium">Vores fødselsplan</p>
           <p className="text-[0.65rem] text-muted-foreground">Gemmes automatisk</p>
         </div>
         <button

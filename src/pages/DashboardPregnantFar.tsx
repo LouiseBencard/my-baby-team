@@ -170,7 +170,7 @@ export default function DashboardPregnantFar() {
           </div>
         </div>
 
-        <h1 className="text-[1.9rem] leading-tight">
+        <h1 className="font-serif text-[1.9rem] leading-tight">
           {getGreeting()}, {farName || profile.parentName}
         </h1>
         <p className="text-[0.9rem] text-muted-foreground mt-1">

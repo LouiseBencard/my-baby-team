@@ -55,7 +55,7 @@ export default function SammenBaby() {
     <div className="space-y-5">
       <div className="section-fade-in flex items-start justify-between">
         <div>
-          <h1 className="text-[1.9rem] font-normal">{t("together.title")}</h1>
+          <h1 className="font-serif text-[1.9rem] font-normal">{t("together.title")}</h1>
           <p className="label-upper mt-1">{t("together.yourOverview")}</p>
         </div>
         <button
