@@ -10,8 +10,8 @@ import { Link, useNavigate } from "react-router-dom";
 export default function BarnPage() {
   const { profile, currentWeek, babyAgeWeeks, babyAgeMonths } = useFamily();
 
-  if (profile.phase === "pregnant") return <PregnantBarnPage week={currentWeek} />;
-  return <BornBarnPage ageWeeks={babyAgeWeeks} ageMonths={babyAgeMonths} />;
+  if (profile.phase === "pregnant") return <PregnantBarnPage week={currentWeek} role={profile.role} />;
+  return <BornBarnPage ageWeeks={babyAgeWeeks} ageMonths={babyAgeMonths} role={profile.role} />;
 }
 
 // ── Data helpers ───────────────────────────────────────────────────────────────
@@ -170,6 +170,97 @@ function getWeekRecommendations(week: number): { icon: string; title: string; su
     { icon: "🚗", title: "Kør-ruten til hospitalet", sub: "Øv den med din partner" },
     { icon: "😴", title: "Hvil så meget du kan", sub: "Du får brug for kræfterne" },
   ];
+}
+
+// ── Far-specific data ───────────────────────────────────────────────────────────
+function getFarBodyPills(week: number): { icon: string; label: string }[] {
+  if (week < 12) return [
+    { icon: "🤢", label: "Hun: kvalme" },
+    { icon: "😴", label: "Hun: træt" },
+    { icon: "🌡️", label: "Din: couvade" },
+    { icon: "😰", label: "Din: uro" },
+  ];
+  if (week < 20) return [
+    { icon: "⚡", label: "Hun: mere energi" },
+    { icon: "👶", label: "Spark snart" },
+    { icon: "💭", label: "Din: forestillevne" },
+    { icon: "🔧", label: "Din: planlægning" },
+  ];
+  if (week < 28) return [
+    { icon: "🦶", label: "Hun: hævede ankler" },
+    { icon: "🔥", label: "Hun: halsbrand" },
+    { icon: "🤝", label: "Din: tilstedeværelse" },
+    { icon: "💪", label: "Din: ansvar" },
+  ];
+  if (week < 36) return [
+    { icon: "😓", label: "Hun: tung og træt" },
+    { icon: "😤", label: "Hun: åndedræt" },
+    { icon: "🧳", label: "Din: hospitalstaske" },
+    { icon: "📱", label: "Din: oplad altid" },
+  ];
+  return [
+    { icon: "⏳", label: "Hun: utålmodig" },
+    { icon: "😰", label: "Din: klar til det" },
+    { icon: "🚗", label: "Kend vejen" },
+    { icon: "📞", label: "Hold telefon tæt" },
+  ];
+}
+
+function getFarBodyDesc(week: number): { text: string; tip: string } {
+  if (week < 12) return {
+    text: "1. trimester kan føles ensomt for partneren — hun er syg og træt, men graviditeten er ikke synlig endnu. Dine omsorg og tålmodighed er afgørende nu.",
+    tip: "Tag over med madlavning og undgå stærke dufte derhjemme — det gør en kæmpe forskel.",
+  };
+  if (week < 20) return {
+    text: "2. trimester er ofte lettere for hende. Baby begynder at sparke, og du kan snart mærke det med din hånd. Det er et særligt øjeblik for jer begge.",
+    tip: "Læg hånden på maven og vent — det er en af de øjeblikke man ikke glemmer.",
+  };
+  if (week < 28) return {
+    text: "Baby hører jer begge tydeligt nu. Tal til maven, syng, og vær til stede — baby kender allerede din stemme. Hun har brug for din ro i denne periode.",
+    tip: "Massér hendes ryg om aftenen — lændesmerter er meget almindelige nu og din hjælp er uvurderlig.",
+  };
+  if (week < 36) return {
+    text: "3. trimester er fysisk hårdt. Hun bærer en fuldt udviklet baby og er sandsynligvis udmattet. Alt du tager fra hende nu er guld.",
+    tip: "Tag styring på indkøb, madlavning og alt der kræver bøjning eller løft. Hun har ikke energien.",
+  };
+  return {
+    text: "I er tæt på. Baby kan komme enhver dag. Hold telefonen opladet, kend vejen til hospitalet, og vær mentalt klar. Din ro er hendes tryghed.",
+    tip: "Øv kørselruten til fødegangen, hav veer-timeren klar og hold telefonen opladet til enhver tid.",
+  };
+}
+
+function getFarSymptoms(week: number): string[] {
+  if (week < 12) return ["Kvalme & opkast (hende)", "Ekstrem træthed (hende)", "Ændret madlyst", "Stemningsudsving"];
+  if (week < 20) return ["Begyndende spark (mærk dem!)", "Rundere mave (synlig nu)", "Mere energi hos hende", "Baby hører jeres stemmer"];
+  if (week < 28) return ["Spark er tydelige", "Halsbrand (hende)", "Hævede ankler (hende)", "Rygsmerter (hende)"];
+  if (week < 36) return ["Braxton Hicks-veer", "Åndenød (hende)", "Træt og tung (hende)", "Baby vender sig"];
+  return ["Ægte veer begynder", "Vandafgang muligt", "Nesting (hun gør rent alt)", "I er klar begge to"];
+}
+
+function getFarNutritionTips(week: number): { icon: string; text: string }[] {
+  if (week < 14) return [
+    { icon: "🥤", text: "Hav ingefærte og kiks klar — det hjælper mod morgenkvalme" },
+    { icon: "🍋", text: "Syrlige mad og kold drik kan lindre kvalme" },
+    { icon: "🛒", text: "Tag over med indkøb — undgå stærkt lugtende mad" },
+  ];
+  if (week < 28) return [
+    { icon: "🥗", text: "Lav nærende måltider med jern og folsyre til hende" },
+    { icon: "💧", text: "Sørg for hun drikker nok — ca. 2 liter dagligt" },
+    { icon: "🫐", text: "Blåbær og nødder er gode snacks til hende" },
+  ];
+  return [
+    { icon: "🥣", text: "Små hyppige måltider hjælper mod halsbrand" },
+    { icon: "🐟", text: "Fisk 2x om ugen giver vigtig omega-3 til baby" },
+    { icon: "🛒", text: "Hav let tilgængeligt snackemad klar til hende" },
+  ];
+}
+
+function getFarAffirmation(week: number): string {
+  if (week < 12) return "Din ro og omsorg er det vigtigste fundament nu. Du er allerede en fantastisk partner. 🌿";
+  if (week < 20) return "Din stemme er din baby allerede ved at kende. Tal til maven — det betyder noget. 💚";
+  if (week < 28) return "Halvvejs! Du er en enorm støtte. Jeres baby er heldig at have jer begge. 🌿";
+  if (week < 36) return "I er stærkere end I tror. Hvert valg du tager nu er en gave til jeres familie. 🌿";
+  return "Du er klar. Hun er klar. Jeres barn er klar. Stol på jer selv — I har det, der skal til. 💚";
 }
 
 function getTrimesterLabel(week: number): string {
@@ -359,20 +450,22 @@ function BabyAnimationModal({ week, size, onClose }: { week: number; size: Retur
 }
 
 // ── Pregnant BarnPage ──────────────────────────────────────────────────────────
-function PregnantBarnPage({ week: currentWeek }: { week: number }) {
+function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mor" | "far" }) {
   const [selectedWeek, setSelectedWeek] = useState(currentWeek);
   const [showAnimation, setShowAnimation] = useState(false);
   const weekScrollRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
   const { addTask } = useFamily();
 
+  const isFar = role === "far";
+
   const size = getBabySize(selectedWeek);
   const devCards = getDevCards(selectedWeek);
-  const bodyPills = getBodyPills(selectedWeek);
-  const bodyDesc = getBodyDesc(selectedWeek);
-  const symptoms = getSymptoms(selectedWeek);
-  const nutrition = getNutritionTips(selectedWeek);
-  const affirmation = getAffirmation(selectedWeek);
+  const bodyPills = isFar ? getFarBodyPills(selectedWeek) : getBodyPills(selectedWeek);
+  const bodyDesc = isFar ? getFarBodyDesc(selectedWeek) : getBodyDesc(selectedWeek);
+  const symptoms = isFar ? getFarSymptoms(selectedWeek) : getSymptoms(selectedWeek);
+  const nutrition = isFar ? getFarNutritionTips(selectedWeek) : getNutritionTips(selectedWeek);
+  const affirmation = isFar ? getFarAffirmation(selectedWeek) : getAffirmation(selectedWeek);
   const recommendations = getWeekRecommendations(selectedWeek);
 
   // Scroll selected week into center on mount and week change
@@ -541,10 +634,10 @@ function PregnantBarnPage({ week: currentWeek }: { week: number }) {
         </div>
       </div>
 
-      {/* ── Din krop i denne fase ───────────────────────────────────────── */}
+      {/* ── Din krop / Partner i denne fase ────────────────────────────── */}
       <div className="section-fade-in" style={{ animationDelay: "100ms" }}>
         <div className="flex items-center justify-between mb-3">
-          <p className="text-[0.9rem] font-semibold">Din krop i denne fase</p>
+          <p className="text-[0.9rem] font-semibold">{isFar ? "Din rolle som partner" : "Din krop i denne fase"}</p>
           <Link to="/chat" className="flex items-center gap-0.5 text-[0.72rem]" style={{ color: "hsl(var(--moss))" }}>
             Spørg MELO <ChevronRight className="w-3.5 h-3.5" />
           </Link>
@@ -563,7 +656,7 @@ function PregnantBarnPage({ week: currentWeek }: { week: number }) {
           style={{ background: "hsl(var(--stone-lighter))", border: "1px solid hsl(var(--stone-light))" }}>
           <span className="text-base flex-shrink-0">🌿</span>
           <div>
-            <p className="text-[0.72rem] font-semibold uppercase tracking-wide text-muted-foreground">Tip til dig</p>
+            <p className="text-[0.72rem] font-semibold uppercase tracking-wide text-muted-foreground">{isFar ? "Tip til dig som partner" : "Tip til dig"}</p>
             <p className="text-[0.78rem] leading-relaxed mt-0.5">{bodyDesc.tip}</p>
           </div>
         </div>
@@ -574,7 +667,7 @@ function PregnantBarnPage({ week: currentWeek }: { week: number }) {
         {/* Symptoms */}
         <div className="rounded-2xl p-3.5 space-y-2" style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
           <div className="flex items-center justify-between">
-            <p className="text-[0.72rem] font-semibold leading-tight">Symptomer der er normale nu</p>
+            <p className="text-[0.72rem] font-semibold leading-tight">{isFar ? "Hvad sker der nu" : "Symptomer der er normale nu"}</p>
             <span className="text-sm">🙂</span>
           </div>
           <ul className="space-y-1">
@@ -593,8 +686,8 @@ function PregnantBarnPage({ week: currentWeek }: { week: number }) {
         {/* Nutrition */}
         <div className="rounded-2xl p-3.5 space-y-2" style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
           <div className="flex items-center justify-between">
-            <p className="text-[0.72rem] font-semibold leading-tight">Kostråd i uge {selectedWeek}</p>
-            <span className="text-sm">🍎</span>
+            <p className="text-[0.72rem] font-semibold leading-tight">{isFar ? "Du kan hjælpe med" : `Kostråd i uge ${selectedWeek}`}</p>
+            <span className="text-sm">{isFar ? "🤝" : "🍎"}</span>
           </div>
           <ul className="space-y-1.5">
             {nutrition.map(n => (
@@ -711,10 +804,21 @@ function PregnantBarnPage({ week: currentWeek }: { week: number }) {
   );
 }
 
-function BornBarnPage({ ageWeeks, ageMonths }: { ageWeeks: number; ageMonths: number }) {
+function getFarBabyTip(ageWeeks: number, childName: string): string {
+  if (ageWeeks < 2) return `Hold ${childName} hud-mod-hud på dit bryst — din stemme og din varme skaber tilknytning fra dag ét.`;
+  if (ageWeeks < 6) return `Tal til ${childName} mens du skifter ble, bader eller bærer dem — din stemme er det vigtigste stimuli nu.`;
+  if (ageWeeks < 12) return `Lav "borte-tit-tit" og øjenkontakt — ${childName} smiler socialt nu og du er en af favoritterne.`;
+  const months = Math.floor(ageWeeks / 4.33);
+  if (months < 6) return `Læg ${childName} på maven (tummy time) og opmuntr dem med dit ansigt — det styrker nakken og giver jer begge glæde.`;
+  if (months < 9) return `${childName} elsker at efterligne — lav lyde og grimasser og se dem svare. Det er fundamentet for sproget.`;
+  return `Leg "gem gemme" og sæt enkle ord på alt — dit engagement nu er direkte investering i ${childName}s sprogudvikling.`;
+}
+
+function BornBarnPage({ ageWeeks, ageMonths, role }: { ageWeeks: number; ageMonths: number; role: "mor" | "far" }) {
   const { profile } = useFamily();
   const { t } = useTranslation();
   const childName = profile.children?.[0]?.name || "Baby";
+  const isFar = role === "far";
   const insight = getBabyInsight(ageWeeks, childName);
   const activeLeap = getActiveLeap(ageWeeks);
 
@@ -755,7 +859,9 @@ function BornBarnPage({ ageWeeks, ageMonths }: { ageWeeks: number; ageMonths: nu
       <div
         className="rounded-[20px] overflow-hidden section-fade-in"
         style={{
-          background: "linear-gradient(145deg, hsl(22 35% 32%), hsl(22 30% 22%))",
+          background: isFar
+            ? "linear-gradient(145deg, hsl(154 27% 24%), hsl(154 22% 16%))"
+            : "linear-gradient(145deg, hsl(22 35% 32%), hsl(22 30% 22%))",
           animationDelay: "40ms",
         }}
       >
@@ -780,6 +886,20 @@ function BornBarnPage({ ageWeeks, ageMonths }: { ageWeeks: number; ageMonths: nu
       <div className="section-fade-in" style={{ animationDelay: "120ms" }}>
         <BabyMeasurements childName={childName} ageWeeks={ageWeeks} />
       </div>
+
+      {/* ── Far-specific dev tip ─────────────────────────────────────────── */}
+      {isFar && (
+        <div
+          className="rounded-2xl px-4 py-4 flex items-start gap-3 section-fade-in"
+          style={{ background: "hsl(var(--sage-light))", border: "1px solid hsl(var(--sage) / 0.3)", animationDelay: "130ms" }}
+        >
+          <span className="text-xl flex-shrink-0">🤲</span>
+          <div>
+            <p className="text-[0.72rem] font-semibold uppercase tracking-wide mb-1" style={{ color: "hsl(var(--moss))" }}>Din rolle nu</p>
+            <p className="text-[0.8rem] leading-relaxed">{getFarBabyTip(ageWeeks, childName)}</p>
+          </div>
+        </div>
+      )}
 
       <Link to="/leg" className="block">
         <div className="rounded-2xl p-4 flex items-center gap-3 section-fade-in transition-all hover:shadow-sm active:scale-[0.98]" style={{

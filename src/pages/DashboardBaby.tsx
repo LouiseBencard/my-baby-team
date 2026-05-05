@@ -128,6 +128,7 @@ export default function DashboardBaby() {
       <LiveSleepTracker childName={childName || "Baby"} />
       <WhatMattersNow />
       <QuickLog />
+      <DiarySnapshot childName={childName || "Baby"} />
       <TaskList />
       <NeedsCardConditional />
       <NatteplanCard />
@@ -246,6 +247,91 @@ function NotificationPrompt({ childName }: { childName: string }) {
         </div>
       </div>
     </div>
+  );
+}
+
+function DiarySnapshot({ childName }: { childName: string }) {
+  const { nursingLogs, diaperLogs, sleepLogs } = useDiary();
+
+  const isToday = (ts: string) => new Date(ts).toDateString() === new Date().toDateString();
+  const todayFeedings = nursingLogs.filter(l => isToday(l.timestamp)).length;
+  const todayDiapers = diaperLogs.filter(l => isToday(l.timestamp)).length;
+  const todaySleepMin = sleepLogs
+    .filter(l => isToday(l.startTime) && l.endTime)
+    .reduce((acc, l) => acc + (new Date(l.endTime!).getTime() - new Date(l.startTime).getTime()) / 60000, 0);
+  const sleepH = Math.floor(todaySleepMin / 60);
+  const sleepM = Math.round(todaySleepMin % 60);
+
+  // 7-day trend dots (number of feedings per day)
+  const trend = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date();
+    d.setDate(d.getDate() - (6 - i));
+    const dayStr = d.toDateString();
+    return nursingLogs.filter(l => new Date(l.timestamp).toDateString() === dayStr).length;
+  });
+  const maxTrend = Math.max(...trend, 1);
+
+  const hasAnyData = todayFeedings > 0 || todayDiapers > 0 || todaySleepMin > 0;
+  if (!hasAnyData && trend.every(v => v === 0)) return null;
+
+  return (
+    <Link
+      to="/dagbog"
+      className="block rounded-2xl px-4 py-4 section-fade-in transition-all active:scale-[0.98]"
+      style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}
+    >
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <span className="text-base">📔</span>
+          <p className="text-[0.82rem] font-semibold">{childName}s dag i dag</p>
+        </div>
+        <p className="text-[0.68rem]" style={{ color: "hsl(var(--moss))" }}>Se dagbog →</p>
+      </div>
+      <div className="flex gap-4 mb-3">
+        <div className="flex items-center gap-1.5">
+          <span className="text-sm">🤱</span>
+          <div>
+            <p className="text-[0.72rem] font-semibold">{todayFeedings}</p>
+            <p className="text-[0.58rem] text-muted-foreground">måltider</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="text-sm">💧</span>
+          <div>
+            <p className="text-[0.72rem] font-semibold">{todayDiapers}</p>
+            <p className="text-[0.58rem] text-muted-foreground">bleskift</p>
+          </div>
+        </div>
+        <div className="flex items-center gap-1.5">
+          <span className="text-sm">💤</span>
+          <div>
+            <p className="text-[0.72rem] font-semibold">{sleepH > 0 ? `${sleepH}t ${sleepM}m` : todaySleepMin > 0 ? `${sleepM}m` : "—"}</p>
+            <p className="text-[0.58rem] text-muted-foreground">søvn</p>
+          </div>
+        </div>
+      </div>
+      {/* 7-day feeding trend */}
+      <div>
+        <p className="text-[0.6rem] text-muted-foreground mb-1.5">Måltider — 7 dage</p>
+        <div className="flex items-end gap-1 h-6">
+          {trend.map((v, i) => (
+            <div
+              key={i}
+              className="flex-1 rounded-sm transition-all"
+              style={{
+                height: `${Math.max(4, (v / maxTrend) * 100)}%`,
+                background: i === 6 ? "hsl(var(--moss))" : "hsl(var(--stone-light))",
+                minHeight: 4,
+              }}
+            />
+          ))}
+        </div>
+        <div className="flex justify-between mt-1">
+          <p className="text-[0.52rem] text-muted-foreground">For 6 dage</p>
+          <p className="text-[0.52rem] text-muted-foreground">I dag</p>
+        </div>
+      </div>
+    </Link>
   );
 }
 
