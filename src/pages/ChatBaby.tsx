@@ -68,7 +68,21 @@ const RAGE_PROMPTS = [
   "Jeg er ikke mig selv længere",
 ];
 
-function getQuickPrompts(childName: string, en: boolean) {
+function getQuickPrompts(childName: string, en: boolean, role: "mor" | "far") {
+  if (role === "far") {
+    if (en) return [
+      `How can I best support my partner right now?`,
+      `How much should ${childName} sleep?`,
+      `What can I do when ${childName} won't stop crying?`,
+      `How do I bond with ${childName}?`,
+    ];
+    return [
+      "Hvordan støtter jeg min partner bedst lige nu?",
+      `Hvor meget skal ${childName} sove?`,
+      `Hvad gør jeg når ${childName} ikke vil stoppe med at græde?`,
+      `Hvordan skaber jeg tilknytning med ${childName}?`,
+    ];
+  }
   if (en) return [
     `How much should ${childName} sleep?`,
     `${childName} won't latch — what should I do?`,
@@ -274,7 +288,7 @@ export default function ChatBaby() {
     ? ORACLE_PROMPTS.slice(0, 4)
     : mode === "rage"
       ? RAGE_PROMPTS.slice(0, 4)
-      : getQuickPrompts(childName, en).slice(0, 4);
+      : getQuickPrompts(childName, en, profile.role).slice(0, 4);
 
   const hasRageExchange = histories.rage.filter(m => m.role === "user").length > 0;
   const accentColor = `hsl(var(${cfg.accentVar}))`;

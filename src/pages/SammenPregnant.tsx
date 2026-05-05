@@ -16,12 +16,12 @@ const CATEGORY_CONFIG: Record<string, { label: string; emoji: string; bg: string
 
 // ── Nudges ─────────────────────────────────────────────────────────────────────
 const ALL_NUDGES = [
-  { emoji: "❤️", bg: "hsl(var(--clay-light))",  title: "Tag én ting fra din partner i dag",  desc: "Selv små ting gør en forskel" },
-  { emoji: "💬", bg: "hsl(var(--stone-lighter))", title: "Spørg hvordan dagen har været",      desc: "Lyt – det styrker forbindelsen" },
-  { emoji: "📅", bg: "hsl(var(--sand-light))",   title: "Planlæg næste uge sammen",           desc: "10 minutter nu sparer stress senere" },
-  { emoji: "🌿", bg: "hsl(var(--sage-light))",   title: "Del én bekymring og én glæde",       desc: "Ærlighed skaber nærhed" },
-  { emoji: "🫶", bg: "hsl(var(--clay-light))",   title: "Sæt et minut af til at kramas",      desc: "Fysisk kontakt er vigtigt" },
-  { emoji: "💛", bg: "hsl(var(--sand-light))",   title: "Fortæl din partner noget du sætter pris på", desc: "Et ord kan vende en dag" },
+  { emoji: "❤️", bg: "hsl(var(--clay-light))",  title: "Tag én ting fra din partner i dag",  desc: "Se jeres opgaver herunder", link: null },
+  { emoji: "💬", bg: "hsl(var(--stone-lighter))", title: "Spørg hvordan dagen har været",      desc: "Åbn chatten og skriv til MELO", link: "/chat" },
+  { emoji: "📅", bg: "hsl(var(--sand-light))",   title: "Planlæg næste uge sammen",           desc: "Se kalender og scanninger", link: "/gravid-kalender" },
+  { emoji: "🌿", bg: "hsl(var(--sage-light))",   title: "Del én bekymring og én glæde",       desc: "Skriv til MELO – det hjælper", link: "/chat" },
+  { emoji: "🫶", bg: "hsl(var(--clay-light))",   title: "Sæt et minut af til at kramas",      desc: "Fysisk kontakt er vigtigt", link: null },
+  { emoji: "💛", bg: "hsl(var(--sand-light))",   title: "Fortæl din partner noget du sætter pris på", desc: "Brug chatten til at formulere det", link: "/chat" },
 ];
 
 function getTodayNudges() {
@@ -363,23 +363,24 @@ export default function SammenPregnant() {
           <p className="text-[0.88rem] font-semibold">Små påmindelser til jer i dag</p>
         </div>
         <div className="flex gap-3 overflow-x-auto pb-1 -mx-1 px-1" style={{ scrollbarWidth: "none" }}>
-          {nudges.map((n, i) => (
-            <div
-              key={i}
-              className="flex-shrink-0 rounded-2xl px-4 py-3.5 w-44"
-              style={{
-                background: "hsl(var(--warm-white))",
-                border: "1px solid hsl(var(--stone-light))",
-              }}
-            >
-              <div className="w-8 h-8 rounded-full flex items-center justify-center text-base mb-2.5"
-                style={{ background: n.bg }}>
-                {n.emoji}
-              </div>
-              <p className="text-[0.78rem] font-medium leading-snug mb-1">{n.title}</p>
-              <p className="text-[0.65rem] text-muted-foreground leading-snug">{n.desc}</p>
-            </div>
-          ))}
+          {nudges.map((n, i) => {
+            const inner = (
+              <>
+                <div className="w-8 h-8 rounded-full flex items-center justify-center text-base mb-2.5"
+                  style={{ background: n.bg }}>
+                  {n.emoji}
+                </div>
+                <p className="text-[0.78rem] font-medium leading-snug mb-1">{n.title}</p>
+                <p className="text-[0.65rem] text-muted-foreground leading-snug">{n.desc}</p>
+                {n.link && <p className="text-[0.6rem] mt-1.5 font-medium" style={{ color: "hsl(var(--moss))" }}>Gå til →</p>}
+              </>
+            );
+            const cls = "flex-shrink-0 rounded-2xl px-4 py-3.5 w-44 transition-all active:scale-[0.97]";
+            const sty = { background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" };
+            return n.link
+              ? <Link key={i} to={n.link} className={cls} style={sty}>{inner}</Link>
+              : <div key={i} className={cls} style={sty}>{inner}</div>;
+          })}
         </div>
       </div>
 

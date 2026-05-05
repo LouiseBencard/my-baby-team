@@ -182,7 +182,7 @@ export default function DashboardPregnantFar() {
       <div
         className="rounded-[20px] overflow-hidden section-fade-in"
         style={{
-          background: "linear-gradient(145deg, hsl(22 35% 38%), hsl(22 30% 28%))",
+          background: "linear-gradient(145deg, hsl(154 27% 24%), hsl(154 22% 16%))",
           animationDelay: "30ms",
         }}
       >

@@ -97,7 +97,17 @@ Kontakt din læge eller fødegangen med det samme — ring **1813** eller tag di
 Det er altid bedre at ringe og få besked om at det er okay, end at vente.`;
 
 // ── Week-based suggested prompts ───────────────────────────────────────────────
-function getPregnancyPrompts(week: number): string[] {
+function getPregnancyPrompts(week: number, role: "mor" | "far"): string[] {
+  if (role === "far") {
+    return [
+      `Hvordan støtter jeg hende bedst i uge ${week}?`,
+      `Hvad sker der med baby i uge ${week}?`,
+      `Hvad skal vi have pakket til hospitalet?`,
+      `Hvad kan jeg gøre når hun har det dårligt?`,
+      `Hvad er min rolle under fødslen?`,
+      `Hvornår skal vi tage til fødegangen?`,
+    ];
+  }
   return [
     `Hvad skal vi have styr på i denne uge?`,
     `Hvad må jeg spise i denne uge?`,
@@ -252,7 +262,7 @@ export default function PregnancyChatPage() {
     }
   };
 
-  const prompts = getPregnancyPrompts(currentWeek);
+  const prompts = getPregnancyPrompts(currentWeek, profile.role);
   const hasConversation = messages.length > 0;
 
   return (

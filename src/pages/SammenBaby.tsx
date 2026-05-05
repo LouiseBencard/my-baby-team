@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Plus } from "lucide-react";
 import { useFamily } from "@/context/FamilyContext";
 import { useDiary } from "@/context/DiaryContext";
@@ -276,6 +277,14 @@ export default function SammenBaby() {
         <p className="text-[0.62rem] text-muted-foreground/60 mt-2 text-center">
           {t("together.conversationStarter")}
         </p>
+        <Link
+          to="/chat"
+          className="mt-3 flex items-center justify-center gap-1.5 py-2.5 rounded-full text-[0.8rem] font-semibold transition-all active:scale-[0.98]"
+          style={{ background: "hsl(var(--sage-light))", color: "hsl(var(--moss))" }}
+        >
+          <MessageCircle className="w-3.5 h-3.5" />
+          Få hjælp af MELO til samtalen
+        </Link>
       </div>
 
 

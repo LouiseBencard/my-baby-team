@@ -3,7 +3,7 @@ import { useFamily } from "@/context/FamilyContext";
 import { useDiary } from "@/context/DiaryContext";
 import { format, differenceInMinutes, isToday, subDays } from "date-fns";
 import { da, enUS } from "date-fns/locale";
-import { Moon, Sun, Clock, Wifi, Trash2, ChevronRight } from "lucide-react";
+import { Moon, Sun, Clock, Trash2 } from "lucide-react";
 import { AISleepGuidance } from "@/components/AISleepGuidance";
 import { useTranslation } from "react-i18next";
 
@@ -252,50 +252,6 @@ export default function SovnPage() {
           <button onClick={handleManualAdd} disabled={!manualStart} className="btn-moss w-full disabled:opacity-50 text-[0.82rem]">
             {t("sleep.addBtn")}
           </button>
-        </div>
-      </div>
-
-      {/* Auto tracking */}
-      <div
-        className="rounded-2xl p-4 section-fade-in"
-        style={{ background: "hsl(var(--cream))", border: "1px solid hsl(var(--stone-light))", animationDelay: "200ms" }}
-      >
-        <div className="flex items-center gap-3 mb-3">
-          <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "hsl(var(--sage-light))" }}>
-            <Wifi className="w-5 h-5" style={{ color: "hsl(var(--moss))" }} />
-          </div>
-          <div className="flex-1">
-            <p className="text-[0.88rem] font-medium">{t("sleep.autoTracking")}</p>
-            <p className="text-[0.68rem] text-muted-foreground">{t("sleep.connectMonitor")}</p>
-          </div>
-          <ChevronRight className="w-4 h-4 text-muted-foreground" />
-        </div>
-        <div className="space-y-2">
-          {[
-            { name: "Owlet Dream Sock", statusKey: "supported", connected: false },
-            { name: "Nanit Pro", statusKey: "supported", connected: false },
-            { name: "Muse S", statusKey: "comingSoon", connected: false },
-          ].map(device => (
-            <div
-              key={device.name}
-              className="flex items-center justify-between px-3 py-2.5 rounded-xl border"
-              style={{ borderColor: "hsl(var(--stone-light))" }}
-            >
-              <div className="flex items-center gap-2">
-                <Wifi className="w-3.5 h-3.5 text-muted-foreground" />
-                <span className="text-[0.78rem]">{device.name}</span>
-              </div>
-              <span
-                className="text-[0.62rem] px-2 py-0.5 rounded-full"
-                style={{
-                  background: device.statusKey === "supported" ? "hsl(var(--sage-light))" : "hsl(var(--stone-lighter))",
-                  color: device.statusKey === "supported" ? "hsl(var(--moss))" : "hsl(var(--stone))",
-                }}
-              >
-                {device.connected ? t("sleep.connected") : t(`sleep.${device.statusKey}`)}
-              </span>
-            </div>
-          ))}
         </div>
       </div>
 
