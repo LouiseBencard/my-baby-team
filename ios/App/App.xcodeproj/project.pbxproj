@@ -11,8 +11,6 @@
 		2224C69A2F9EBD310067125D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2224C6992F9EBD310067125D /* SwiftUI.framework */; };
 		2224C6A52F9EBD340067125D /* SleepWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2224C6952F9EBD300067125D /* SleepWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2224C6B12F9F47190067125D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2224C6972F9EBD300067125D /* WidgetKit.framework */; };
-		2224C6B52F9F49D20067125D /* LiveActivityPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2224C6B32F9F49D20067125D /* LiveActivityPlugin.m */; };
-		2224C6B62F9F49D20067125D /* LiveActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2224C6B42F9F49D20067125D /* LiveActivityPlugin.swift */; };
 		2224C6B72F9F49D20067125D /* LiveActivityPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2224C6B32F9F49D20067125D /* LiveActivityPlugin.m */; };
 		2224C6B82F9F49D20067125D /* LiveActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2224C6B42F9F49D20067125D /* LiveActivityPlugin.swift */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
@@ -278,8 +276,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2224C6B52F9F49D20067125D /* LiveActivityPlugin.m in Sources */,
-				2224C6B62F9F49D20067125D /* LiveActivityPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -531,7 +527,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Melo - Baby & Family Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
@@ -558,7 +554,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				INFOPLIST_FILE = App/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Melo - Baby & Family Tracker";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
