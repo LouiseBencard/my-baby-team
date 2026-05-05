@@ -130,7 +130,7 @@ export default function ShopPage() {
       <div className="section-fade-in">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-[1.9rem] font-normal">Abonnement</h1>
+            <h1 className="font-serif text-[1.9rem] font-normal">Abonnement</h1>
             <p className="label-upper mt-1">ALDRIG LØBET TØR — LEVERET TIL DØREN</p>
           </div>
           <button className="flex items-center gap-1.5 px-4 py-2 rounded-full border text-[0.7rem] tracking-[0.08em] uppercase font-medium transition-all active:scale-95 hover:shadow-sm"

@@ -67,8 +67,8 @@ export default function MerePage() {
       items: [
         { icon: CreditCard,   label: t("sidebar.subscription"),desc: t("sidebar.subscriptionDesc"), path: "/shop" },
         { icon: Settings,     label: t("settings.settingsMenu"),desc: t("settings.languageThemeData"), path: "/indstillinger" },
-        { icon: Bell,         label: t("settings.notifications"),desc: t("settings.quietReminders"), path: "" },
-        { icon: HelpCircle,   label: t("settings.help"),       desc: t("settings.faqSupport"),      path: "" },
+        { icon: Bell,         label: t("settings.notifications"),desc: t("settings.quietReminders"), path: "", action: "notifications" },
+        { icon: HelpCircle,   label: t("settings.help"),       desc: t("settings.faqSupport"),      path: "", action: "help" },
       ],
     },
   ];
@@ -224,7 +224,10 @@ export default function MerePage() {
         <div key={section.title} className="space-y-1 section-fade-in" style={{ animationDelay: `${(si + 2) * 60}ms` }}>
           <p className="text-[0.58rem] tracking-[0.18em] uppercase text-muted-foreground px-1 mb-2">{section.title}</p>
           {section.items.map((item) => (
-            <button key={item.label} onClick={() => item.path && navigate(item.path)}
+            <button key={item.label} onClick={() => {
+                if (item.path) navigate(item.path);
+                else if (item.action === "notifications") Notification.requestPermission();
+              }}
               className="card-soft w-full flex items-center gap-4 text-left transition-all active:scale-[0.98]">
               <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "hsl(var(--sand-light))" }}>
                 <item.icon className="w-5 h-5" style={{ color: "hsl(var(--moss))" }} />

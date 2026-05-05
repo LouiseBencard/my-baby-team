@@ -300,7 +300,7 @@ export default function ChatBaby() {
 
       {/* Header */}
       <div className="section-fade-in px-1 pb-3">
-        <h1 className="text-[1.9rem]">{t("chat.title")}</h1>
+        <h1 className="font-serif text-[1.9rem]">{t("chat.title")}</h1>
 
         {/* Mode tabs */}
         <div className="flex gap-1.5 mt-2.5 p-1 rounded-2xl" style={{ background: "hsl(var(--stone-lighter))" }}>

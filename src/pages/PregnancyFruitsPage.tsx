@@ -48,7 +48,7 @@ export default function PregnancyFruitsPage() {
       </div>
 
       <div>
-        <h1 className="text-[1.6rem]">Babys rejse</h1>
+        <h1 className="font-serif text-[1.6rem]">Babys rejse</h1>
         <p className="text-[0.82rem] text-muted-foreground mt-1">Uge for uge — fra frø til mødet</p>
       </div>
 

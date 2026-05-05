@@ -194,7 +194,7 @@ export default function RaadGuidesPage() {
   return (
     <div className="space-y-5">
       <div className="section-fade-in">
-        <h1 className="text-[1.9rem] font-normal">{t("advice.title")}</h1>
+        <h1 className="font-serif text-[1.9rem] font-normal">{t("advice.title")}</h1>
         <p className="label-upper mt-1">{isPregnant ? t("advice.pregnancyKnowledge") : t("advice.adaptedForYou")}</p>
       </div>
 

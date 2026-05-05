@@ -577,7 +577,7 @@ export default function BabynavnePage() {
   return (
     <div className="space-y-4">
       <div className="section-fade-in">
-        <h1 className="text-[1.9rem] font-normal">Babynavne</h1>
+        <h1 className="font-serif text-[1.9rem] font-normal">Babynavne</h1>
         <p className="label-upper mt-1">STEM PÅ JERES FAVORITTER</p>
       </div>
 
