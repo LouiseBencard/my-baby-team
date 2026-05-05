@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useFamily } from "@/context/FamilyContext";
-import { Check, ChevronDown, ChevronUp, Plus, X, List, LayoutGrid } from "lucide-react";
+import { Check, ChevronDown, ChevronUp, Plus, X, List, LayoutGrid, Heart, ShoppingCart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import confetti from "canvas-confetti";
 import { getHealthSuggestions } from "@/lib/phaseData";
+import { useWishlist } from "@/hooks/useWishlist";
 
 const TASK_CATEGORY_CONFIG: Record<string, { label: string; emoji: string; bg: string }> = {
   health:       { label: "Helbred",      emoji: "🏥", bg: "hsl(var(--sage-light))"   },
@@ -287,9 +288,14 @@ function useChecklist() {
   return { checked, toggle, customItems, addCustom, removeCustom };
 }
 
+function babysamUrl(title: string) {
+  return `https://www.babysam.dk/search?query=${encodeURIComponent(title)}`;
+}
+
 export default function TjeklistePage() {
   const { profile } = useFamily();
   const { checked, toggle, customItems, addCustom, removeCustom } = useChecklist();
+  const { isWished, toggleWish } = useWishlist();
   const [mainTab, setMainTab] = useState<"opgaver" | "forberedelse">("opgaver");
   const [phase, setPhase] = useState<Phase>("before");
   const [selectedCat, setSelectedCat] = useState<string | null>(null);
@@ -484,6 +490,31 @@ export default function TjeklistePage() {
                             </p>
                           )}
                         </div>
+                        {/* Wish + shop icons for non-custom items */}
+                        {!isCustom && (
+                          <div className="flex items-center gap-1 flex-shrink-0">
+                            <a
+                              href={babysamUrl(item.title)}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="p-1.5 rounded-lg transition-colors active:scale-90"
+                              style={{ color: "hsl(var(--muted-foreground))" }}
+                              onClick={e => e.stopPropagation()}
+                            >
+                              <ShoppingCart className="w-3.5 h-3.5" />
+                            </a>
+                            <button
+                              onClick={e => { e.stopPropagation(); toggleWish(item.title, (item as ChecklistItem).emoji); }}
+                              className="p-1.5 rounded-lg transition-all active:scale-90"
+                            >
+                              <Heart
+                                className="w-3.5 h-3.5 transition-colors"
+                                style={{ color: isWished(item.title) ? "hsl(var(--clay))" : "hsl(var(--muted-foreground))" }}
+                                fill={isWished(item.title) ? "hsl(var(--clay))" : "none"}
+                              />
+                            </button>
+                          </div>
+                        )}
                         {isCustom && (
                           <button onClick={() => removeCustom(item.id)} className="text-muted-foreground/40 hover:text-muted-foreground transition-colors">
                             <X className="w-3.5 h-3.5" />

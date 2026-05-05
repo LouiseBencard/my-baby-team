@@ -3,7 +3,7 @@ import { useFamily, type BirthType, type FeedingMethod } from "@/context/FamilyC
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Settings, User, Bell, HelpCircle, RotateCcw, Baby, Plus, Trash2, Users, Heart, BookOpen, Moon, CalendarDays, ClipboardList, Lightbulb, Gamepad2, CreditCard, Star } from "lucide-react";
+import { Settings, User, Bell, HelpCircle, RotateCcw, Baby, Plus, Trash2, Users, Heart, BookOpen, Moon, CalendarDays, ClipboardList, Lightbulb, Gamepad2, CreditCard, Star, NotebookPen, Timer, FileText, Gift } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function MerePage() {
@@ -42,25 +42,46 @@ export default function MerePage() {
     setNewChildName(""); setNewChildDate(""); setShowAddChild(false); setShowFutureConfirm(false);
   };
 
+  const isPregnant = profile.phase === "pregnant";
+
+  const yourPagesItems = isPregnant
+    ? [
+        { icon: NotebookPen,  label: "Gravid dagbog",          desc: "Skriv om din graviditet",         path: "/gravid-dagbog" },
+        { icon: CalendarDays, label: t("sidebar.calendar"),    desc: t("sidebar.calendarDesc"),         path: "/gravid-kalender" },
+        { icon: ClipboardList,label: t("sidebar.checklist"),   desc: t("sidebar.checklistDesc"),        path: "/tjekliste" },
+        { icon: Gift,         label: "Oenskeliste",            desc: "Produkter I mangler",             path: "/oenskeliste" },
+        { icon: Users,        label: t("nav.together"),        desc: t("sidebar.togetherDesc"),         path: "/sammen" },
+        { icon: Timer,        label: "Veer",                   desc: "Tidtag veerne",                   path: "/veer" },
+        { icon: FileText,     label: "Foedselsplan",           desc: "Dine oensker til fodslen",        path: "/foedselsplan" },
+      ]
+    : [
+        { icon: BookOpen,     label: t("nav.diary"),           desc: t("sidebar.diaryDesc"),            path: "/dagbog" },
+        { icon: Moon,         label: t("sidebar.sleep"),       desc: t("sidebar.sleepDesc"),            path: "/sovn" },
+        { icon: Baby,         label: t("nav.child"),           desc: t("sidebar.childDesc"),            path: "/barn" },
+        { icon: Users,        label: t("nav.together"),        desc: t("sidebar.togetherDesc"),         path: "/sammen" },
+        { icon: CalendarDays, label: t("sidebar.calendar"),    desc: t("sidebar.calendarDesc"),         path: "/kalender" },
+        { icon: ClipboardList,label: t("sidebar.checklist"),   desc: t("sidebar.checklistDesc"),        path: "/tjekliste" },
+        { icon: Gift,         label: "Oenskeliste",            desc: "Produkter I mangler eller vil have", path: "/oenskeliste" },
+      ];
+
+  const discoverItems = isPregnant
+    ? [
+        { icon: Lightbulb,    label: t("sidebar.advice"),      desc: t("sidebar.adviceDesc"),           path: "/raad" },
+        { icon: Star,         label: t("babyNames.addName"),   desc: t("sidebar.babyNamesDesc"),        path: "/babynavne" },
+      ]
+    : [
+        { icon: Lightbulb,    label: t("sidebar.advice"),      desc: t("sidebar.adviceDesc"),           path: "/raad" },
+        { icon: Gamepad2,     label: t("sidebar.play"),        desc: t("sidebar.playDesc"),             path: "/leg" },
+      ];
+
   const sections = [
     {
       title: t("settings.yourPages"),
-      items: [
-        { icon: BookOpen,     label: t("nav.diary"),          desc: t("sidebar.diaryDesc"),        path: "/dagbog" },
-        { icon: Moon,         label: t("sidebar.sleep"),       desc: t("sidebar.sleepDesc"),        path: "/sovn" },
-        { icon: Baby,         label: t("nav.child"),           desc: t("sidebar.childDesc"),        path: "/barn" },
-        { icon: Users,        label: t("nav.together"),        desc: t("sidebar.togetherDesc"),     path: "/sammen" },
-        { icon: CalendarDays, label: t("sidebar.calendar"),    desc: t("sidebar.calendarDesc"),     path: "/kalender" },
-        { icon: ClipboardList,label: t("sidebar.checklist"),   desc: t("sidebar.checklistDesc"),    path: "/tjekliste" },
-      ],
+      items: yourPagesItems,
     },
     {
       title: t("settings.discoverMore"),
-      items: [
-        { icon: Lightbulb,    label: t("sidebar.advice"),      desc: t("sidebar.adviceDesc"),       path: "/raad" },
-        { icon: Gamepad2,     label: t("sidebar.play"),        desc: t("sidebar.playDesc"),         path: "/leg" },
-        { icon: Star,         label: t("babyNames.addName"),   desc: t("sidebar.babyNamesDesc"),    path: "/babynavne" },
-      ],
+      items: discoverItems,
     },
     {
       title: t("settings.account"),

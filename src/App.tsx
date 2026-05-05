@@ -53,6 +53,7 @@ import PregnancyCalendarPage from "@/pages/PregnancyCalendarPage";
 import AuthPage from "@/pages/AuthPage";
 import NotFound from "@/pages/NotFound";
 import PrivacyPage from "@/pages/PrivacyPage";
+import OenskelistePage from "@/pages/OenskelistePage";
 
 const queryClient = new QueryClient();
 
@@ -133,6 +134,7 @@ function AuthenticatedApp() {
             <Route path="/veer" element={<ContractionTimerPage />} />
             <Route path="/foedselsplan" element={<BirthPlanPage />} />
             <Route path="/gravid-kalender" element={<PregnancyCalendarPage />} />
+            <Route path="/oenskeliste" element={<OenskelistePage />} />
           </Route>
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<NotFound />} />
