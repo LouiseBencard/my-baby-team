@@ -46,31 +46,48 @@ function Section({
 function PillSelect({
   options, selected, onToggle,
 }: {
-  options: { key: string; label: string; icon?: string }[];
+  options: { key: string; label: string; icon?: string; desc?: string }[];
   selected: string[];
   onToggle: (key: string) => void;
 }) {
+  const activeDescs = options.filter(o => selected.includes(o.key) && o.desc);
   return (
-    <div className="flex flex-wrap gap-2">
-      {options.map(opt => {
-        const active = selected.includes(opt.key);
-        return (
-          <button
-            key={opt.key}
-            onClick={() => onToggle(opt.key)}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[0.75rem] font-medium transition-all active:scale-95"
-            style={{
-              background: active ? "hsl(var(--moss))" : "hsl(var(--stone-lighter))",
-              color: active ? "white" : "hsl(var(--foreground))",
-              border: active ? "none" : "1.5px solid hsl(var(--stone-light))",
-            }}
-          >
-            {opt.icon && <span>{opt.icon}</span>}
-            {opt.label}
-            {active && <Check className="w-3 h-3" />}
-          </button>
-        );
-      })}
+    <div>
+      <div className="flex flex-wrap gap-2">
+        {options.map(opt => {
+          const active = selected.includes(opt.key);
+          return (
+            <button
+              key={opt.key}
+              onClick={() => onToggle(opt.key)}
+              className="flex items-center gap-1.5 px-3 py-2 rounded-full text-[0.75rem] font-medium transition-all active:scale-95"
+              style={{
+                background: active ? "hsl(var(--moss))" : "hsl(var(--stone-lighter))",
+                color: active ? "white" : "hsl(var(--foreground))",
+                border: active ? "none" : "1.5px solid hsl(var(--stone-light))",
+              }}
+            >
+              {opt.icon && <span>{opt.icon}</span>}
+              {opt.label}
+              {active && <Check className="w-3 h-3" />}
+            </button>
+          );
+        })}
+      </div>
+      {activeDescs.length > 0 && (
+        <div className="mt-3 space-y-2">
+          {activeDescs.map(opt => (
+            <div key={opt.key} className="flex items-start gap-2 rounded-xl px-3 py-2.5"
+              style={{ background: "hsl(var(--sage-light))" }}>
+              <span className="flex-shrink-0 text-sm">{opt.icon || "✓"}</span>
+              <div>
+                <p className="text-[0.7rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>{opt.label}</p>
+                <p className="text-[0.68rem] text-muted-foreground leading-snug">{opt.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -79,7 +96,7 @@ function PillSelect({
 function RadioSelect({
   options, value, onChange,
 }: {
-  options: { key: string; label: string; icon?: string }[];
+  options: { key: string; label: string; icon?: string; desc?: string }[];
   value: string;
   onChange: (key: string) => void;
 }) {
@@ -91,16 +108,21 @@ function RadioSelect({
           <button
             key={opt.key}
             onClick={() => onChange(opt.key)}
-            className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-left transition-all active:scale-[0.98]"
+            className="w-full flex items-start gap-3 px-4 py-3 rounded-xl text-left transition-all active:scale-[0.98]"
             style={{
               background: active ? "hsl(var(--sage-light))" : "hsl(var(--stone-lighter))",
               border: active ? "1.5px solid hsl(var(--sage))" : "1.5px solid transparent",
             }}
           >
-            {opt.icon && <span className="text-base">{opt.icon}</span>}
-            <span className="flex-1 text-[0.82rem] font-medium">{opt.label}</span>
+            {opt.icon && <span className="text-base flex-shrink-0 mt-0.5">{opt.icon}</span>}
+            <div className="flex-1 min-w-0">
+              <span className="text-[0.82rem] font-medium block">{opt.label}</span>
+              {active && opt.desc && (
+                <p className="text-[0.68rem] text-muted-foreground leading-snug mt-0.5">{opt.desc}</p>
+              )}
+            </div>
             {active && (
-              <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0"
+              <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
                 style={{ background: "hsl(var(--moss))" }}>
                 <Check className="w-3 h-3 text-white" />
               </div>

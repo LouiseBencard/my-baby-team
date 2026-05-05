@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useFamily } from "@/context/FamilyContext";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -36,7 +36,9 @@ export function AppreciationCard() {
 
   const todayStr = new Date().toISOString().slice(0, 10);
   const sentToday = appreciations.some(a => a.from === role && a.date.startsWith(todayStr));
-  const latestFromPartner = appreciations.filter(a => a.from !== role).at(-1);
+  const fromPartner = useMemo(() => [...appreciations.filter(a => a.from !== role)].reverse(), [appreciations, role]);
+  const latestFromPartner = fromPartner[0];
+  const [showHistory, setShowHistory] = useState(false);
 
   const myCustomIdea = profile.dateNightIdeas?.[role];
   const partnerCustomIdea = profile.dateNightIdeas?.[partnerRole];
@@ -77,13 +79,32 @@ export function AppreciationCard() {
         <p className="text-[0.6rem] tracking-[0.16em] uppercase text-muted-foreground">{t("appreciation.title")}</p>
       </div>
 
-      {/* Latest from partner */}
+      {/* Latest from partner + history */}
       {latestFromPartner && (
-        <div className="rounded-xl px-3 py-2.5" style={{ background: accentBg }}>
-          <p className="text-[0.6rem] tracking-[0.1em] uppercase text-muted-foreground mb-1">
-            {t("appreciation.noticeLabel", { name: partnerName || "" })}
-          </p>
-          <p className="text-[0.82rem] italic" style={{ color: accentText }}>"{latestFromPartner.text}"</p>
+        <div className="space-y-2">
+          <div className="rounded-xl px-3 py-2.5" style={{ background: accentBg }}>
+            <div className="flex items-center justify-between mb-1">
+              <p className="text-[0.6rem] tracking-[0.1em] uppercase text-muted-foreground">
+                {t("appreciation.noticeLabel", { name: partnerName || "" })}
+              </p>
+              {fromPartner.length > 1 && (
+                <button
+                  onClick={() => setShowHistory(h => !h)}
+                  className="text-[0.6rem] font-medium"
+                  style={{ color: accentText }}
+                >
+                  {showHistory ? "Skjul" : `+${fromPartner.length - 1} flere`}
+                </button>
+              )}
+            </div>
+            <p className="text-[0.82rem] italic" style={{ color: accentText }}>"{latestFromPartner.text}"</p>
+          </div>
+          {showHistory && fromPartner.slice(1, 6).map((a, i) => (
+            <div key={i} className="rounded-xl px-3 py-2.5" style={{ background: "hsl(var(--stone-lighter))" }}>
+              <p className="text-[0.6rem] text-muted-foreground mb-0.5">{new Date(a.date).toLocaleDateString("da-DK", { day: "numeric", month: "short" })}</p>
+              <p className="text-[0.78rem] italic text-muted-foreground">"{a.text}"</p>
+            </div>
+          ))}
         </div>
       )}
 
