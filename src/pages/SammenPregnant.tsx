@@ -15,19 +15,29 @@ const CATEGORY_CONFIG: Record<string, { label: string; emoji: string; bg: string
 };
 
 // ── Nudges ─────────────────────────────────────────────────────────────────────
-const ALL_NUDGES = [
-  { emoji: "❤️", bg: "hsl(var(--clay-light))",  title: "Tag én ting fra din partner i dag",  desc: "Se jeres opgaver herunder", link: null },
-  { emoji: "💬", bg: "hsl(var(--stone-lighter))", title: "Spørg hvordan dagen har været",      desc: "Åbn chatten og skriv til MELO", link: "/chat" },
-  { emoji: "📅", bg: "hsl(var(--sand-light))",   title: "Planlæg næste uge sammen",           desc: "Se kalender og scanninger", link: "/gravid-kalender" },
-  { emoji: "🌿", bg: "hsl(var(--sage-light))",   title: "Del én bekymring og én glæde",       desc: "Skriv til MELO – det hjælper", link: "/chat" },
-  { emoji: "🫶", bg: "hsl(var(--clay-light))",   title: "Sæt et minut af til at kramas",      desc: "Fysisk kontakt er vigtigt", link: null },
-  { emoji: "💛", bg: "hsl(var(--sand-light))",   title: "Fortæl din partner noget du sætter pris på", desc: "Brug chatten til at formulere det", link: "/chat" },
+const MOR_NUDGES = [
+  { emoji: "❤️", bg: "hsl(var(--clay-light))",   title: "Tag én ting fra din partners liste", desc: "Se jeres opgaver herunder",          link: null },
+  { emoji: "💬", bg: "hsl(var(--stone-lighter))", title: "Spørg hvordan dagen har været",       desc: "Åbn chatten og skriv til MELO",      link: "/chat" },
+  { emoji: "📅", bg: "hsl(var(--sand-light))",    title: "Planlæg næste uge sammen",            desc: "Se kalender og scanninger",          link: "/gravid-kalender" },
+  { emoji: "🌿", bg: "hsl(var(--sage-light))",    title: "Del én bekymring og én glæde",        desc: "Skriv til MELO — det hjælper",       link: "/chat" },
+  { emoji: "🫶", bg: "hsl(var(--clay-light))",    title: "Sæt et minut af til at kramas",       desc: "Fysisk kontakt er vigtigt",          link: null },
+  { emoji: "💛", bg: "hsl(var(--sand-light))",    title: "Fortæl din partner noget du sætter pris på", desc: "Brug chatten til at formulere det", link: "/chat" },
 ];
 
-function getTodayNudges() {
+const FAR_NUDGES = [
+  { emoji: "🤝", bg: "hsl(var(--sage-light))",    title: "Spørg hvad du kan tage i dag",        desc: "Én konkret opgave fra jeres liste",  link: null },
+  { emoji: "📖", bg: "hsl(var(--sand-light))",    title: "Forstå hvad hun oplever",             desc: "Læs om den aktuelle graviditetstuge", link: "/graviditet/uge" },
+  { emoji: "💬", bg: "hsl(var(--stone-lighter))", title: "Lyt uden at løse",                    desc: "Spørg til hendes bekymringer i dag", link: "/chat" },
+  { emoji: "🛒", bg: "hsl(var(--clay-light))",    title: "Tjek ønskelisten",                    desc: "Er der noget du kan bestille?",      link: "/oenskeliste" },
+  { emoji: "🫶", bg: "hsl(var(--clay-light))",    title: "Sæt et minut af til at kramas",       desc: "Fysisk kontakt er vigtigt",          link: null },
+  { emoji: "📋", bg: "hsl(var(--sage-light))",    title: "Tjek hvad I mangler",                 desc: "Forbered jer inden fødslen",         link: "/tjekliste" },
+];
+
+function getTodayNudges(role: "mor" | "far") {
+  const nudges = role === "far" ? FAR_NUDGES : MOR_NUDGES;
   const day = Math.floor(Date.now() / 86400000);
-  const start = day % ALL_NUDGES.length;
-  return [0, 1, 2].map(i => ALL_NUDGES[(start + i) % ALL_NUDGES.length]);
+  const start = day % nudges.length;
+  return [0, 1, 2].map(i => nudges[(start + i) % nudges.length]);
 }
 
 // ── Task suggestions ───────────────────────────────────────────────────────────
@@ -116,7 +126,7 @@ export default function SammenPregnant() {
     setNewTitle(""); setNewAssignee("fælles"); setShowCreate(false);
   };
 
-  const nudges = getTodayNudges();
+  const nudges = getTodayNudges(role);
 
   return (
     <div className="space-y-5 pb-8">

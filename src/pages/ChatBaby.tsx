@@ -61,12 +61,33 @@ const ORACLE_PROMPTS = [
   "Er det normalt at jeg er vred på min partner?",
 ];
 
-const RAGE_PROMPTS = [
+const RAGE_PROMPTS_MOR = [
   "Jeg er så træt og ingen forstår det",
   "Min partner hjælper ikke nok",
   "Jeg føler mig usynlig",
   "Jeg er ikke mig selv længere",
 ];
+
+const RAGE_PROMPTS_FAR_PREGNANT = [
+  "Jeg ved ikke hvad jeg skal gøre for at hjælpe",
+  "Jeg er bange for at alt forandrer sig for meget",
+  "Jeg føler mig sat udenfor og overflødig",
+  "Jeg er nervøs for fødslen og hvad der sker bagefter",
+];
+
+const RAGE_PROMPTS_FAR_BABY = [
+  "Jeg er ekstremt træt og ingen anerkender det som far",
+  "Jeg føler mig usynlig i hele den her proces",
+  "Jeg savner min partner og det liv vi havde",
+  "Jeg ved ikke om jeg gør det godt nok som far",
+];
+
+function getRagePrompts(role: "mor" | "far", phase: string): string[] {
+  if (role === "far") {
+    return phase === "pregnant" ? RAGE_PROMPTS_FAR_PREGNANT : RAGE_PROMPTS_FAR_BABY;
+  }
+  return RAGE_PROMPTS_MOR;
+}
 
 function getQuickPrompts(childName: string, en: boolean, role: "mor" | "far") {
   if (role === "far") {
@@ -287,7 +308,7 @@ export default function ChatBaby() {
   const quickPrompts = mode === "oracle"
     ? ORACLE_PROMPTS.slice(0, 4)
     : mode === "rage"
-      ? RAGE_PROMPTS.slice(0, 4)
+      ? getRagePrompts(profile.role, profile.phase).slice(0, 4)
       : getQuickPrompts(childName, en, profile.role).slice(0, 4);
 
   const hasRageExchange = histories.rage.filter(m => m.role === "user").length > 0;

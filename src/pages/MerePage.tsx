@@ -3,7 +3,7 @@ import { useFamily, type BirthType, type FeedingMethod } from "@/context/FamilyC
 import { useAuth } from "@/context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { Settings, User, Bell, HelpCircle, RotateCcw, Baby, Plus, Trash2, Users, Heart, BookOpen, Moon, CalendarDays, ClipboardList, Lightbulb, Gamepad2, CreditCard, Star, NotebookPen, Timer, FileText, Gift } from "lucide-react";
+import { Settings, User, Bell, HelpCircle, RotateCcw, Baby, Plus, Trash2, Users, Heart, BookOpen, Moon, CalendarDays, ClipboardList, Lightbulb, Gamepad2, CreditCard, Star, NotebookPen, Timer, FileText, Gift, Link2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function MerePage() {
@@ -43,16 +43,19 @@ export default function MerePage() {
   };
 
   const isPregnant = profile.phase === "pregnant";
+  const isFar = profile.role === "far";
+  const partnerConnected = !!profile.partnerUserId;
 
   const yourPagesItems = isPregnant
     ? [
-        { icon: NotebookPen,  label: "Gravid dagbog",          desc: "Skriv om din graviditet",         path: "/gravid-dagbog" },
+        ...(!isFar ? [{ icon: NotebookPen,  label: "Gravid dagbog",          desc: "Skriv om din graviditet",         path: "/gravid-dagbog" }] : []),
         { icon: CalendarDays, label: t("sidebar.calendar"),    desc: t("sidebar.calendarDesc"),         path: "/gravid-kalender" },
         { icon: ClipboardList,label: t("sidebar.checklist"),   desc: t("sidebar.checklistDesc"),        path: "/tjekliste" },
         { icon: Gift,         label: "Oenskeliste",            desc: "Produkter I mangler",             path: "/oenskeliste" },
         { icon: Users,        label: t("nav.together"),        desc: t("sidebar.togetherDesc"),         path: "/sammen" },
-        { icon: Timer,        label: "Veer",                   desc: "Tidtag veerne",                   path: "/veer" },
-        { icon: FileText,     label: "Foedselsplan",           desc: "Dine oensker til fodslen",        path: "/foedselsplan" },
+        ...(!isFar ? [{ icon: Timer, label: "Veer", desc: "Tidtag veerne", path: "/veer" }] : []),
+        ...(!isFar ? [{ icon: FileText, label: "Foedselsplan", desc: "Dine oensker til fodslen", path: "/foedselsplan" }] : []),
+        { icon: Link2,        label: "Forbind med partner",    desc: partnerConnected ? `Forbundet med ${profile.partnerName}` : "Del invitationskode", path: "/invite" },
       ]
     : [
         { icon: BookOpen,     label: t("nav.diary"),           desc: t("sidebar.diaryDesc"),            path: "/dagbog" },
@@ -62,6 +65,7 @@ export default function MerePage() {
         { icon: CalendarDays, label: t("sidebar.calendar"),    desc: t("sidebar.calendarDesc"),         path: "/kalender" },
         { icon: ClipboardList,label: t("sidebar.checklist"),   desc: t("sidebar.checklistDesc"),        path: "/tjekliste" },
         { icon: Gift,         label: "Oenskeliste",            desc: "Produkter I mangler eller vil have", path: "/oenskeliste" },
+        { icon: Link2,        label: "Forbind med partner",    desc: partnerConnected ? `Forbundet med ${profile.partnerName}` : "Del invitationskode", path: "/invite" },
       ];
 
   const discoverItems = isPregnant

@@ -429,6 +429,19 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
     if (data.user_id === user?.id) return { success: false, error: "Det er din egen kode — del den med din partner." };
     const partnerUserId = data.user_id;
     const sharedFamilyId = data.family_id || data.user_id;
+
+    // Import partner's tasks — merge by title to avoid duplicates
+    const partnerTasks = await fetchTasks(partnerUserId);
+    if (partnerTasks && partnerTasks.length > 0) {
+      setTasks(prev => {
+        const existingTitles = new Set(prev.map(t => t.title.toLowerCase()));
+        const newTasks = partnerTasks
+          .filter(t => !existingTitles.has(t.title.toLowerCase()))
+          .map(t => ({ ...t, id: generateId() }));
+        return [...prev, ...newTasks];
+      });
+    }
+
     setProfileState(prev => ({
       ...prev,
       partnerUserId,
