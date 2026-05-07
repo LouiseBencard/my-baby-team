@@ -9,14 +9,13 @@ Hver gang vi laver kodeændringer køres disse trin i rækkefølge:
 ```bash
 npm run build                          # byg React-koden → /dist
 npx cap sync ios                       # kopiér dist ind i Xcode-projektet + generer Package.swift
-xcodebuild -project ios/App/App.xcodeproj \
-  -scheme App -configuration Release \
-  -destination generic/platform=iOS \
-  archive -archivePath /tmp/MeloApp.xcarchive   # bekræft lokal build
-git add <ændrede filer>
+git add <ændrede src-filer> ios/App/App/public/   # VIGTIGT: altid inkluder ios/App/App/public/
 git commit -m "beskrivelse"
 git push origin main                   # trigger Xcode Cloud automatisk
 ```
+
+> **KRITISK:** `ios/App/App/public/` skal altid committes med. Xcode Cloud har ingen `dist/` (gitignored),
+> så ci_post_clone.sh falder tilbage på de committede assets. Uden dette ser alle builds ens ud.
 
 ### Xcode Cloud — VIGTIGT
 - Xcode Cloud kører `ios/App/ci_scripts/ci_post_clone.sh` automatisk ved hvert build
