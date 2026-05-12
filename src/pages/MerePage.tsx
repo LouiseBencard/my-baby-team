@@ -7,7 +7,7 @@ import { Settings, User, Bell, HelpCircle, RotateCcw, Baby, Plus, Trash2, Users,
 import { cn } from "@/lib/utils";
 
 export default function MerePage() {
-  const { profile, setProfile, resetProfile, addChild, removeChild } = useFamily();
+  const { profile, setProfile, resetProfile, removeChild } = useFamily();
   const { signOut } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
@@ -20,25 +20,45 @@ export default function MerePage() {
   const handleReset = () => { resetProfile(); navigate("/onboarding"); };
   const handleSignOut = async () => { await signOut(); };
 
-  const handleAddChild = () => {
-    if (!newChildName.trim()) return;
-    const isFuture = newChildDate && new Date(newChildDate) > new Date();
-    if (isFuture) {
-      setShowFutureConfirm(true);
-    } else {
-      addChild(newChildName.trim(), newChildDate || new Date().toISOString());
-      setNewChildName(""); setNewChildDate(""); setShowAddChild(false);
-    }
-  };
-
-  const confirmFutureDueDate = () => {
-    addChild(newChildName.trim(), newChildDate);
-    setProfile({ ...profile, dueOrBirthDate: newChildDate, phase: "pregnant" });
+  const applyNewChild = (birthDate: string, phase: "pregnant" | "newborn" | "baby") => {
+    const newChild = {
+      id: Math.random().toString(36).substring(2, 10),
+      name: newChildName.trim(),
+      birthDate,
+    };
+    setProfile({
+      ...profile,
+      children: [...(profile.children || []), newChild],
+      dueOrBirthDate: birthDate,
+      phase,
+    });
     setNewChildName(""); setNewChildDate(""); setShowAddChild(false); setShowFutureConfirm(false);
   };
 
+  const handleAddChild = () => {
+    if (!newChildName.trim()) return;
+    const dateStr = newChildDate || new Date().toISOString().split("T")[0];
+    const isFuture = new Date(dateStr) > new Date();
+    if (isFuture) {
+      setShowFutureConfirm(true);
+    } else {
+      const n = new Date();
+      const d = new Date(dateStr);
+      const weeksOld = Math.max(0, Math.floor((n.getTime() - d.getTime()) / (1000 * 60 * 60 * 24 * 7)));
+      const monthsOld = Math.floor(weeksOld / 4.33);
+      applyNewChild(dateStr, monthsOld < 3 ? "newborn" : "baby");
+    }
+  };
+
+  const confirmFutureDueDate = () => applyNewChild(newChildDate, "pregnant");
   const denyFutureDueDate = () => {
-    addChild(newChildName.trim(), newChildDate);
+    // Future date men brugeren bekræfter det ikke er terminsdato — tilføj bare barnet
+    const newChild = {
+      id: Math.random().toString(36).substring(2, 10),
+      name: newChildName.trim(),
+      birthDate: newChildDate,
+    };
+    setProfile({ ...profile, children: [...(profile.children || []), newChild] });
     setNewChildName(""); setNewChildDate(""); setShowAddChild(false); setShowFutureConfirm(false);
   };
 
