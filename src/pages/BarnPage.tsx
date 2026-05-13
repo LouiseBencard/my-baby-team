@@ -14,133 +14,219 @@ export default function BarnPage() {
   return <BornBarnPage ageWeeks={babyAgeWeeks} ageMonths={babyAgeMonths} role={profile.role} />;
 }
 
+// ── Week-specific development bullets (2 facts shown in hero per week) ────────
+const WEEK_BULLETS: Record<number, [string, string]> = {
+  5:  ["Hjertet slår for første gang — en klump celler der banker", "Neuralrøret dannes og bliver til hjerne og rygsøjle"],
+  6:  ["Hjertet slår 100–160 gange i minuttet — synligt på scanning", "Arme- og benstumper vokser frem som små årer"],
+  7:  ["Hjernen vokser med 100 nye neuroner i minuttet", "Ansigtstræk begynder at forme sig — øjne og næsepartiet skimtes"],
+  8:  ["Alle vitale organer er anlægt og i fuld udvikling", "Baby er officielt et foster — ca. 1,6 cm, ligner et lille menneske"],
+  9:  ["Fingre og tæer adskilles fra hinanden", "Baby kan allerede gabe, strække sig og røre ved sit ansigt"],
+  10: ["Neglene begynder at spire frem på fingre og tæer", "Baby drejer aktivt rundt i fostervæsken — men du mærker det ikke endnu"],
+  11: ["Baby har allerede unikke fingeraftryk", "Nyrerne er aktive og producerer urin direkte i fostervandet"],
+  12: ["Risikoen for tab falder markant — 1. trimester er næsten slut", "Baby kan suge tommelfingeren og lave ansigtsudtryk"],
+  13: ["Baby 'vejrer' nu med fostervand og træner lungebevægelser", "Tarmene er vandret fra navlestrengen ind i bughulen"],
+  14: ["Baby laver tydelige ansigtsudtryk — griner, rynker bryn, blinkker", "Kønnet kan nu bestemmes hos de fleste på scanning"],
+  15: ["Høresansen udvikles — baby begynder at reagere på lyde udefra", "Baby drejer og sparker aktivt hele dagen"],
+  16: ["Baby kan gribe og blinke — reflekserne er på plads", "Skelettet hærder fra bruskvæv til rigtigt knogle"],
+  17: ["Fedtvæv begynder at dannes under huden for at holde varmen", "Høresansen skærpes markant — baby kender allerede din stemme"],
+  18: ["Baby hører din stemme tydeligt og reagerer på den", "De første bevægelser kan mærkes — som sommerfugle i maven"],
+  19: ["Vernix caseosa (ostecreme) begynder at beskytte babys hud", "Baby har nu en fast søvn-vågne cyklus på 20–30 minutter"],
+  20: ["Halvvejs! Baby vejer ca. 300 g og er fuldt proportioneret", "Alle fem sanser er aktive og i fuld udvikling"],
+  21: ["Baby synker fostervand og træner fordøjelsessystemet aktivt", "REM-søvn er bekræftet — baby drømmer sandsynligvis allerede"],
+  22: ["Hjernen koordinerer nu bevægelserne aktivt og bevidst", "Baby ligner et lille menneskebarn — blot meget slankere"],
+  23: ["Baby genkender stemmer den har hørt mange gange", "Finger- og tånegle er fuldt udviklede"],
+  24: ["Baby er nu levedygtig med avanceret medicinsk hjælp", "Lungerne producerer surfaktant — stof der holder luftsækkene åbne"],
+  25: ["Baby kan registrere lys udefra — dæk maven til og baby mærker det", "Hårvækst på babyens hoved begynder"],
+  26: ["Baby åbner øjnene for første gang — synet begynder at fungere", "Hjernen styrer nu kropstemperatur selvstændigt"],
+  27: ["Baby kan suge sin tommelfinger — sugeinstinktet er klar", "Baby er ca. 35 cm — 3. trimester er lige om hjørnet"],
+  28: ["3. TRIMESTER! Baby vejer nu ca. 1 kg", "Synsnerverne er fuldt aktive — baby skelner lys fra mørke"],
+  29: ["Hjernen danner gyri — folderne der giver mere kapacitet", "Baby sparker kraftigt og regelmæssigt — maven bevæger sig synligt"],
+  30: ["Baby vender sig med hovedet nedad hos de fleste", "Knoglerne hærder intensivt — det kræver rigeligt calcium fra dig"],
+  31: ["Baby kan blinkke og holde øjnene åbne i perioder", "Lungerne er næsten klar til selvstændig vejrtrækning"],
+  32: ["Baby sover 90–95% af døgnet svarende til dine søvncyklusser", "Alle grundreflekser er på plads og funktionelle"],
+  33: ["Skallen er stadig blød og formbar — den skal passere fødselskanalen", "Baby har alle fødselsreflekser klar til brug"],
+  34: ["Baby er fuldt dannet — de kommende uger handler om at tage på", "Det hvide fedtlag giver babys hud den kendte runde, bløde form"],
+  35: ["Baby vejer ca. 2,4 kg og er ca. 46 cm lang", "Nyrerne er 100% funktionelle"],
+  36: ["Baby er officielt 'early term' og parat til verden", "Positionen er næsten altid hoved nedad fra nu af"],
+  37: ["Baby er FULDGAAREN — lunger og hjerne er fuldt modne", "Baby kan klare sig uden medicinsk hjælp fra nu af"],
+  38: ["Baby tager de allerseneste gram på", "Immunstoffer fra dig overføres via navlestrengen"],
+  39: ["Baby er 100% klar — venter bare på det rette signal", "Moderkagen aeldes — kroppen goer sig klar til fodslen"],
+  40: ["TERMIN! Baby vejer typisk 3,2–3,6 kg og er ca. 50 cm", "Fodsel kan ske enhver dag — stol paa din krop"],
+  41: ["Babys hud kan begynde at skalle lidt — fostervandet aftager", "Overvaagning intensiveres — I er i gode haender"],
+  42: ["Igangsaetning overvejes med din laege eller jordemoder", "Baby er klar og rask — I er staerkere end I tror"],
+};
+
+// ── Week-specific nutrition (3 tips per week) ─────────────────────────────────
+const WEEK_NUTRITION_DATA: Record<number, { icon: string; text: string }[]> = {
+  5:  [{ icon: "🥦", text: "Folsyre (400 µg/dag) er kritisk — beskytter neuralrøret" }, { icon: "🚫", text: "Undgå alkohol fuldstændigt — ingen mængde er sikker" }, { icon: "💊", text: "Start D-vitamin (10 µg/dag) med det samme" }],
+  6:  [{ icon: "🥦", text: "Folsyre: grønne blade, linser og nødder dagligt" }, { icon: "🍋", text: "Syrlig mad og kold drik kan lindre morgenkvalme" }, { icon: "🫚", text: "Spis lidt og tit — holder blodsukkeret stabilt" }],
+  7:  [{ icon: "🫙", text: "Ingefærte eller ingefærkandis er effektivt mod morgenkvalme" }, { icon: "🍌", text: "Bananer: let fordøjelig energi når kvalmen er slem" }, { icon: "💧", text: "Drik rigeligt — kvalme kan føre til dehydrering" }],
+  8:  [{ icon: "🥦", text: "Folsyre stadig kritisk til og med uge 12" }, { icon: "🥛", text: "Calcium fra mejeriprodukter — babys knogler dannes nu" }, { icon: "🚫", text: "Undgå lever og leverpostej — for høj vitamin A" }],
+  9:  [{ icon: "🐟", text: "Omega-3 fra fed fisk understøtter babys hjernudvikling" }, { icon: "🥛", text: "Calcium og D-vitamin til babys begyndende knogledannelse" }, { icon: "🫐", text: "Antioxidanter fra bær beskytter mod cellestress" }],
+  10: [{ icon: "🥩", text: "Jern: blodvolumen stiger med 50% i løbet af graviditeten" }, { icon: "🍊", text: "C-vitamin øger optaget af jern fra vegetabilske fødevarer" }, { icon: "🌾", text: "Fuldkorn giver langsom energi og forebygger forstoppelse" }],
+  11: [{ icon: "🌾", text: "Fibre fra havregryn og grøntsager forebygger forstoppelse" }, { icon: "🥦", text: "Grønne grøntsager: folsyre, jern og calcium samlet" }, { icon: "💧", text: "1,5–2 liter vand dagligt — hyppig vandladning er normal" }],
+  12: [{ icon: "🥩", text: "Jern stiger i vigtighed — din blodmasse øges hurtigt nu" }, { icon: "🥛", text: "Calcium: 1000 mg/dag — babys skelet begynder at hærde" }, { icon: "🚫", text: "Undgå rå fisk, upasteuriseret ost og rå æg" }],
+  13: [{ icon: "🥩", text: "Protein til babys hurtige vækst: mindst 70 g dagligt" }, { icon: "🌾", text: "Fibre og vand mod forstoppelse der er hyppig i 2. trimester" }, { icon: "🥛", text: "Mejeri styrker babys begyndende tanddannelse" }],
+  14: [{ icon: "🫐", text: "Jernrige bær kombineret med C-vitamin øger optaget" }, { icon: "🥜", text: "Nødder og frø: sundt fedt, magnesium og E-vitamin" }, { icon: "💧", text: "Drik mindst 2 liter — fostervandproduktionen øges" }],
+  15: [{ icon: "🐟", text: "Fed fisk 2x ugentligt — omega-3 til babys øre- og øjenudvikling" }, { icon: "🥦", text: "Grønne blade: jern og folsyre — fortsat vigtig nu" }, { icon: "🫘", text: "Bønner og linser: plantebaseret jern og protein" }],
+  16: [{ icon: "🥩", text: "Jern: babys røde blodlegemer produceres hurtigt nu" }, { icon: "🥛", text: "Calcium ekstra vigtig — knoglehærdningen er i fuld gang" }, { icon: "🌾", text: "Komplekse kulhydrater giver stabil energi hele dagen" }],
+  17: [{ icon: "🐟", text: "Omega-3 og E-vitamin støtter babys fedtvævsdannelse" }, { icon: "🥜", text: "Mandler og solsikkefrø: E-vitamin der beskytter cellerne" }, { icon: "💧", text: "2+ liter vand hjælper mod hævede ankler og halsbrand" }],
+  18: [{ icon: "🥩", text: "Jern: behovet er nu 27 mg/dag — dobbelt af det normale" }, { icon: "🍊", text: "C-vitamin til hvert jernrigt måltid øger optaget dramatisk" }, { icon: "🌾", text: "Fuldkorn giver B-vitaminer og langvarig energi" }],
+  19: [{ icon: "🫘", text: "Protein til babys accelererende vækst: linser, bønner, kød, fisk" }, { icon: "🥛", text: "Calcium og D-vitamin: knogledannelsen er på sit højeste" }, { icon: "🌾", text: "Fibre og regelmæssige måltider forebygger forstoppelse" }],
+  20: [{ icon: "🐟", text: "DHA omega-3: babys hjerne vokser særlig hurtigt nu" }, { icon: "🥦", text: "Magnesium fra grønne grøntsager hjælper mod benkramper" }, { icon: "💧", text: "2–2,5 liter vand — fostervandproduktionen er nu høj" }],
+  21: [{ icon: "🥛", text: "Jod fra mejeriprodukter og fisk: babys skjoldbruskkirtel dannes" }, { icon: "🥩", text: "Protein og jern til babys fortsatte hurtige vækst" }, { icon: "🫐", text: "Bær og citrus: antioxidanter og C-vitamin" }],
+  22: [{ icon: "🌾", text: "Komplekse kulhydrater forebygger svimmelhed og blodsukkerfald" }, { icon: "🐟", text: "DHA fra fed fisk eller algeolier — babys visuelle cortex er aktiv" }, { icon: "🥜", text: "Avocado og nødder: sundt fedt til babys hurtige hjernvækst" }],
+  23: [{ icon: "🥩", text: "Jern og protein til babys store vækstspurt de kommende uger" }, { icon: "🫘", text: "Kikærter og linser: jern, fibre og protein i ét" }, { icon: "🍊", text: "C-vitamin kombineret med jernrige måltider — bedste duo" }],
+  24: [{ icon: "🥛", text: "Calcium (1000 mg/dag): babys lunger og knogler hærder simultant" }, { icon: "💊", text: "D-vitamin understøtter calciumoptaget og lungernes modning" }, { icon: "🌾", text: "Fibre forebygger forstoppelse og hæmorider i 3. trimester" }],
+  25: [{ icon: "🐟", text: "Omega-3 kritisk nu — babys øjennethindes DHA-indhold opbygges" }, { icon: "🥦", text: "Folat fra grønne grøntsager — fortsat vigtig for nervesystemet" }, { icon: "💧", text: "2+ liter vand forebygger hævede ankler og vandretention" }],
+  26: [{ icon: "🫘", text: "Protein til det største vækstspurt i hele graviditeten" }, { icon: "🥛", text: "Calcium og magnesium hjælper mod søvnproblemer og kramper" }, { icon: "🌾", text: "Fuldkorn giver B6, der kan reducere tilbagevendende kvalme" }],
+  27: [{ icon: "🥩", text: "Jern: dit blodvolumen er nu 50% højere end normalt" }, { icon: "🐟", text: "Fed fisk 2x ugentligt — de næste uger er afgørende for babys hjerne" }, { icon: "🍊", text: "Citrusfrugter: C-vitamin, fibre og naturlig hydrering" }],
+  28: [{ icon: "🥦", text: "Vitamin K fra grønne blade hjælper mod blødning ved fødsel" }, { icon: "🥛", text: "Calcium: babys knogler mineraliseres hurtigt i 3. trimester" }, { icon: "🌾", text: "Fibre og vand forebygger forstoppelse i 3. trimester" }],
+  29: [{ icon: "🐟", text: "DHA omega-3: babys hjerneudvikling accelererer kraftigt nu" }, { icon: "🥩", text: "Protein til babys vækst på ca. 200 g pr. uge fremover" }, { icon: "💊", text: "Tal med din læge om jern-niveau og eventuelt tilskud" }],
+  30: [{ icon: "🥛", text: "Calcium er kritisk — babys skelet er ved at hærde fuldt" }, { icon: "🌾", text: "Spis lidt og tit — livmoderen trykker på mave og spiserør" }, { icon: "💧", text: "2+ liter vand forebygger Braxton Hicks-sammentrækninger" }],
+  31: [{ icon: "🐟", text: "Omega-3: babys lungeudvikling og hjernefunktion i final fase" }, { icon: "🫘", text: "Plantebaseret jern fra kikærter + C-vitamin øger optaget" }, { icon: "🥛", text: "Calciumbehovet er højest nu — babys knogler kræver meget" }],
+  32: [{ icon: "🥦", text: "Jern fortsat vigtigt — din krop bygger reserver til fødslen" }, { icon: "🌾", text: "Små, hyppige måltider afhjælper halsbrand og tyngdefornemmelse" }, { icon: "🐟", text: "Omega-3 via fisk eller algesupplement de næste uger" }],
+  33: [{ icon: "🥩", text: "Protein og jern til babys vækst og din blodopbygning til fødsel" }, { icon: "🥛", text: "Calcium og D-vitamin er kritisk disse næste 7 uger" }, { icon: "🌾", text: "Fibre forebygger forstoppelse — undgå raffinerede kulhydrater" }],
+  34: [{ icon: "🍊", text: "C-vitamin styrker bindevæv og reducerer blødningsrisiko" }, { icon: "🐟", text: "Fed fisk 2x ugentligt — omega-3 essentiel frem til fødslen" }, { icon: "💧", text: "Rigeligt vand — dehydrering kan udløse for tidlige veer" }],
+  35: [{ icon: "🌾", text: "Let fordøjelig mad: ris, pasta, kartofler — maven er presset" }, { icon: "🥛", text: "Calcium og magnesium mod søvnproblemer og natlige kramper" }, { icon: "🫐", text: "Antioxidanter fra bær styrker dit immunforsvar inden fødsel" }],
+  36: [{ icon: "🌾", text: "Små portioner — baby trykker nu markant på mave og spiserør" }, { icon: "🥩", text: "Protein holder energiniveauet oppe den sidste måned" }, { icon: "💊", text: "Jern bør tjekkes af læge — forebyg anæmi inden fødsel" }],
+  37: [{ icon: "💧", text: "Hold dig godt hydreret — svag dehydrering kan ligne tidlige veer" }, { icon: "🌾", text: "Lette, næringsrige måltider — kroppen forbereder sig" }, { icon: "🥛", text: "Calcium og magnesium understøtter muskelkontraktioner ved fødsel" }],
+  38: [{ icon: "🥣", text: "Let, næringsrig mad — fødslen kan starte hvornår som helst" }, { icon: "💧", text: "Drik rigeligt — dehydrering er hyppig årsag til igangsætning" }, { icon: "🌾", text: "Kulhydrater giver energireserver til selve fødselsarbejdet" }],
+  39: [{ icon: "🥣", text: "Spis regelmæssigt — du ved ikke hvornår fødslen starter" }, { icon: "💧", text: "Vand og elektrolytter holder dig klar til den store dag" }, { icon: "🥩", text: "Protein giver muskler kraft til lange veer-perioder" }],
+  40: [{ icon: "🥣", text: "Spis let og hyppigt — maven er presset til det yderste" }, { icon: "💧", text: "Drik nok vand — vigtigere end nogensinde nu" }, { icon: "🌿", text: "Hold dig næringsrig og let — krop og baby er klar" }],
+  41: [{ icon: "💧", text: "God hydrering mens monitoreringen intensiveres" }, { icon: "🥣", text: "Let, næringsrig mad — kroppen holder sig klar til fødsel" }, { icon: "🌾", text: "Undgå tung, fedtrig mad — fokus på let og nærende" }],
+  42: [{ icon: "💧", text: "Drik rigeligt vand hele dagen" }, { icon: "🥣", text: "Regelmæssige lette måltider holder blodsukkeret stabilt" }, { icon: "🌿", text: "Tal med jordemoder om igangsætning og muligheder" }],
+};
+
+function closestWeek(week: number, record: Record<number, unknown>): number {
+  const keys = Object.keys(record).map(Number).sort((a, b) => a - b);
+  return keys.reduce((prev, curr) => Math.abs(curr - week) < Math.abs(prev - week) ? curr : prev, keys[0]);
+}
+
 // ── Data helpers ───────────────────────────────────────────────────────────────
 function getDevCards(week: number) {
-  if (week < 10) return [
-    { icon: "🧠", title: "Hjernen dannes", desc: "Hjernens grundstruktur udvikles i lynende fart." },
-    { icon: "❤️", title: "Hjertet slår", desc: "Babys hjerte slår allerede ca. 150 gange i minuttet." },
-    { icon: "👁️", title: "Øjne & ører", desc: "De første anlæg til øjne og ører begynder at forme sig." },
-    { icon: "🦴", title: "Knogler dannes", desc: "Skelettet begynder at erstatte bruskvæv med knogle." },
-  ];
-  if (week < 14) return [
-    { icon: "🧠", title: "Nervesystem", desc: "Nerve-forbindelser dannes i stor fart i hjernen." },
-    { icon: "🤲", title: "Fingre & tæer", desc: "Babys fingre og tæer er ved at forme sig tydeligt." },
-    { icon: "😊", title: "Ansigtsudtryk", desc: "Baby kan lave grimasser og røre ved sit ansigt." },
-    { icon: "🫁", title: "Organer", desc: "Lever, nyrer og lunger er alle i fuld gang med at udvikle sig." },
-  ];
-  if (week < 20) return [
-    { icon: "🧠", title: "Hjernen udvikles hurtigt", desc: "Forbindelser i hjernen dannes i stor fart, og din baby reagerer nu på sanseindtryk." },
-    { icon: "👂", title: "Hørelsen styrkes", desc: "Din baby kan høre lyde udefra – inkl. din stemme og hjerteslag." },
-    { icon: "💪", title: "Små bevægelser", desc: "Muskler og led trænes hver dag, selvom du måske ikke mærker det endnu." },
-    { icon: "🫀", title: "Nyrerne arbejder", desc: "Nyrerne producerer urin, som din baby slipper ud i fostervandet." },
-  ];
-  if (week < 28) return [
-    { icon: "👂", title: "Hører tydeligt", desc: "Baby reagerer på musik og din stemme — syng og tal til maven." },
-    { icon: "👁️", title: "Øjnene åbner", desc: "Baby begynder at åbne og lukke øjnene og reagere på lys." },
-    { icon: "💤", title: "Søvnrytme", desc: "Baby har en regelmæssig søvnrytme med aktive og rolige perioder." },
-    { icon: "🫁", title: "Lunger modnes", desc: "Lungerne er ved at producere surfaktant, der er nødvendigt ved fødslen." },
-  ];
-  if (week < 36) return [
-    { icon: "🧠", title: "Hjernen færdiggøres", desc: "De sidste hjerneforbindelser etableres — en intens periode." },
-    { icon: "💪", title: "Tager på i vægt", desc: "Baby er næsten fuldt udviklet og fokuserer nu på at vokse sig stærk." },
-    { icon: "🔄", title: "Vender sig", desc: "Baby drejer sig langsomt med hovedet nedad klar til fødslen." },
-    { icon: "👁️", title: "Ser og drømmer", desc: "Baby kan følge lys og har REM-søvn — drømmer måske allerede." },
-  ];
+  const w = WEEK_BULLETS[week] ?? WEEK_BULLETS[closestWeek(week, WEEK_BULLETS)];
   return [
-    { icon: "✅", title: "Fuldt udviklet", desc: "Alle organer er fuldt udviklede og klar til livet udenfor." },
-    { icon: "⚖️", title: "Tager på", desc: "Baby fokuserer på at tage de sidste gram på." },
-    { icon: "🎯", title: "Klar til verden", desc: "Baby kan komme til verden enhver dag nu." },
-    { icon: "💓", title: "Stærkt hjerte", desc: "Hjertet pumper ca. 500 liter blod om dagen." },
+    { icon: "🌱", title: "Denne uge", desc: w[0] },
+    { icon: "✨", title: "Og desuden", desc: w[1] },
+    { icon: "📏", title: "Størrelse", desc: "Se details" },
+    { icon: "⚖️", title: "Vaegt", desc: "Se details" },
   ];
 }
 
 function getBodyPills(week: number): { icon: string; label: string }[] {
-  if (week < 12) return [
-    { icon: "😴", label: "Træthed" },
-    { icon: "🤢", label: "Kvalme" },
-    { icon: "💧", label: "Øget vandladning" },
+  if (week < 8) return [
+    { icon: "🤢", label: "Morgenkvalme" },
+    { icon: "😴", label: "Ekstrem træthed" },
     { icon: "🌸", label: "Ømme bryster" },
+  ];
+  if (week < 12) return [
+    { icon: "🤢", label: "Kvalme" },
+    { icon: "😴", label: "Træthed" },
+    { icon: "💧", label: "Øget vandladning" },
+  ];
+  if (week < 16) return [
+    { icon: "⚡", label: "Energi vender tilbage" },
+    { icon: "🔵", label: "Begyndende maveform" },
+    { icon: "💧", label: "Øget blodvolumen" },
   ];
   if (week < 20) return [
     { icon: "⚡", label: "Mere energi" },
     { icon: "🔵", label: "Rundere mave" },
     { icon: "😊", label: "Forbedret humør" },
-    { icon: "💧", label: "Ømme bryster" },
   ];
-  if (week < 28) return [
+  if (week < 24) return [
     { icon: "👶", label: "Mærker spark" },
-    { icon: "🔥", label: "Halsbrand" },
-    { icon: "🦶", label: "Hævede ankler" },
+    { icon: "🔥", label: "Begyndende halsbrand" },
     { icon: "🌙", label: "Søvnproblemer" },
   ];
-  if (week < 36) return [
+  if (week < 28) return [
+    { icon: "👶", label: "Tydelige spark" },
+    { icon: "🔥", label: "Halsbrand" },
+    { icon: "🦶", label: "Hævede ankler" },
+  ];
+  if (week < 32) return [
     { icon: "🤰", label: "Tung mave" },
     { icon: "😮‍💨", label: "Åndenød" },
-    { icon: "🚽", label: "Hyppig toilet" },
     { icon: "🌀", label: "Braxton Hicks" },
+  ];
+  if (week < 36) return [
+    { icon: "🤰", label: "Tung og stor mave" },
+    { icon: "🚽", label: "Hyppig toilet" },
+    { icon: "🦶", label: "Hævede fødder" },
   ];
   return [
     { icon: "🌀", label: "Øveveer" },
     { icon: "🪺", label: "Nesting" },
-    { icon: "😴", label: "Træthed" },
     { icon: "⚡", label: "Spænding" },
   ];
 }
 
 function getBodyDesc(week: number): { text: string; tip: string } {
+  if (week < 8) return {
+    text: "De tidlige uger er præget af intense hormonforandringer. Morgenkvalme og træthed er tegn på, at graviditeten udvikler sig normalt — din krop arbejder hårdt.",
+    tip: "Spis noget tørt (kiks, riskakor) inden du står op — det hjælper mod morgenkvalme.",
+  };
   if (week < 12) return {
-    text: "De første uger kan føles overvældende. Kvalme, træthed og ømme bryster er meget almindelige og er tegn på, at graviditeten udvikler sig normalt.",
+    text: "Kvalme, træthed og ømme bryster er meget almindelige og er tegn på, at graviditeten udvikler sig normalt. Hormonerne er på sit højeste nu.",
     tip: "Spis lidt og ofte for at holde blodsukkeret stabilt — det hjælper mod kvalme.",
   };
+  if (week < 16) return {
+    text: "Første trimester er overstået! Energien begynder at vende tilbage. Livmoderen vokser og du kan begynde at mærke en let maveform.",
+    tip: "Begynd at bruge fugtighedscreme på maven — det hjælper på elasticiteten.",
+  };
   if (week < 20) return {
-    text: "Det er normalt at føle sig mere energisk i dette trimester. Din mave vokser, og du kan opleve nye små spark i løbet af ugen.",
-    tip: "Lyt til din krop – hvile og små pauser er stadig vigtige.",
+    text: "2. trimester er for mange den behageligste periode. Energien er tilbage, kvalmen er væk, og maven er synlig men ikke tung endnu.",
+    tip: "Start svømmning, yoga eller gåture — bevægelse er godt for jer begge.",
+  };
+  if (week < 24) return {
+    text: "Du kan nu mærke baby bevæge sig tydeligt. Ryggen kan begynde at give lidt — det er fordi din holdning ændrer sig i takt med maven.",
+    tip: "En graviditetspude kan hjælpe dig sove bedre — placer den mellem knæene.",
   };
   if (week < 28) return {
     text: "Baby sparker og bevæger sig nu regelmæssigt. Halsbrand kan tiltage da livmoderen trykker mod mavesækken.",
     tip: "Spis mindre portioner mere hyppigt og løft benene når du sidder for at modvirke hævede ankler.",
   };
+  if (week < 32) return {
+    text: "Braxton Hicks-sammentrækninger er normale og harmløse øveveer. Baby er nu stor nok til at du kan mærke tydelige spark og bevægelser.",
+    tip: "Sov på venstre side — det giver det bedste blodomløb til placenta og reducerer hævelse.",
+  };
   if (week < 36) return {
-    text: "Du er i tredje trimester. Braxton Hicks-sammentrækninger er normale og harmløse. Baby er nu stor nok til at du kan mærke tydelige spark.",
-    tip: "Sov på venstre side — det giver det bedste blodomløb til placenta.",
+    text: "Baby er næsten fuldt udviklet. Du kan opleve åndedrætsbesvær, hyppig vandladning og bækkentryk — det er alt sammen normalt.",
+    tip: "Pak hospitalstasken og kend vejen til fødegangen — det giver ro i sindet.",
   };
   return {
-    text: "Du er næsten ved termin. Baby kan komme når som helst de næste uger. Nesting-instinktet er normalt.",
-    tip: "Hvil når du kan — du får brug for energien snart.",
+    text: "Du er næsten ved termin. Baby kan komme når som helst de næste uger. Nesting-instinktet — trangen til at rydde og gøre klar — er kroppens naturlige forberedelse.",
+    tip: "Hvil når du kan — du får brug for energien snart. Stol på din krop.",
   };
 }
 
 function getSymptoms(week: number): string[] {
-  if (week < 12) return ["Kvalme og opkast", "Ekstrem træthed", "Ømme bryster", "Hyppig vandladning"];
+  if (week < 8)  return ["Morgenkvalme", "Ekstrem træthed", "Ømme bryster", "Øget lugtesans"];
+  if (week < 12) return ["Kvalme og opkast", "Træthed", "Ømme bryster", "Hyppig vandladning"];
+  if (week < 16) return ["Energi vender tilbage", "Rundere mave", "Rygsmerter", "Svimmelhed"];
   if (week < 20) return ["Oppustethed", "Rygsmerter", "Hyppig vandladning", "Svært ved at sove"];
+  if (week < 24) return ["Spark mærkes", "Halsbrand", "Rygsmerter", "Hævede ankler"];
   if (week < 28) return ["Halsbrand", "Hævede ankler", "Ryg- og bækkensmerter", "Søvnproblemer"];
-  if (week < 36) return ["Åndenød", "Hyppig vandladning", "Braxton Hicks", "Træthed"];
+  if (week < 32) return ["Åndenød", "Hyppig vandladning", "Braxton Hicks", "Træthed"];
+  if (week < 36) return ["Tunge ben og fødder", "Hyppig vandladning", "Bækkentryk", "Åndenød"];
   return ["Stærke øveveer", "Bækkentryk", "Nesting-trang", "Søvnproblemer"];
 }
 
 function getNutritionTips(week: number): { icon: string; text: string }[] {
-  if (week < 14) return [
-    { icon: "🥦", text: "Spis folsyrerigt: grønne blade, linser, nødder" },
-    { icon: "🥛", text: "Kalk fra mælkeprodukter og brocoli" },
-    { icon: "💧", text: "Drik rigeligt med vand — 1,5–2 liter dagligt" },
-  ];
-  if (week < 28) return [
-    { icon: "🥩", text: "Spis jernrige fødevarer (fx kød, linser, spinat)" },
-    { icon: "🌾", text: "Husk fuldkorn og fibre" },
-    { icon: "💧", text: "Drik rigeligt med vand" },
-  ];
-  return [
-    { icon: "🐟", text: "Omega-3 fra fisk eller tilskud støtter babys hjerne" },
-    { icon: "🥛", text: "Kalk og D-vitamin er ekstra vigtigt nu" },
-    { icon: "🥗", text: "Små måltider hyppigt hjælper mod halsbrand" },
-  ];
+  const w = WEEK_NUTRITION_DATA[week] ?? WEEK_NUTRITION_DATA[closestWeek(week, WEEK_NUTRITION_DATA)];
+  return w;
 }
 
 function getAffirmation(week: number): string {
+  if (week < 8)  return "Din krop klarer et af de sværeste jobs i naturen. Bliv ved. 🌿";
   if (week < 12) return "Det er helt normalt at have blandede følelser. Din krop gør et fantastisk arbejde. 🌿";
-  if (week < 20) return "Det er helt normalt at føle både glæde og bekymring. Du gør det godt. 🌿";
-  if (week < 28) return "Halvvejs! I gør det fantastisk. Jeres barn er allerede den heldigste baby i verden. 💚";
-  if (week < 36) return "I er stærkere end I tror. Hver dag bringer jer tættere på det store møde. 🌿";
+  if (week < 16) return "1. trimester klaret! Du er stærkere end du tror. 🌿";
+  if (week < 20) return "Det er normalt at føle både glæde og bekymring. Du gør det godt. 🌿";
+  if (week < 24) return "Halvvejs! I gør det fantastisk. Jeres barn er allerede den heldigste baby i verden. 💚";
+  if (week < 28) return "Baby kender allerede jeres stemmer. I er allerede en familie. 💚";
+  if (week < 32) return "3. trimester! Hvert skridt bringer jer tættere på det store møde. 🌿";
+  if (week < 36) return "I er stærkere end I tror. Hvert valg I tager nu er en gave til jeres barn. 🌿";
   return "I er klar — kroppen og barnet er klar. Stol på jer selv. 🌿";
 }
 
@@ -310,141 +396,125 @@ function getAnimConfig(week: number) {
 }
 
 function BabyAnimationModal({ week, size, onClose }: { week: number; size: ReturnType<typeof getBabySize>; onClose: () => void }) {
-  const [factIdx, setFactIdx] = useState(0);
+  const bullets = WEEK_BULLETS[week] ?? WEEK_BULLETS[closestWeek(week, WEEK_BULLETS)];
   const config = getAnimConfig(week);
 
-  useEffect(() => {
-    const id = setInterval(() => setFactIdx(i => (i + 1) % config.facts.length), 2800);
-    return () => clearInterval(id);
-  }, [config.facts.length]);
-
-  // Scale emoji size by week
-  const emojiSize = week < 10 ? "4rem" : week < 20 ? "5.5rem" : week < 28 ? "7rem" : week < 36 ? "8.5rem" : "10rem";
+  const openVideo = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const q = encodeURIComponent(`fetal development week ${week} 3D animation in womb`);
+    window.open(`https://www.youtube.com/results?search_query=${q}`, "_blank");
+  };
 
   return (
     <div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center"
+      className="fixed inset-0 z-50 flex flex-col"
       style={{ background: config.bg }}
-      onClick={onClose}
     >
       <style>{`
-        @keyframes melo-float {
-          0%, 100% { transform: translateY(0px) rotate(-2deg); }
-          50% { transform: translateY(-18px) rotate(2deg); }
-        }
-        @keyframes melo-ring-pulse {
-          0% { transform: scale(1); opacity: 0.5; }
-          100% { transform: scale(2.2); opacity: 0; }
+        @keyframes melo-pulse-ring {
+          0% { transform: scale(0.95); opacity: 0.6; }
+          50% { transform: scale(1.05); opacity: 0.3; }
+          100% { transform: scale(0.95); opacity: 0.6; }
         }
         @keyframes melo-heartbeat {
           0%, 100% { transform: scale(1); }
-          14% { transform: scale(1.12); }
+          14% { transform: scale(1.08); }
           28% { transform: scale(1); }
-          42% { transform: scale(1.06); }
+          42% { transform: scale(1.04); }
           56% { transform: scale(1); }
-        }
-        @keyframes melo-fact-in {
-          from { opacity: 0; transform: translateY(8px); }
-          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
 
-      {/* Close */}
+      {/* Close button */}
       <button
         onClick={onClose}
-        className="absolute top-12 right-6 w-9 h-9 rounded-full flex items-center justify-center"
-        style={{ background: "rgba(255,255,255,0.12)" }}
+        className="absolute top-12 right-5 w-10 h-10 rounded-full flex items-center justify-center z-10"
+        style={{ background: "rgba(255,255,255,0.1)", backdropFilter: "blur(8px)" }}
       >
-        <X className="w-4 h-4 text-white" />
+        <X className="w-5 h-5 text-white" />
       </button>
 
-      {/* Label */}
-      <p className="text-[0.7rem] tracking-[0.18em] uppercase font-medium mb-10" style={{ color: "rgba(255,255,255,0.45)" }}>
-        {config.label}
-      </p>
-
-      {/* Rings + baby */}
-      <div className="relative flex items-center justify-center" style={{ width: 240, height: 240 }}>
-        {/* Outer pulse rings */}
-        {[0, 1].map(i => (
-          <div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width: 160, height: 160,
-              border: `1.5px solid ${config.ringColor}`,
-              animation: `melo-ring-pulse 2.4s ease-out ${i * 1.2}s infinite`,
-              top: "50%", left: "50%",
-              transform: "translate(-50%, -50%)",
-            }}
-          />
-        ))}
-        {/* Static ring */}
-        <div className="absolute rounded-full" style={{
-          width: 160, height: 160,
-          border: `1px solid ${config.ringColor}`,
-          opacity: 0.25,
-          top: "50%", left: "50%",
-          transform: "translate(-50%, -50%)",
-        }} />
-        {/* Heartbeat circle */}
-        <div
-          className="absolute rounded-full"
-          style={{
-            width: 140, height: 140,
-            background: "rgba(255,255,255,0.04)",
-            animation: "melo-heartbeat 1.5s ease-in-out infinite",
-            top: "50%", left: "50%",
-            transform: "translate(-50%, -50%)",
-          }}
-        />
-        {/* Floating baby emoji */}
-        <div style={{ animation: "melo-float 4s ease-in-out infinite", fontSize: emojiSize, lineHeight: 1 }}>
-          {size.emoji}
-        </div>
-      </div>
-
-      {/* Stats */}
-      <div className="flex items-center gap-6 mt-10 mb-8">
-        <div className="text-center">
-          <p className="text-[0.6rem] tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.4)" }}>Længde</p>
-          <p className="text-white font-semibold text-[1rem] mt-0.5">ca. {size.lengthCm} cm</p>
-        </div>
-        <div className="w-px h-8" style={{ background: "rgba(255,255,255,0.15)" }} />
-        <div className="text-center">
-          <p className="text-[0.6rem] tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.4)" }}>Vægt</p>
-          <p className="text-white font-semibold text-[1rem] mt-0.5">ca. {size.weightG} g</p>
-        </div>
-        <div className="w-px h-8" style={{ background: "rgba(255,255,255,0.15)" }} />
-        <div className="text-center">
-          <p className="text-[0.6rem] tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.4)" }}>Størrelse</p>
-          <p className="text-white font-semibold text-[1rem] mt-0.5">{size.label}</p>
-        </div>
-      </div>
-
-      {/* Cycling fact */}
-      <div className="px-8 text-center" style={{ minHeight: 48 }}>
-        <p
-          key={factIdx}
-          className="text-white/80 text-[0.9rem] leading-relaxed font-serif"
-          style={{ animation: "melo-fact-in 0.5s ease forwards" }}
-        >
-          {config.facts[factIdx]}
+      {/* Top — week + trimester */}
+      <div className="pt-14 pb-6 px-6 text-center">
+        <p className="text-[0.62rem] tracking-[0.2em] uppercase mb-1" style={{ color: "rgba(255,255,255,0.4)" }}>
+          {config.label}
         </p>
-        <div className="flex justify-center gap-1.5 mt-4">
-          {config.facts.map((_, i) => (
-            <div key={i} className="rounded-full transition-all" style={{
-              width: i === factIdx ? 16 : 5, height: 5,
-              background: i === factIdx ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.25)",
-            }} />
+        <p className="font-serif text-[3rem] font-normal leading-none text-white">Uge {week}</p>
+      </div>
+
+      {/* Centre — visual placeholder with heartbeat pulse */}
+      <div className="flex-1 flex flex-col items-center justify-center px-6 gap-8">
+        {/* Pulse rings around stats */}
+        <div className="relative flex items-center justify-center" style={{ width: 200, height: 200 }}>
+          {[0, 1, 2].map(i => (
+            <div
+              key={i}
+              className="absolute rounded-full"
+              style={{
+                width: 160 + i * 24, height: 160 + i * 24,
+                border: `1px solid ${config.ringColor}`,
+                animation: `melo-pulse-ring 3s ease-in-out ${i * 0.8}s infinite`,
+                top: "50%", left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+          ))}
+          {/* Central stats card */}
+          <div
+            className="w-36 h-36 rounded-full flex flex-col items-center justify-center gap-1"
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              backdropFilter: "blur(12px)",
+              border: `1.5px solid ${config.ringColor}`,
+              animation: "melo-heartbeat 1.8s ease-in-out infinite",
+            }}
+          >
+            <p className="text-[0.52rem] tracking-[0.15em] uppercase" style={{ color: "rgba(255,255,255,0.45)" }}>Foster</p>
+            <p className="text-white font-semibold text-[1.1rem]">{size.lengthCm} cm</p>
+            <div className="w-8 h-px my-0.5" style={{ background: "rgba(255,255,255,0.2)" }} />
+            <p className="text-white font-semibold text-[1.1rem]">{size.weightG} g</p>
+            <p className="text-[0.52rem] tracking-[0.12em] uppercase mt-0.5" style={{ color: "rgba(255,255,255,0.4)" }}>{size.label}</p>
+          </div>
+        </div>
+
+        {/* Development facts */}
+        <div className="w-full space-y-3 px-2">
+          {bullets.map((bullet, i) => (
+            <div key={i} className="flex items-start gap-3 rounded-2xl px-4 py-3"
+              style={{ background: "rgba(255,255,255,0.07)", backdropFilter: "blur(8px)" }}>
+              <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                style={{ background: "rgba(255,255,255,0.15)" }}>
+                <Check className="w-3 h-3 text-white" strokeWidth={2.5} />
+              </div>
+              <p className="text-[0.82rem] text-white/85 leading-snug">{bullet}</p>
+            </div>
           ))}
         </div>
       </div>
 
-      {/* Tap to close hint */}
-      <p className="absolute bottom-10 text-[0.65rem] tracking-widest uppercase" style={{ color: "rgba(255,255,255,0.25)" }}>
-        Tryk hvor som helst for at lukke
-      </p>
+      {/* Bottom — YouTube video CTA */}
+      <div className="px-6 pb-12 pt-4 space-y-3">
+        <button
+          onClick={openVideo}
+          className="w-full flex items-center justify-center gap-3 py-4 rounded-2xl font-semibold text-[0.95rem] transition-all active:scale-[0.98]"
+          style={{ background: "hsl(var(--clay))", color: "white" }}
+        >
+          <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+            <span className="text-white text-[0.7rem] ml-0.5">▶</span>
+          </div>
+          Se video af barnet i uge {week}
+        </button>
+        <p className="text-center text-[0.62rem]" style={{ color: "rgba(255,255,255,0.3)" }}>
+          Aabner YouTube med 3D-animationer af foster i uge {week}
+        </p>
+        <button
+          onClick={onClose}
+          className="w-full py-2 text-[0.72rem]"
+          style={{ color: "rgba(255,255,255,0.35)" }}
+        >
+          Luk
+        </button>
+      </div>
     </div>
   );
 }
@@ -625,7 +695,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
         {/* Bottom — animation CTA */}
         <div className="flex justify-between items-center px-4 pb-4 pt-1">
           <p className="text-[0.65rem] text-muted-foreground leading-snug max-w-[55%]">
-            {devCards[2]?.title} · {devCards[3]?.title}
+            {size.label} · {size.lengthCm} cm · {size.weightG} g
           </p>
           <button
             onClick={() => setShowAnimation(true)}
