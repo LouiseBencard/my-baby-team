@@ -667,6 +667,22 @@ export default function SovnPage() {
   const [manualStart, setManualStart] = useState("");
   const [manualEnd, setManualEnd] = useState("");
 
+  // Manual "baby is awake now" — stored per day so it resets at midnight
+  const todayStr = new Date().toISOString().slice(0, 10);
+  const WAKE_KEY = `melo-manual-wake-${todayStr}`;
+  const [manualWakeTime, setManualWakeTime] = useState<Date | null>(() => {
+    try {
+      const v = localStorage.getItem(WAKE_KEY);
+      return v ? new Date(v) : null;
+    } catch { return null; }
+  });
+
+  const handleBabyAwake = () => {
+    const now = new Date();
+    setManualWakeTime(now);
+    localStorage.setItem(WAKE_KEY, now.toISOString());
+  };
+
   // ── Pregnant interface ──
   if (profile.phase === "pregnant") {
     return <PregnantSleepPage week={currentWeek} />;
@@ -688,11 +704,12 @@ export default function SovnPage() {
   const totalMins = Math.round(todaySleepMinutes % 60);
   const progressPct = Math.min((todaySleepMinutes / (rec.totalHours * 60)) * 100, 100);
 
-  // Last time baby woke up (end of most recent sleep)
+  // Last time baby woke up: prefer logged end-of-sleep, fall back to manual tap
   const lastWakeTime = useMemo(() => {
     const lastEnded = todayLogs.find(l => l.endTime && !activeSleep);
-    return lastEnded ? new Date(lastEnded.endTime!) : null;
-  }, [todayLogs, activeSleep]);
+    if (lastEnded) return new Date(lastEnded.endTime!);
+    return manualWakeTime;
+  }, [todayLogs, activeSleep, manualWakeTime]);
 
   // Last nap end (for bedtime calc)
   const lastNapEnd = useMemo(() => {
@@ -710,7 +727,11 @@ export default function SovnPage() {
     });
   }, [sleepLogs, dateFnsLocale]);
 
-  const handleQuickStart = () => addSleep(sleepType, new Date().toISOString());
+  const handleQuickStart = () => {
+    setManualWakeTime(null);
+    localStorage.removeItem(WAKE_KEY);
+    addSleep(sleepType, new Date().toISOString());
+  };
 
   const handleManualAdd = () => {
     if (!manualStart) return;
@@ -764,7 +785,39 @@ export default function SovnPage() {
 
       {/* Sweetspot timer — only when not sleeping */}
       {!activeSleep && lastWakeTime && (
-        <WakeWindowSweetspot lastWakeTime={lastWakeTime} wakeWindow={rec.wakeWindow} />
+        <div className="space-y-2">
+          <WakeWindowSweetspot lastWakeTime={lastWakeTime} wakeWindow={rec.wakeWindow} />
+          <button
+            onClick={handleBabyAwake}
+            className="w-full text-[0.72rem] text-muted-foreground py-2 rounded-xl border border-dashed transition-all active:scale-[0.98]"
+            style={{ borderColor: "hsl(var(--stone-light))" }}
+          >
+            Baby er vågnet nu — nulstil timer
+          </button>
+        </div>
+      )}
+
+      {/* "Baby er vågnet nu" — shown when no sleep has been logged today */}
+      {!activeSleep && !lastWakeTime && (
+        <button
+          onClick={handleBabyAwake}
+          className="w-full rounded-2xl px-5 py-4 flex items-center gap-4 transition-all active:scale-[0.98] section-fade-in"
+          style={{
+            background: "hsl(var(--warm-white))",
+            border: "1.5px dashed hsl(var(--stone-light))",
+          }}
+        >
+          <div
+            className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+            style={{ background: "hsl(var(--sage-light))" }}
+          >
+            <Sun className="w-5 h-5" style={{ color: "hsl(var(--moss))" }} />
+          </div>
+          <div className="flex-1 text-left">
+            <p className="text-[0.95rem] font-semibold">Baby er vågnet nu</p>
+            <p className="text-[0.72rem] text-muted-foreground">Start vaagevindue-timer uden at logge lur</p>
+          </div>
+        </button>
       )}
 
       {/* Today's progress */}
