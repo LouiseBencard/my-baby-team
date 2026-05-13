@@ -48,12 +48,12 @@ const WEEK_BULLETS: Record<number, [string, string]> = {
   34: ["Baby er fuldt dannet — de kommende uger handler om at tage på", "Det hvide fedtlag giver babys hud den kendte runde, bløde form"],
   35: ["Baby vejer ca. 2,4 kg og er ca. 46 cm lang", "Nyrerne er 100% funktionelle"],
   36: ["Baby er officielt 'early term' og parat til verden", "Positionen er næsten altid hoved nedad fra nu af"],
-  37: ["Baby er FULDGAAREN — lunger og hjerne er fuldt modne", "Baby kan klare sig uden medicinsk hjælp fra nu af"],
+  37: ["Baby er FULDGÅREN — lunger og hjerne er fuldt modne", "Baby kan klare sig uden medicinsk hjælp fra nu af"],
   38: ["Baby tager de allerseneste gram på", "Immunstoffer fra dig overføres via navlestrengen"],
-  39: ["Baby er 100% klar — venter bare på det rette signal", "Moderkagen aeldes — kroppen goer sig klar til fodslen"],
-  40: ["TERMIN! Baby vejer typisk 3,2–3,6 kg og er ca. 50 cm", "Fodsel kan ske enhver dag — stol paa din krop"],
-  41: ["Babys hud kan begynde at skalle lidt — fostervandet aftager", "Overvaagning intensiveres — I er i gode haender"],
-  42: ["Igangsaetning overvejes med din laege eller jordemoder", "Baby er klar og rask — I er staerkere end I tror"],
+  39: ["Baby er 100% klar — venter bare på det rette signal", "Moderkagen ældes — kroppen gør sig klar til fødslen"],
+  40: ["TERMIN! Baby vejer typisk 3,2–3,6 kg og er ca. 50 cm", "Fødsel kan ske enhver dag — stol på din krop"],
+  41: ["Babys hud kan begynde at skalle lidt — fostervandet aftager", "Overvågning intensiveres — I er i gode hænder"],
+  42: ["Igangsætning overvejes med din læge eller jordemoder", "Baby er klar og rask — I er stærkere end I tror"],
 };
 
 // ── Week-specific nutrition (3 tips per week) ─────────────────────────────────
@@ -110,7 +110,7 @@ function getDevCards(week: number) {
     { icon: "🌱", title: "Denne uge", desc: w[0] },
     { icon: "✨", title: "Og desuden", desc: w[1] },
     { icon: "📏", title: "Størrelse", desc: "Se details" },
-    { icon: "⚖️", title: "Vaegt", desc: "Se details" },
+    { icon: "⚖️", title: "Vægt", desc: "Se details" },
   ];
 }
 
@@ -505,7 +505,7 @@ function BabyAnimationModal({ week, size, onClose }: { week: number; size: Retur
           Se video af barnet i uge {week}
         </button>
         <p className="text-center text-[0.62rem]" style={{ color: "rgba(255,255,255,0.3)" }}>
-          Aabner YouTube med 3D-animationer af foster i uge {week}
+          Åbner YouTube med 3D-animationer af foster i uge {week}
         </p>
         <button
           onClick={onClose}
@@ -662,7 +662,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
                 style={{ background: "rgba(255,255,255,0.75)" }}>
                 <span className="text-[1.1rem]">{size.emoji}</span>
                 <div>
-                  <p className="text-[0.5rem] tracking-[0.1em] uppercase text-muted-foreground">Laengde</p>
+                  <p className="text-[0.5rem] tracking-[0.1em] uppercase text-muted-foreground">Længde</p>
                   <p className="text-[0.8rem] font-semibold" style={{ color: "hsl(var(--bark))" }}>ca. {size.lengthCm} cm</p>
                 </div>
               </div>
@@ -670,24 +670,41 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
                 style={{ background: "rgba(255,255,255,0.75)" }}>
                 <span className="text-[1.1rem]">⚖️</span>
                 <div>
-                  <p className="text-[0.5rem] tracking-[0.1em] uppercase text-muted-foreground">Vaegt</p>
+                  <p className="text-[0.5rem] tracking-[0.1em] uppercase text-muted-foreground">Vægt</p>
                   <p className="text-[0.8rem] font-semibold" style={{ color: "hsl(var(--bark))" }}>ca. {size.weightG} g</p>
                 </div>
               </div>
             </div>
           </div>
 
-          {/* Right — large emoji in circle */}
-          <div className="w-[42%] flex items-center justify-center py-5 pr-4 pl-1">
+          {/* Right — fetal silhouette */}
+          <div className="w-[44%] flex items-center justify-center py-4 pr-3 pl-1">
             <div
               className="w-full aspect-square rounded-full flex items-center justify-center"
               style={{
-                background: "radial-gradient(circle at 40% 35%, rgba(255,255,255,0.55), rgba(255,255,255,0.12))",
-                border: "1.5px solid rgba(255,255,255,0.45)",
-                boxShadow: "inset 0 2px 12px rgba(255,255,255,0.3)",
+                background: "radial-gradient(circle at 38% 32%, rgba(255,255,255,0.6), rgba(255,255,255,0.15) 70%)",
+                border: "1.5px solid rgba(255,255,255,0.5)",
+                boxShadow: "inset 0 3px 16px rgba(255,255,255,0.35), 0 4px 20px rgba(38,66,54,0.12)",
               }}
             >
-              <span style={{ fontSize: "4.5rem", lineHeight: 1 }}>{size.emoji}</span>
+              <svg viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ width: "72%", height: "72%" }}>
+                {/* Head */}
+                <ellipse cx="61" cy="29" rx="19" ry="21" fill="rgba(38,66,54,0.28)" />
+                {/* Face highlight */}
+                <ellipse cx="56" cy="24" rx="7" ry="8" fill="rgba(255,255,255,0.18)" />
+                {/* Body */}
+                <ellipse cx="47" cy="72" rx="23" ry="30" fill="rgba(38,66,54,0.22)" transform="rotate(-10 47 72)" />
+                {/* Upper arm near face */}
+                <path d="M 57 50 Q 72 58 73 73" stroke="rgba(38,66,54,0.25)" strokeWidth="9" strokeLinecap="round" fill="none" />
+                {/* Hand/fist near face */}
+                <circle cx="73" cy="75" r="6" fill="rgba(38,66,54,0.22)" />
+                {/* Legs tucked up */}
+                <path d="M 27 84 Q 17 100 26 112 Q 37 120 53 116 Q 67 112 74 100" stroke="rgba(38,66,54,0.26)" strokeWidth="11" strokeLinecap="round" fill="none" />
+                {/* Foot/heel hint */}
+                <ellipse cx="74" cy="100" rx="7" ry="5" fill="rgba(38,66,54,0.2)" transform="rotate(-20 74 100)" />
+                {/* Umbilical cord */}
+                <path d="M 34 80 Q 20 84 17 75 Q 14 65 23 62" stroke="rgba(38,66,54,0.13)" strokeWidth="3" strokeLinecap="round" fill="none" />
+              </svg>
             </div>
           </div>
         </div>
@@ -735,7 +752,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
           <Link to="/chat"
             className="flex items-center gap-0.5 text-[0.68rem] font-medium mt-3"
             style={{ color: "hsl(var(--moss))" }}>
-            {isFar ? "Laes om din rolle" : "Laes mere om din krop"} <ChevronRight className="w-3 h-3" />
+            {isFar ? "Læs om din rolle" : "Læs mere om din krop"} <ChevronRight className="w-3 h-3" />
           </Link>
         </div>
 
@@ -744,7 +761,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
           style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
           <div className="flex items-start justify-between mb-3">
             <p className="text-[0.72rem] font-semibold leading-snug pr-1" style={{ color: "hsl(var(--bark))" }}>
-              {isFar ? "Du kan hjaelpe med" : "Kost & naering"}
+              {isFar ? "Du kan hjælpe med" : "Kost & næring"}
             </p>
             <span className="text-base flex-shrink-0">🍎</span>
           </div>
@@ -784,7 +801,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
             {selectedWeek <= 12
               ? "Folsyre og D-vitamin er vigtigst nu. Start fra dag et."
               : selectedWeek <= 27
-              ? "Fortsaet med folsyre og D-vitamin. Tal med laege om jern."
+              ? "Fortsæt med folsyre og D-vitamin. Tal med læge om jern."
               : "Jern, kalk og D-vitamin er ekstra vigtigt i 3. trimester."}
           </p>
           <div className="mt-3 flex items-center gap-1.5">
@@ -851,7 +868,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
           </div>
           <div className="flex-1">
             <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>Vores foedselsplan</p>
-            <p className="text-[0.7rem] text-muted-foreground">Dokumenter jeres onsker til fodslen</p>
+            <p className="text-[0.7rem] text-muted-foreground">Dokumentér jeres ønsker til fødslen</p>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
         </Link>
@@ -887,7 +904,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
           <span className="text-[0.9rem] flex-shrink-0">ℹ️</span>
           <p className="text-[0.62rem] text-muted-foreground leading-relaxed">
             Informationen er generel og baseret på sundhedsfaglige kilder.
-            Kontakt din laege eller jordemoder, hvis du er i tvivl.
+            Kontakt din læge eller jordemoder, hvis du er i tvivl.
           </p>
         </div>
         <button className="flex items-center gap-1 text-[0.65rem] font-medium flex-shrink-0 ml-3" style={{ color: "hsl(var(--moss))" }}>
