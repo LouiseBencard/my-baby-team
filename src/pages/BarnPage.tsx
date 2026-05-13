@@ -490,24 +490,28 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
   };
 
   return (
-    <div className="space-y-5 pb-6">
+    <div className="space-y-4 pb-6">
 
       {showAnimation && (
         <BabyAnimationModal week={selectedWeek} size={size} onClose={() => setShowAnimation(false)} />
       )}
 
       {/* ── Header ─────────────────────────────────────────────────────── */}
-      <div className="flex items-center justify-between section-fade-in">
-        <div className="w-8" />
+      <div className="flex items-center justify-between section-fade-in pt-1">
+        <div className="w-9" />
         <div className="text-center">
-          <p className="text-[1rem] font-semibold">Uge {selectedWeek}</p>
-          <p className="text-[0.65rem] text-muted-foreground">{getTrimesterLabel(selectedWeek)}</p>
+          <h1 className="font-serif text-[2rem] font-normal leading-none" style={{ color: "hsl(var(--moss))" }}>
+            Uge {selectedWeek}
+          </h1>
+          <p className="text-[0.65rem] text-muted-foreground mt-0.5">{getTrimesterLabel(selectedWeek)}</p>
         </div>
-        <div className="flex items-center gap-2">
-          <button className="w-8 h-8 flex items-center justify-center rounded-full transition-colors active:bg-[hsl(var(--stone-lighter))]">
+        <div className="flex items-center gap-1">
+          <button className="w-9 h-9 flex items-center justify-center rounded-full border transition-colors active:bg-[hsl(var(--stone-lighter))]"
+            style={{ borderColor: "hsl(var(--stone-light))" }}>
             <Bookmark className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
           </button>
-          <button onClick={handleShare} className="w-8 h-8 flex items-center justify-center rounded-full transition-colors active:bg-[hsl(var(--stone-lighter))]">
+          <button onClick={handleShare} className="w-9 h-9 flex items-center justify-center rounded-full border transition-colors active:bg-[hsl(var(--stone-lighter))]"
+            style={{ borderColor: "hsl(var(--stone-light))" }}>
             <Share2 className="w-4 h-4 text-muted-foreground" strokeWidth={1.5} />
           </button>
         </div>
@@ -516,7 +520,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
       {/* ── Week selector ───────────────────────────────────────────────── */}
       <div
         ref={weekScrollRef}
-        className="-mx-4 px-4 flex gap-3 overflow-x-auto scrollbar-none pb-2 section-fade-in"
+        className="-mx-4 px-4 flex gap-2.5 overflow-x-auto scrollbar-none pb-1 section-fade-in"
         style={{ animationDelay: "30ms" }}
       >
         {Array.from({ length: 38 }, (_, i) => i + 5).map(w => {
@@ -527,15 +531,16 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
               key={w}
               data-week={w}
               onClick={() => setSelectedWeek(w)}
-              className="flex flex-col items-center gap-1 flex-shrink-0 transition-all active:scale-90"
+              className="flex flex-col items-center gap-0.5 flex-shrink-0 transition-all active:scale-90"
             >
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center text-[0.82rem] font-medium transition-all"
+                className="w-11 h-11 rounded-full flex items-center justify-center text-[0.85rem] font-medium transition-all"
                 style={{
-                  background: isActive ? "hsl(var(--moss))" : "transparent",
+                  background: isActive ? "hsl(var(--moss))" : "hsl(var(--warm-white))",
                   border: isActive ? "none" : "1.5px solid hsl(var(--stone-light))",
                   color: isActive ? "white" : "hsl(var(--foreground))",
-                  fontWeight: isActive ? 600 : 400,
+                  fontWeight: isActive ? 700 : 400,
+                  boxShadow: isActive ? "0 2px 8px hsl(var(--moss) / 0.25)" : "none",
                 }}
               >
                 {w}
@@ -543,201 +548,219 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
               {isCurrent && (
                 <Heart className="w-2.5 h-2.5" style={{ color: "hsl(var(--moss))" }} fill="hsl(var(--moss))" />
               )}
+              {!isCurrent && <div className="h-2.5" />}
             </button>
           );
         })}
       </div>
 
-      {/* ── Hero card ───────────────────────────────────────────────────── */}
-      <div className="relative rounded-3xl overflow-hidden section-fade-in" style={{ background: "hsl(var(--sage-light))", animationDelay: "60ms" }}>
-        <div className="flex">
-          {/* Left content */}
-          <div className="flex-1 p-5 pr-2">
-            <p className="text-[0.65rem] tracking-[0.1em] uppercase text-muted-foreground mb-2 flex items-center gap-1">
-              Barnets udvikling <span>🌱</span>
-            </p>
-            <h2 className="font-serif text-[1.25rem] font-medium leading-tight mb-2" style={{ color: "hsl(var(--moss))" }}>
-              Din baby er på størrelse med {size.label === "?" ? "et lille mirakel" : `en ${size.label.toLowerCase()}`} {size.emoji}
-            </h2>
-            <p className="text-[0.75rem] text-muted-foreground leading-relaxed mb-4">
-              {selectedWeek < 14
-                ? "Din baby vokser hurtigt og alle vitale organer er i fuld udvikling."
-                : selectedWeek < 28
-                ? "Din baby vokser støt og udvikler både sanser, muskler og bevægelser. De fleste mødre kan begynde at mærke liv nu."
-                : "Baby er næsten klar — alle organer er udviklet og baby tager de sidste gram på."}
-            </p>
+      {/* ── Hero card — Barnets udvikling ────────────────────────────────── */}
+      <div
+        className="rounded-3xl overflow-hidden section-fade-in"
+        style={{ background: "hsl(var(--sage-light))", animationDelay: "60ms" }}
+      >
+        {/* Top content row */}
+        <div className="flex min-h-[200px]">
+          {/* Left text */}
+          <div className="flex-1 p-5 pb-3 flex flex-col justify-between">
+            <div>
+              <p className="text-[0.58rem] tracking-[0.15em] uppercase font-medium mb-2 flex items-center gap-1.5"
+                style={{ color: "hsl(var(--moss))" }}>
+                🌱 Barnets udvikling
+              </p>
+              <h2 className="font-serif text-[1.3rem] font-normal leading-snug mb-3"
+                style={{ color: "hsl(var(--bark))" }}>
+                Din baby er på størrelse med {size.label === "?" ? "et lille mirakel" : `en ${size.label.toLowerCase()}`} {size.emoji}
+              </h2>
+              {/* 2 bullet points from devCards */}
+              <ul className="space-y-2 mb-4">
+                {devCards.slice(0, 2).map(card => (
+                  <li key={card.title} className="flex items-start gap-2 text-[0.75rem]"
+                    style={{ color: "hsl(var(--bark))" }}>
+                    <span className="w-4.5 h-4.5 rounded-full flex-shrink-0 flex items-center justify-center mt-0.5"
+                      style={{ background: "hsl(var(--moss) / 0.15)" }}>
+                      <Check className="w-2.5 h-2.5" style={{ color: "hsl(var(--moss))" }} strokeWidth={2.5} />
+                    </span>
+                    <span className="leading-snug">{card.desc}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            {/* Length + weight pills */}
             <div className="flex gap-2">
-              <div className="flex items-center gap-1.5 rounded-xl px-3 py-2" style={{ background: "rgba(255,255,255,0.6)" }}>
-                <span className="text-[0.75rem]">📏</span>
+              <div className="flex items-center gap-2 rounded-xl px-3 py-2.5"
+                style={{ background: "rgba(255,255,255,0.75)" }}>
+                <span className="text-[1.1rem]">{size.emoji}</span>
                 <div>
-                  <p className="text-[0.55rem] text-muted-foreground">Længde</p>
-                  <p className="text-[0.78rem] font-semibold">ca. {size.lengthCm} cm</p>
+                  <p className="text-[0.5rem] tracking-[0.1em] uppercase text-muted-foreground">Laengde</p>
+                  <p className="text-[0.8rem] font-semibold" style={{ color: "hsl(var(--bark))" }}>ca. {size.lengthCm} cm</p>
                 </div>
               </div>
-              <div className="flex items-center gap-1.5 rounded-xl px-3 py-2" style={{ background: "rgba(255,255,255,0.6)" }}>
-                <span className="text-[0.75rem]">⚖️</span>
+              <div className="flex items-center gap-2 rounded-xl px-3 py-2.5"
+                style={{ background: "rgba(255,255,255,0.75)" }}>
+                <span className="text-[1.1rem]">⚖️</span>
                 <div>
-                  <p className="text-[0.55rem] text-muted-foreground">Vægt</p>
-                  <p className="text-[0.78rem] font-semibold">ca. {size.weightG} g</p>
+                  <p className="text-[0.5rem] tracking-[0.1em] uppercase text-muted-foreground">Vaegt</p>
+                  <p className="text-[0.8rem] font-semibold" style={{ color: "hsl(var(--bark))" }}>ca. {size.weightG} g</p>
                 </div>
               </div>
             </div>
           </div>
-          {/* Right emoji */}
-          <div className="w-32 flex items-center justify-center py-4 pr-3">
-            <div className="w-24 h-24 rounded-full flex items-center justify-center"
-              style={{ background: "rgba(255,255,255,0.4)" }}>
-              <span className="text-5xl">{size.emoji}</span>
+
+          {/* Right — large emoji in circle */}
+          <div className="w-[42%] flex items-center justify-center py-5 pr-4 pl-1">
+            <div
+              className="w-full aspect-square rounded-full flex items-center justify-center"
+              style={{
+                background: "radial-gradient(circle at 40% 35%, rgba(255,255,255,0.55), rgba(255,255,255,0.12))",
+                border: "1.5px solid rgba(255,255,255,0.45)",
+                boxShadow: "inset 0 2px 12px rgba(255,255,255,0.3)",
+              }}
+            >
+              <span style={{ fontSize: "4.5rem", lineHeight: 1 }}>{size.emoji}</span>
             </div>
           </div>
         </div>
-        {/* Animation button */}
-        <div className="flex justify-end px-4 pb-4 -mt-2">
+
+        {/* Bottom — animation CTA */}
+        <div className="flex justify-between items-center px-4 pb-4 pt-1">
+          <p className="text-[0.65rem] text-muted-foreground leading-snug max-w-[55%]">
+            {devCards[2]?.title} · {devCards[3]?.title}
+          </p>
           <button
             onClick={() => setShowAnimation(true)}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-[0.72rem] font-medium transition-all active:scale-95"
-            style={{ background: "rgba(255,255,255,0.7)", color: "hsl(var(--moss))" }}>
-            Se animation
-            <div className="w-5 h-5 rounded-full flex items-center justify-center" style={{ background: "hsl(var(--moss))" }}>
-              <span className="text-white text-[0.5rem] ml-0.5">▶</span>
+            className="flex items-center gap-2 px-4 py-2.5 rounded-full text-[0.75rem] font-semibold transition-all active:scale-95"
+            style={{ background: "hsl(var(--clay))", color: "white" }}
+          >
+            Se 3D-animation
+            <div className="w-5 h-5 rounded-full flex items-center justify-center bg-white/20">
+              <span className="text-[0.45rem] ml-0.5">▶</span>
             </div>
           </button>
         </div>
       </div>
 
-      {/* ── Hvad sker der i denne uge? ──────────────────────────────────── */}
-      <div className="section-fade-in" style={{ animationDelay: "80ms" }}>
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-[0.9rem] font-semibold">Hvad sker der i denne uge?</p>
-          <Link to="/graviditet/uge" className="flex items-center gap-0.5 text-[0.72rem]" style={{ color: "hsl(var(--moss))" }}>
-            Se mere <ChevronRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-        <div className="grid grid-cols-4 gap-2">
-          {devCards.map((card) => (
-            <div key={card.title} className="rounded-2xl p-3 space-y-1.5"
-              style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
-              <span className="text-[1.4rem]">{card.icon}</span>
-              <p className="text-[0.68rem] font-semibold leading-tight">{card.title}</p>
-              <p className="text-[0.58rem] text-muted-foreground leading-snug hidden sm:block">{card.desc}</p>
-            </div>
-          ))}
-        </div>
-        {/* Expanded descriptions below grid */}
-        <div className="mt-3 space-y-2">
-          {devCards.map((card) => (
-            <div key={card.title + "_desc"} className="flex items-start gap-2.5 text-[0.78rem] text-muted-foreground">
-              <span className="text-base flex-shrink-0">{card.icon}</span>
-              <span><strong className="text-foreground">{card.title}</strong> — {card.desc}</span>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* ── 2-column cards row 1: Din krop + Kost & næring ──────────────── */}
+      <div className="grid grid-cols-2 gap-3 section-fade-in" style={{ animationDelay: "90ms" }}>
 
-      {/* ── Din krop / Partner i denne fase ────────────────────────────── */}
-      <div className="section-fade-in" style={{ animationDelay: "100ms" }}>
-        <div className="flex items-center justify-between mb-3">
-          <p className="text-[0.9rem] font-semibold">{isFar ? "Din rolle som partner" : "Din krop i denne fase"}</p>
-          <Link to="/chat" className="flex items-center gap-0.5 text-[0.72rem]" style={{ color: "hsl(var(--moss))" }}>
-            Spørg MELO <ChevronRight className="w-3.5 h-3.5" />
-          </Link>
-        </div>
-        {/* Symptom pills */}
-        <div className="flex gap-2 overflow-x-auto scrollbar-none pb-1 -mx-4 px-4">
-          {bodyPills.map(pill => (
-            <div key={pill.label} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full flex-shrink-0 text-[0.72rem] font-medium"
-              style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
-              <span>{pill.icon}</span> {pill.label}
-            </div>
-          ))}
-        </div>
-        <p className="text-[0.78rem] text-muted-foreground leading-relaxed mt-3">{bodyDesc.text}</p>
-        <div className="mt-3 rounded-2xl p-3.5 flex items-start gap-2.5"
-          style={{ background: "hsl(var(--stone-lighter))", border: "1px solid hsl(var(--stone-light))" }}>
-          <span className="text-base flex-shrink-0">🌿</span>
-          <div>
-            <p className="text-[0.72rem] font-semibold uppercase tracking-wide text-muted-foreground">{isFar ? "Tip til dig som partner" : "Tip til dig"}</p>
-            <p className="text-[0.78rem] leading-relaxed mt-0.5">{bodyDesc.tip}</p>
+        {/* Din krop i denne fase */}
+        <div className="rounded-2xl p-4 flex flex-col"
+          style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
+          <div className="flex items-start justify-between mb-3">
+            <p className="text-[0.72rem] font-semibold leading-snug pr-1" style={{ color: "hsl(var(--bark))" }}>
+              {isFar ? "Din rolle som partner" : "Din krop i denne fase"}
+            </p>
           </div>
-        </div>
-      </div>
-
-      {/* ── 3-column info cards ─────────────────────────────────────────── */}
-      <div className="grid grid-cols-3 gap-2.5 section-fade-in" style={{ animationDelay: "120ms" }}>
-        {/* Symptoms */}
-        <div className="rounded-2xl p-3.5 space-y-2" style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
-          <div className="flex items-center justify-between">
-            <p className="text-[0.72rem] font-semibold leading-tight">{isFar ? "Hvad sker der nu" : "Symptomer der er normale nu"}</p>
-            <span className="text-sm">🙂</span>
-          </div>
-          <ul className="space-y-1">
-            {symptoms.map(s => (
-              <li key={s} className="flex items-start gap-1.5 text-[0.65rem] text-muted-foreground">
-                <Check className="w-3 h-3 flex-shrink-0 mt-0.5" style={{ color: "hsl(var(--moss))" }} />
-                {s}
+          <ul className="space-y-2.5 flex-1">
+            {bodyPills.slice(0, 3).map(pill => (
+              <li key={pill.label} className="flex items-center gap-2.5">
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-[0.9rem]"
+                  style={{ background: "hsl(var(--stone-lighter))" }}>
+                  {pill.icon}
+                </div>
+                <span className="text-[0.72rem] leading-snug text-muted-foreground">{pill.label}</span>
               </li>
             ))}
           </ul>
-          <Link to="/chat" className="text-[0.62rem] flex items-center gap-0.5 mt-1" style={{ color: "hsl(var(--moss))" }}>
-            Spørg MELO <ChevronRight className="w-2.5 h-2.5" />
+          <Link to="/chat"
+            className="flex items-center gap-0.5 text-[0.68rem] font-medium mt-3"
+            style={{ color: "hsl(var(--moss))" }}>
+            {isFar ? "Laes om din rolle" : "Laes mere om din krop"} <ChevronRight className="w-3 h-3" />
           </Link>
         </div>
 
-        {/* Nutrition */}
-        <div className="rounded-2xl p-3.5 space-y-2" style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
-          <div className="flex items-center justify-between">
-            <p className="text-[0.72rem] font-semibold leading-tight">{isFar ? "Du kan hjælpe med" : `Kostråd i uge ${selectedWeek}`}</p>
-            <span className="text-sm">{isFar ? "🤝" : "🍎"}</span>
+        {/* Kost & næring */}
+        <div className="rounded-2xl p-4 flex flex-col"
+          style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
+          <div className="flex items-start justify-between mb-3">
+            <p className="text-[0.72rem] font-semibold leading-snug pr-1" style={{ color: "hsl(var(--bark))" }}>
+              {isFar ? "Du kan hjaelpe med" : "Kost & naering"}
+            </p>
+            <span className="text-base flex-shrink-0">🍎</span>
           </div>
-          <ul className="space-y-1.5">
+          <ul className="space-y-2.5 flex-1">
             {nutrition.map(n => (
-              <li key={n.text} className="flex items-start gap-1.5 text-[0.65rem] text-muted-foreground">
-                <span className="flex-shrink-0">{n.icon}</span>
-                {n.text}
+              <li key={n.text} className="flex items-start gap-2">
+                <div className="w-7 h-7 rounded-lg flex items-center justify-center flex-shrink-0 text-[0.9rem]"
+                  style={{ background: "hsl(var(--stone-lighter))" }}>
+                  {n.icon}
+                </div>
+                <span className="text-[0.72rem] leading-snug text-muted-foreground">{n.text}</span>
               </li>
             ))}
           </ul>
-          <Link to="/chat" className="text-[0.62rem] flex items-center gap-0.5 mt-1" style={{ color: "hsl(var(--moss))" }}>
-            Se flere kostråd <ChevronRight className="w-2.5 h-2.5" />
-          </Link>
-        </div>
-
-        {/* Affirmation */}
-        <div className="rounded-2xl p-3.5 space-y-2" style={{ background: "hsl(var(--sage-light))", border: "1px solid hsl(var(--sage) / 0.3)" }}>
-          <div className="flex items-center justify-between">
-            <p className="text-[0.72rem] font-semibold leading-tight">Godt at vide</p>
-            <span className="text-sm">🧠</span>
-          </div>
-          <p className="text-[0.68rem] leading-relaxed" style={{ color: "hsl(var(--moss))" }}>{affirmation}</p>
-          <Link to="/gravid-dagbog" className="text-[0.62rem] flex items-center gap-0.5 mt-1" style={{ color: "hsl(var(--moss))" }}>
-            Din dagbog <ChevronRight className="w-2.5 h-2.5" />
+          <Link to="/chat"
+            className="flex items-center gap-0.5 text-[0.68rem] font-medium mt-3"
+            style={{ color: "hsl(var(--moss))" }}>
+            Se flere kostraad <ChevronRight className="w-3 h-3" />
           </Link>
         </div>
       </div>
 
-      {/* ── Ugens anbefalinger til jer ──────────────────────────────────── */}
-      <div className="section-fade-in" style={{ animationDelay: "140ms" }}>
-        <div className="flex items-center justify-between mb-1">
-          <div>
-            <p className="text-[0.9rem] font-semibold">Ugens anbefalinger til jer</p>
-            <p className="text-[0.65rem] text-muted-foreground">Små skridt, der gør en stor forskel</p>
+      {/* ── 2-column cards row 2: Vitaminer + Forbered ──────────────────── */}
+      <div className="grid grid-cols-2 gap-3 section-fade-in" style={{ animationDelay: "110ms" }}>
+
+        {/* Vitaminer & anbefalinger */}
+        <div className="rounded-2xl p-4 flex flex-col"
+          style={{ background: "hsl(var(--cream))", border: "1px solid hsl(var(--stone-light))" }}>
+          <div className="flex items-start justify-between mb-2">
+            <p className="text-[0.65rem] font-semibold tracking-[0.08em] uppercase leading-snug"
+              style={{ color: "hsl(var(--clay))" }}>
+              {isFar ? "Dit velvard" : "Vitaminer & anbefalinger"}
+            </p>
+            <span className="text-base flex-shrink-0">💊</span>
           </div>
-          <Link to="/tjekliste" className="flex items-center gap-0.5 text-[0.72rem]" style={{ color: "hsl(var(--moss))" }}>
-            Se alle <ChevronRight className="w-3.5 h-3.5" />
+          <p className="text-[0.72rem] text-muted-foreground leading-relaxed flex-1">
+            {selectedWeek <= 12
+              ? "Folsyre og D-vitamin er vigtigst nu. Start fra dag et."
+              : selectedWeek <= 27
+              ? "Fortsaet med folsyre og D-vitamin. Tal med laege om jern."
+              : "Jern, kalk og D-vitamin er ekstra vigtigt i 3. trimester."}
+          </p>
+          <div className="mt-3 flex items-center gap-1.5">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl flex-shrink-0"
+              style={{ background: "rgba(255,255,255,0.6)" }}>
+              🌿
+            </div>
+            <p className="text-[0.65rem] text-muted-foreground leading-snug">{affirmation}</p>
+          </div>
+          <Link to="/chat"
+            className="flex items-center gap-0.5 text-[0.68rem] font-medium mt-3"
+            style={{ color: "hsl(var(--clay))" }}>
+            Se anbefalinger <ChevronRight className="w-3 h-3" />
           </Link>
         </div>
-        <div className="flex gap-3 overflow-x-auto scrollbar-none pb-1 -mx-4 px-4 mt-3">
-          {recommendations.map(rec => (
-            <button
-              key={rec.title}
-              onClick={() => addTask(rec.title, "fælles", "never")}
-              className="flex-shrink-0 w-36 rounded-2xl p-3.5 text-left space-y-1.5 transition-all active:scale-95"
-              style={{ background: "hsl(var(--warm-white))", border: "1px solid hsl(var(--stone-light))" }}>
-              <span className="text-xl">{rec.icon}</span>
-              <p className="text-[0.72rem] font-semibold leading-tight">{rec.title}</p>
-              <p className="text-[0.62rem] text-muted-foreground leading-snug">{rec.sub}</p>
-            </button>
-          ))}
+
+        {/* Denne uge kan I forberede */}
+        <div className="rounded-2xl p-4 flex flex-col"
+          style={{ background: "hsl(var(--clay-light))", border: "1px solid hsl(var(--clay) / 0.2)" }}>
+          <div className="flex items-start justify-between mb-3">
+            <p className="text-[0.65rem] font-semibold tracking-[0.08em] uppercase leading-snug"
+              style={{ color: "hsl(var(--clay))" }}>
+              Denne uge kan I forberede
+            </p>
+            <span className="text-base flex-shrink-0">📅</span>
+          </div>
+          <div className="grid grid-cols-2 gap-1.5 flex-1">
+            {recommendations.slice(0, 4).map(rec => (
+              <button
+                key={rec.title}
+                onClick={() => addTask(rec.title, "fælles", "never")}
+                className="rounded-xl p-2.5 text-left transition-all active:scale-95 flex flex-col gap-1"
+                style={{ background: "rgba(255,255,255,0.55)" }}
+              >
+                <span className="text-[0.95rem]">{rec.icon}</span>
+                <p className="text-[0.65rem] font-medium leading-snug" style={{ color: "hsl(var(--bark))" }}>
+                  {rec.title}
+                </p>
+              </button>
+            ))}
+          </div>
+          <Link to="/tjekliste"
+            className="flex items-center gap-0.5 text-[0.68rem] font-medium mt-3"
+            style={{ color: "hsl(var(--clay))" }}>
+            Se tjekliste <ChevronRight className="w-3 h-3" />
+          </Link>
         </div>
       </div>
 
@@ -747,18 +770,18 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
           to="/foedselsplan"
           className="flex items-center gap-4 rounded-2xl px-5 py-4 section-fade-in transition-all active:scale-[0.98]"
           style={{
-            background: "hsl(var(--warm-white))",
-            border: "1px solid hsl(var(--stone-light))",
-            animationDelay: "150ms",
+            background: "hsl(var(--sage-light))",
+            border: "1px solid hsl(var(--sage) / 0.3)",
+            animationDelay: "130ms",
           }}
         >
           <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 text-2xl"
-            style={{ background: "hsl(var(--sage-light))" }}>
+            style={{ background: "hsl(var(--sage) / 0.2)" }}>
             🌿
           </div>
           <div className="flex-1">
-            <p className="text-[0.88rem] font-semibold">Vores fødselsplan</p>
-            <p className="text-[0.7rem] text-muted-foreground">Dokumentér jeres ønsker til fødslen</p>
+            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>Vores foedselsplan</p>
+            <p className="text-[0.7rem] text-muted-foreground">Dokumenter jeres onsker til fodslen</p>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
         </Link>
@@ -770,9 +793,9 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
           to="/veer"
           className="flex items-center gap-4 rounded-2xl px-5 py-4 section-fade-in transition-all active:scale-[0.98]"
           style={{
-            background: "linear-gradient(135deg, hsl(var(--clay-light)), hsl(var(--sand-light)))",
+            background: "linear-gradient(135deg, hsl(var(--clay-light)), hsl(var(--cream)))",
             border: "1px solid hsl(var(--clay) / 0.3)",
-            animationDelay: "160ms",
+            animationDelay: "140ms",
           }}
         >
           <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 text-2xl"
@@ -780,7 +803,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
             ⏱️
           </div>
           <div className="flex-1">
-            <p className="text-[0.88rem] font-semibold">Veer-timer</p>
+            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--clay))" }}>Ve-timer</p>
             <p className="text-[0.7rem] text-muted-foreground">Track veer og del live med din partner</p>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
@@ -788,11 +811,13 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
       )}
 
       {/* ── Footer disclaimer ───────────────────────────────────────────── */}
-      <div className="flex items-center justify-between rounded-2xl p-4 section-fade-in" style={{ background: "hsl(var(--stone-lighter))", animationDelay: "160ms" }}>
-        <div className="flex items-start gap-2.5 flex-1">
-          <Shield className="w-4 h-4 flex-shrink-0 mt-0.5 text-muted-foreground" strokeWidth={1.5} />
-          <p className="text-[0.65rem] text-muted-foreground leading-relaxed">
-            Indholdet er udarbejdet i samarbejde med sundhedsfaglige eksperter og bygger på officielle kilder.
+      <div className="flex items-center justify-between rounded-2xl px-4 py-3.5 section-fade-in"
+        style={{ background: "hsl(var(--stone-lighter))", animationDelay: "150ms" }}>
+        <div className="flex items-start gap-2 flex-1">
+          <span className="text-[0.9rem] flex-shrink-0">ℹ️</span>
+          <p className="text-[0.62rem] text-muted-foreground leading-relaxed">
+            Informationen er generel og baseret på sundhedsfaglige kilder.
+            Kontakt din laege eller jordemoder, hvis du er i tvivl.
           </p>
         </div>
         <button className="flex items-center gap-1 text-[0.65rem] font-medium flex-shrink-0 ml-3" style={{ color: "hsl(var(--moss))" }}>
