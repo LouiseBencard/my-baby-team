@@ -90,7 +90,7 @@ function getWeekContent(week: number): WeekContent {
   };
   if (week < 32) return {
     partnerTip: "3. trimester. Din partner bærer nu en fuld baby — al hjælp er guld.",
-    herSymptoms: ["Træt og tung", "Ryg- og bækkensmerter", "Søvnproblemer", "Bræ ndt"],
+    herSymptoms: ["Træt og tung", "Ryg- og bækkensmerter", "Søvnproblemer", "Brændt"],
     helpTips: [
       "Tag over med alt der kræver bøjning og løft",
       "Pak hospitalstasken færdig sammen",
@@ -163,7 +163,7 @@ export default function DashboardPregnantFar() {
             <NotificationBell />
             <div
               className="w-9 h-9 rounded-full flex items-center justify-center text-[0.75rem] font-semibold overflow-hidden"
-              style={{ background: "hsl(var(--clay-light))", color: "hsl(var(--bark))" }}
+              style={{ background: "hsl(var(--sage-light))", color: "hsl(var(--moss))" }}
             >
               {profile.parentName?.charAt(0)?.toUpperCase() || <User className="w-4 h-4" />}
             </div>

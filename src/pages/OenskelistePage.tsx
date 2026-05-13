@@ -81,7 +81,7 @@ function AddItemSheet({ onClose, onAdd }: { onClose: () => void; onAdd: (item: {
             className="flex-1 py-3 rounded-full text-[0.85rem] font-semibold text-white transition-all active:scale-[0.98] disabled:opacity-40"
             style={{ background: "hsl(var(--moss))" }}
           >
-            Tilfoej
+            Tilføj
           </button>
         </div>
       </div>
@@ -111,7 +111,7 @@ function WishCard({ item, onRemove, onToggleReserve }: { item: WishlistItem; onR
           {item.note && (
             <p className="text-[0.72rem] text-muted-foreground mt-0.5">{item.note}</p>
           )}
-          <p className="text-[0.6rem] text-muted-foreground/60 mt-1">Tilfojet {formatDate(item.addedAt)}</p>
+          <p className="text-[0.6rem] text-muted-foreground/60 mt-1">Tilføjet {formatDate(item.addedAt)}</p>
         </div>
         <button
           onClick={onRemove}
@@ -146,7 +146,7 @@ function WishCard({ item, onRemove, onToggleReserve }: { item: WishlistItem; onR
             style={{ background: "hsl(var(--stone-light))", color: "hsl(var(--bark))" }}
           >
             <ShoppingCart className="w-3 h-3" />
-            Sog pa babysam
+            Søg på babysam
           </a>
         )}
 
@@ -167,7 +167,7 @@ function WishCard({ item, onRemove, onToggleReserve }: { item: WishlistItem; onR
   );
 }
 
-export default function OenskelistePage() {
+export default function ØnskelistePage() {
   const navigate = useNavigate();
   const { items, addItem, removeItem, toggleReserve } = useWishlist();
   const [showAdd, setShowAdd] = useState(false);
@@ -182,7 +182,7 @@ export default function OenskelistePage() {
       .join("\n");
 
     if (navigator.share) {
-      await navigator.share({ title: "Vores oenskeliste", text });
+      await navigator.share({ title: "Vores ønskeliste", text });
     } else {
       await navigator.clipboard.writeText(text);
     }
@@ -209,9 +209,9 @@ export default function OenskelistePage() {
       </div>
 
       <div>
-        <h1 className="font-serif text-[1.9rem] font-normal">Oenskeliste</h1>
+        <h1 className="font-serif text-[1.9rem] font-normal">Ønskeliste</h1>
         <p className="text-[0.72rem] tracking-[0.12em] uppercase text-muted-foreground mt-1">
-          {items.length} {items.length === 1 ? "onske" : "onsker"} · {reservedItems.length} koebt
+          {items.length} {items.length === 1 ? "ønske" : "ønsker"} · {reservedItems.length} købt
         </p>
       </div>
 
@@ -222,16 +222,16 @@ export default function OenskelistePage() {
         style={{ borderColor: "hsl(var(--stone-light))", color: "hsl(var(--bark))" }}
       >
         <Plus className="w-4 h-4" />
-        Tilfoej produkt
+        Tilføj produkt
       </button>
 
       {/* Empty state */}
       {items.length === 0 && (
         <div className="text-center py-14 space-y-3">
           <Heart className="w-10 h-10 mx-auto text-muted-foreground/30" />
-          <p className="text-[0.85rem] text-muted-foreground">Din oenskeliste er tom</p>
+          <p className="text-[0.85rem] text-muted-foreground">Din ønskeliste er tom</p>
           <p className="text-[0.72rem] text-muted-foreground/60 leading-relaxed max-w-[220px] mx-auto">
-            Tilfoej produkter herfra eller via hjertet pa tjeklisten
+            Tilføj produkter herfra eller via hjertet på tjeklisten
           </p>
         </div>
       )}
@@ -271,7 +271,7 @@ export default function OenskelistePage() {
       {items.length > 0 && (
         <div className="rounded-xl px-4 py-3" style={{ background: "hsl(var(--stone-lighter))" }}>
           <p className="text-[0.68rem] text-muted-foreground leading-relaxed">
-            Del listen med familie og venner via knappen ovenfor. "Marker koebt" hjaelaer jer med at holde styr pa hvad der allerede er koebt.
+            Del listen med familie og venner via knappen ovenfor. "Markér købt" hjælper jer med at holde styr på hvad der allerede er købt.
           </p>
         </div>
       )}

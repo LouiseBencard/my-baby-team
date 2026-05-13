@@ -41,8 +41,8 @@ export function BottomNav() {
       style={{
         background: "hsl(var(--warm-white))",
         borderTop: "1px solid hsl(var(--stone-light))",
-        paddingTop: "8px",
-        paddingBottom: "calc(10px + env(safe-area-inset-bottom, 0px))",
+        paddingTop: "10px",
+        paddingBottom: "calc(12px + env(safe-area-inset-bottom, 0px))",
         paddingLeft: "env(safe-area-inset-left, 0px)",
         paddingRight: "env(safe-area-inset-right, 0px)",
       }}
@@ -57,18 +57,18 @@ export function BottomNav() {
             <Link
               key={item.path}
               to={item.path}
-              className="flex flex-col items-center gap-0.5 -mt-5"
+              className="flex flex-col items-center gap-0.5 -mt-6"
             >
               <div
-                className="w-14 h-14 rounded-full flex items-center justify-center shadow-md transition-transform active:scale-90"
+                className="w-[56px] h-[56px] rounded-full flex items-center justify-center shadow-lg transition-transform active:scale-90"
                 style={{ background: "hsl(var(--moss))" }}
               >
                 <item.icon className="w-6 h-6 text-white" strokeWidth={1.8} />
               </div>
               <span
-                className="text-[11px] mt-0.5"
+                className="text-[10px] mt-0.5"
                 style={{
-                  fontWeight: active ? 500 : 300,
+                  fontWeight: active ? 600 : 400,
                   color: active ? "hsl(var(--moss))" : "hsl(var(--muted-foreground))",
                 }}
               >
@@ -87,15 +87,19 @@ export function BottomNav() {
             }`}
           >
             <div className="relative">
-              <item.icon className="w-5 h-5" strokeWidth={active ? 2.2 : 1.8} />
+              <item.icon className="w-[22px] h-[22px]" strokeWidth={active ? 2.2 : 1.8} />
               {item.path === "/mere" && !active && hasPartnerLogsToday && (
                 <span
                   className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full"
                   style={{ background: "hsl(var(--moss))" }}
                 />
               )}
+              {active && (
+                <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full"
+                  style={{ background: "hsl(var(--moss))" }} />
+              )}
             </div>
-            <span className="text-[11px]" style={{ fontWeight: active ? 500 : 300 }}>
+            <span className="text-[10px]" style={{ fontWeight: active ? 600 : 400 }}>
               {item.label}
             </span>
           </Link>

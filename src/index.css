@@ -93,6 +93,7 @@
     --cream: 37 30% 94%;
     --warm-white: 38 30% 97%;
     --night: 120 20% 10%;
+    --clay-text: 30 35% 38%;
 
     /* Role colors */
     --mom-color: 30 35% 64%;
@@ -388,4 +389,15 @@
 
 .next-leap-dot {
   animation: nextLeapPulse 2.5s ease-in-out infinite;
+}
+
+/* ── Skeleton loader ──────────────────────────────────────── */
+@keyframes skeleton-shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, hsl(var(--stone-lighter)) 25%, hsl(var(--stone-light)) 50%, hsl(var(--stone-lighter)) 75%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.5s ease-in-out infinite;
 }

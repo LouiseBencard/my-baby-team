@@ -27,8 +27,8 @@ export default function AppLayout() {
         <div
           className="max-w-lg mx-auto px-4 md:max-w-2xl md:pt-10 md:pb-10"
           style={{
-            paddingTop: "calc(1.5rem + env(safe-area-inset-top, 0px))",
-            paddingBottom: "calc(5.5rem + env(safe-area-inset-bottom, 0px))",
+            paddingTop: "calc(1rem + env(safe-area-inset-top, 0px))",
+            paddingBottom: "calc(6rem + env(safe-area-inset-bottom, 0px))",
           }}
         >
           <Outlet />

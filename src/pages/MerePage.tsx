@@ -71,10 +71,10 @@ export default function MerePage() {
         ...(!isFar ? [{ icon: NotebookPen,  label: "Gravid dagbog",          desc: "Skriv om din graviditet",         path: "/gravid-dagbog" }] : []),
         { icon: CalendarDays, label: t("sidebar.calendar"),    desc: t("sidebar.calendarDesc"),         path: "/gravid-kalender" },
         { icon: ClipboardList,label: t("sidebar.checklist"),   desc: t("sidebar.checklistDesc"),        path: "/tjekliste" },
-        { icon: Gift,         label: "Oenskeliste",            desc: "Produkter I mangler",             path: "/oenskeliste" },
+        { icon: Gift,         label: "Ønskeliste",            desc: "Produkter I mangler",             path: "/oenskeliste" },
         { icon: Users,        label: t("nav.together"),        desc: t("sidebar.togetherDesc"),         path: "/sammen" },
         ...(!isFar ? [{ icon: Timer, label: "Veer", desc: "Tidtag veerne", path: "/veer" }] : []),
-        ...(!isFar ? [{ icon: FileText, label: "Foedselsplan", desc: "Dine oensker til fodslen", path: "/foedselsplan" }] : []),
+        ...(!isFar ? [{ icon: FileText, label: "Fødselsplan", desc: "Dine ønsker til fødslen", path: "/foedselsplan" }] : []),
         { icon: Link2,        label: "Forbind med partner",    desc: partnerConnected ? `Forbundet med ${profile.partnerName}` : "Del invitationskode", path: "/invite" },
       ]
     : [
@@ -84,7 +84,7 @@ export default function MerePage() {
         { icon: Users,        label: t("nav.together"),        desc: t("sidebar.togetherDesc"),         path: "/sammen" },
         { icon: CalendarDays, label: t("sidebar.calendar"),    desc: t("sidebar.calendarDesc"),         path: "/kalender" },
         { icon: ClipboardList,label: t("sidebar.checklist"),   desc: t("sidebar.checklistDesc"),        path: "/tjekliste" },
-        { icon: Gift,         label: "Oenskeliste",            desc: "Produkter I mangler eller vil have", path: "/oenskeliste" },
+        { icon: Gift,         label: "Ønskeliste",            desc: "Produkter I mangler eller vil have", path: "/oenskeliste" },
         { icon: Link2,        label: "Forbind med partner",    desc: partnerConnected ? `Forbundet med ${profile.partnerName}` : "Del invitationskode", path: "/invite" },
       ];
 

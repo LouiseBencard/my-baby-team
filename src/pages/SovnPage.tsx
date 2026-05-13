@@ -85,7 +85,7 @@ const PREGNANCY_ISSUES = [
     solution: "Spørg din jordemoder om jerntilskud. Stræk benene inden sengetid. Prøv et varmt bad.",
   },
   {
-    title: "Rundbaandssmerter",
+    title: "Rundbåndssmerter",
     icon: "🤰",
     solution: "Pude under maven og mellem knæene. Rul dig langsomt ud af sengen — brug armene til at støtte dig.",
   },
@@ -204,7 +204,7 @@ function WakeWindowSweetspot({
       ? `${formatMinutes(lo - elapsed)} til sweetspot`
       : phase === "sweetspot"
       ? "Nu er det perfekt tidspunkt for lur"
-      : "Overtraet — start sovnroutine nu!";
+      : "Overtræt — start søvnrutine nu!";
 
   return (
     <div
@@ -216,7 +216,7 @@ function WakeWindowSweetspot({
     >
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-[0.58rem] tracking-[0.18em] uppercase text-muted-foreground">Vaagentid</p>
+          <p className="text-[0.58rem] tracking-[0.18em] uppercase text-muted-foreground">Vågetid</p>
           <p className="font-serif text-[1.6rem] leading-none mt-0.5" style={{ color: phaseColor }}>
             {formatMinutes(elapsed)}
           </p>
@@ -320,7 +320,7 @@ function SafeSleepChecklist() {
           <Shield className="w-4.5 h-4.5" style={{ color: allDone ? "hsl(var(--moss))" : "hsl(var(--bark))" }} />
         </div>
         <div className="flex-1 text-left">
-          <p className="text-[0.88rem] font-semibold">Sikker sovn — SST/WHO</p>
+          <p className="text-[0.88rem] font-semibold">Sikker søvn — SST/WHO</p>
           <p className="text-[0.68rem] text-muted-foreground">{checked.length}/{SAFE_SLEEP.length} punkter gennemgaet</p>
         </div>
         {open ? <ChevronUp className="w-4 h-4 text-muted-foreground" /> : <ChevronDown className="w-4 h-4 text-muted-foreground" />}
@@ -446,7 +446,7 @@ function BedtimeCalculator({ lastNapEnd, wakeWindow, bedtime }: {
           {format(suggested, "HH:mm")}
         </p>
         <p className="text-[0.65rem] text-muted-foreground">
-          Baseret pa seneste lur + {formatMinutes(hi)} vaagevindue
+          Baseret på seneste lur + {formatMinutes(hi)} vågevindue
         </p>
       </div>
       <div className="ml-auto text-right">
@@ -482,7 +482,7 @@ function PregnantSleepPage({ week }: { week: number }) {
   return (
     <div className="space-y-5">
       <div className="section-fade-in">
-        <h1 className="font-serif text-[1.9rem] font-normal">Sovn</h1>
+        <h1 className="font-serif text-[1.9rem] font-normal">Søvn</h1>
         <p className="text-[0.58rem] tracking-[0.18em] uppercase text-muted-foreground mt-1">
           Uge {week} · {trimesterData.title}
         </p>
@@ -555,13 +555,13 @@ function PregnantSleepPage({ week }: { week: number }) {
             style={{ color: week >= 28 ? "rgba(255,255,255,0.82)" : "hsl(var(--muted-foreground))" }}
           >
             {week >= 28
-              ? "At sove pa ryggen fra uge 28 gor at livmoderen presser pa en stor aaresstreng og reducerer blodgennemstromningen. Venstre side er bedst — giver optimal blodgennemstromning til moderkagen."
-              : "Begynd at vaenne dig til at sove pa siden nu — det gaelder fra uge 28 og er svaert at aendre vanen til pa et sent tidspunkt."}
+              ? "At sove på ryggen fra uge 28 gør at livmoderen presser på en stor årestreng og reducerer blodgennemstrømningen. Venstre side er bedst — giver optimal blodgennemstrømning til moderkagen."
+              : "Begynd at vænne dig til at sove på siden nu — det gælder fra uge 28 og er svært at ændre vanen til på et sent tidspunkt."}
           </p>
           {week >= 28 && (
             <div className="mt-3 rounded-xl px-3 py-2" style={{ background: "rgba(255,255,255,0.1)" }}>
               <p className="text-[0.72rem]" style={{ color: "rgba(255,255,255,0.7)" }}>
-                Tip: En graviditetspude (C-formet) holder dig pa siden hele natten — et af de bedste sovninvesteringer.
+                Tip: En graviditetspude (C-formet) holder dig på siden hele natten — et af de bedste søvninvesteringer.
               </p>
             </div>
           )}
@@ -574,7 +574,7 @@ function PregnantSleepPage({ week }: { week: number }) {
         style={{ background: "hsl(var(--cream))", border: "1px solid hsl(var(--stone-light))" }}
       >
         <p className="text-[0.58rem] tracking-[0.18em] uppercase text-muted-foreground">
-          Sovntips nu
+          Søvntips nu
         </p>
         {trimesterData.tips.map((tip, i) => (
           <div key={i} className="flex items-start gap-2">
@@ -635,7 +635,7 @@ function PregnantSleepPage({ week }: { week: number }) {
           </div>
           <div className="flex-1">
             <p className="text-[0.88rem] font-semibold">Ve-timer</p>
-            <p className="text-[0.72rem] text-muted-foreground">Tag tid pa veerne og se monster</p>
+            <p className="text-[0.72rem] text-muted-foreground">Tag tid på veerne og se mønster</p>
           </div>
           <LinkIcon className="w-4 h-4 text-muted-foreground" />
         </Link>
@@ -647,8 +647,8 @@ function PregnantSleepPage({ week }: { week: number }) {
         style={{ background: "hsl(var(--stone-lighter))" }}
       >
         <p className="text-[0.68rem] text-muted-foreground leading-relaxed">
-          <strong>WHO anbefaler</strong> 7–9 timers sovn pr. nat under graviditeten. Mange gravide behoever mere.
-          Prioriter sovnen — det er ikke dovenhed, det er biologi.
+          <strong>WHO anbefaler</strong> 7–9 timers søvn pr. nat under graviditeten. Mange gravide behøver mere.
+          Prioritér søvnen — det er ikke dovenskab, det er biologi.
         </p>
       </div>
     </div>
@@ -815,7 +815,7 @@ export default function SovnPage() {
           </div>
           <div className="flex-1 text-left">
             <p className="text-[0.95rem] font-semibold">Baby er vågnet nu</p>
-            <p className="text-[0.72rem] text-muted-foreground">Start vaagevindue-timer uden at logge lur</p>
+            <p className="text-[0.72rem] text-muted-foreground">Start vågevindue-timer uden at logge lur</p>
           </div>
         </button>
       )}

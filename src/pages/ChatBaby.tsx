@@ -487,13 +487,13 @@ export default function ChatBaby() {
             onChange={e => setInput(e.target.value)}
             placeholder={cfg.placeholder}
             disabled={isLoading}
-            className="flex-1 rounded-2xl border px-4 py-3 text-[0.85rem] focus:outline-none transition-colors disabled:opacity-50"
-            style={{ borderColor: `hsl(var(${cfg.accentVar}) / 0.4)`, background: "hsl(var(--warm-white))" }}
+            className="flex-1 rounded-2xl border px-4 py-3 text-[0.85rem] focus:outline-none focus:ring-2 transition-colors disabled:opacity-50"
+            style={{ borderColor: `hsl(var(${cfg.accentVar}) / 0.4)`, background: "hsl(var(--warm-white))", "--tw-ring-color": "hsl(var(--moss) / 0.3)" } as React.CSSProperties}
           />
           <button
             type="submit"
             disabled={!input.trim() || isLoading}
-            className="w-11 h-11 rounded-xl flex items-center justify-center transition-all active:scale-90 disabled:opacity-30"
+            className="w-11 h-11 rounded-full flex items-center justify-center transition-all active:scale-90 disabled:opacity-30"
             style={{ background: accentColor, color: "white" }}
           >
             <Send className="w-4 h-4" />

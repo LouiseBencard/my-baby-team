@@ -867,7 +867,7 @@ function PregnantBarnPage({ week: currentWeek, role }: { week: number; role: "mo
             🌿
           </div>
           <div className="flex-1">
-            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>Vores foedselsplan</p>
+            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>Vores fødselsplan</p>
             <p className="text-[0.7rem] text-muted-foreground">Dokumentér jeres ønsker til fødslen</p>
           </div>
           <ChevronRight className="w-4 h-4 text-muted-foreground/50" />
