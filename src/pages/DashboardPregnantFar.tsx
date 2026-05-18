@@ -2,8 +2,10 @@ import { useFamily } from "@/context/FamilyContext";
 import { getBabySize } from "@/lib/phaseData";
 import { MeloWordmark } from "@/components/MeloWordmark";
 import { NotificationBell } from "@/components/NotificationCenter";
+import { CheckInCard } from "@/components/PregnancyCheckIn";
 import { User, ChevronRight, Heart, CheckCircle2 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 // ── Week-specific content for the partner ─────────────────────────────────────
 
@@ -138,6 +140,7 @@ function getPartnerActions(week: number): string[] {
 // ── Main component ─────────────────────────────────────────────────────────────
 export default function DashboardPregnantFar() {
   const { profile, currentWeek, morName, farName, tasks, takeTask } = useFamily();
+  const { t } = useTranslation();
 
   const size = getBabySize(currentWeek);
   const content = getWeekContent(currentWeek);
@@ -147,9 +150,9 @@ export default function DashboardPregnantFar() {
 
   const getGreeting = (): string => {
     const h = new Date().getHours();
-    if (h < 10) return "Godmorgen";
-    if (h < 17) return "Goddag";
-    return "Godaften";
+    if (h < 10) return t("greeting.morning");
+    if (h < 17) return t("greeting.afternoon");
+    return t("greeting.evening");
   };
 
   return (
@@ -178,7 +181,10 @@ export default function DashboardPregnantFar() {
         </p>
       </div>
 
-      {/* ── B. Baby + uge hero ──────────────────────────────────────────────── */}
+      {/* ── B. Daily Check-in ───────────────────────────────────────────────── */}
+      <CheckInCard />
+
+      {/* ── C. Baby + uge hero ──────────────────────────────────────────────── */}
       <div
         className="rounded-[20px] overflow-hidden section-fade-in"
         style={{
@@ -219,7 +225,7 @@ export default function DashboardPregnantFar() {
         </div>
       </div>
 
-      {/* ── C. Forstå [morName] ──────────────────────────────────────────────── */}
+      {/* ── D. Forstå [morName] ──────────────────────────────────────────────── */}
       <div
         className="rounded-2xl overflow-hidden section-fade-in"
         style={{

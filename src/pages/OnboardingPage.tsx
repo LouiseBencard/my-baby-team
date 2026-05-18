@@ -377,7 +377,7 @@ export default function OnboardingPage() {
             <div className="space-y-5 section-fade-in" key="partnername">
               <StepHeader title="Hvad hedder din medforælder?" sub="Så appen føles personlig for jer begge. Du kan ændre det senere." />
               <InputField
-                label="Medforfælders navn"
+                label="Medforælders navn"
                 value={partnerName}
                 onChange={setPartnerName}
                 placeholder="F.eks. Mikkel"
@@ -572,14 +572,16 @@ export default function OnboardingPage() {
         {step === "account" && !saveSuccess && (
           <p className="text-center text-[0.72rem] text-muted-foreground">
             Har du allerede en konto?{" "}
-            <a
-              href="/"
-              onClick={e => { e.preventDefault(); localStorage.setItem("lille-family", JSON.stringify({ onboarded: true })); window.location.reload(); }}
+            <button
+              onClick={() => {
+                localStorage.removeItem("lille-family");
+                window.location.href = "/";
+              }}
               className="font-medium underline"
               style={{ color: "hsl(var(--moss))" }}
             >
               Log ind her
-            </a>
+            </button>
           </p>
         )}
 

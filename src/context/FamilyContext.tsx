@@ -6,6 +6,7 @@ import { getTasksForPhase } from "@/lib/phaseData";
 import {
   upsertProfile, fetchProfile, syncTasks, fetchTasks,
   syncCheckIns, fetchCheckIns, useDebouncedSync,
+  syncMemories, fetchMemories, syncAppreciations, fetchAppreciations,
 } from "@/hooks/useSupabaseSync";
 
 export type LifePhase = "pregnant" | "newborn" | "baby";
@@ -255,14 +256,15 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
     setProfileLoading(true);
 
     async function loadFromDb() {
-      const [dbProfile, dbTasks, dbCheckIns] = await Promise.all([
+      const [dbProfile, dbTasks, dbCheckIns, dbMemories, dbAppreciations] = await Promise.all([
         fetchProfile(user!.id),
         fetchTasks(user!.id),
         fetchCheckIns(user!.id),
+        fetchMemories(user!.id),
+        fetchAppreciations(user!.id),
       ]);
       if (cancelled) return;
       if (dbProfile) {
-        // Always derive phase from date so the date is the single source of truth
         if (dbProfile.dueOrBirthDate) {
           const d = new Date(dbProfile.dueOrBirthDate);
           const n = new Date();
@@ -282,6 +284,14 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
         setCheckIns(dbCheckIns);
         localStorage.setItem("melo-checkins", JSON.stringify(dbCheckIns));
       }
+      if (dbMemories && dbMemories.length > 0) {
+        setMemories(dbMemories);
+        localStorage.setItem("melo-memories", JSON.stringify(dbMemories));
+      }
+      if (dbAppreciations && dbAppreciations.length > 0) {
+        setAppreciations(dbAppreciations);
+        localStorage.setItem("melo-appreciations", JSON.stringify(dbAppreciations));
+      }
       setProfileLoading(false);
     }
 
@@ -299,10 +309,18 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
   const syncCheckInsCb = useCallback(async (userId: string, data: any[]) => {
     await syncCheckIns(userId, data);
   }, []);
+  const syncMemoriesCb = useCallback(async (userId: string, data: any[]) => {
+    await syncMemories(userId, data);
+  }, []);
+  const syncAppreciationsCb = useCallback(async (userId: string, data: any[]) => {
+    await syncAppreciations(userId, data);
+  }, []);
 
   useDebouncedSync(profile, syncProfileCb);
   useDebouncedSync(tasks, syncTasksCb);
   useDebouncedSync(checkIns, syncCheckInsCb);
+  useDebouncedSync(memories, syncMemoriesCb);
+  useDebouncedSync(appreciations, syncAppreciationsCb);
 
   const setProfile = (p: FamilyProfile) => setProfileState(p);
   const resetProfile = () => {

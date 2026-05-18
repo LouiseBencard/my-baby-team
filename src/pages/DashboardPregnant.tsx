@@ -101,7 +101,7 @@ function CircularRing({ progress }: { progress: number }) {
 // ── Main component ─────────────────────────────────────────────────────────────
 export default function DashboardPregnant() {
   const { profile, currentWeek, totalWeeks, trimester, tasks, morName, farName, takeTask } = useFamily();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   const size = getBabySize(currentWeek);
   const insight = getWeekInsight(currentWeek);
@@ -114,9 +114,9 @@ export default function DashboardPregnant() {
 
   const getGreeting = (): string => {
     const h = new Date().getHours();
-    if (h < 10) return "Godmorgen";
-    if (h < 17) return "Goddag";
-    return "Godaften";
+    if (h < 10) return t("greeting.morning");
+    if (h < 17) return t("greeting.afternoon");
+    return t("greeting.evening");
   };
 
   const previewTasks = tasks.filter(t => !t.completed).slice(0, 3);

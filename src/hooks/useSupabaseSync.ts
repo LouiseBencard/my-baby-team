@@ -65,14 +65,16 @@ export async function fetchProfile(userId: string): Promise<FamilyProfile | null
 // ── Tasks ─────────────────────────────────────────────────────────────────────
 
 export async function syncTasks(userId: string, tasks: any[]) {
-  await supabase.from("tasks").delete().eq("user_id", userId);
+  const { error: delErr } = await supabase.from("tasks").delete().eq("user_id", userId);
+  if (delErr) { console.error("[Melo] syncTasks delete failed:", delErr.message); return; }
   if (tasks.length > 0) {
     const rows = tasks.map(t => ({
       id: t.id, user_id: userId, title: t.title, assignee: t.assignee,
       category: t.category, completed: t.completed, recurrence: t.recurrence,
       due_date: t.dueDate, created_at: t.createdAt,
     }));
-    await supabase.from("tasks").insert(rows);
+    const { error: insErr } = await supabase.from("tasks").insert(rows);
+    if (insErr) console.error("[Melo] syncTasks insert failed:", insErr.message);
   }
 }
 
@@ -88,16 +90,54 @@ export async function fetchTasks(userId: string) {
 // ── Check-ins ─────────────────────────────────────────────────────────────────
 
 export async function syncCheckIns(userId: string, checkIns: any[]) {
-  await supabase.from("check_ins").delete().eq("user_id", userId);
+  const { error: delErr } = await supabase.from("check_ins").delete().eq("user_id", userId);
+  if (delErr) { console.error("[Melo] syncCheckIns delete failed:", delErr.message); return; }
   if (checkIns.length > 0) {
     const rows = checkIns.map(c => ({ user_id: userId, date: c.date, mood: c.mood, role: c.role }));
-    await supabase.from("check_ins").insert(rows);
+    const { error: insErr } = await supabase.from("check_ins").insert(rows);
+    if (insErr) console.error("[Melo] syncCheckIns insert failed:", insErr.message);
   }
 }
 
 export async function fetchCheckIns(userId: string) {
   const { data } = await supabase.from("check_ins").select("*").eq("user_id", userId);
   return data?.map(c => ({ date: c.date, mood: c.mood, role: c.role as any })) || null;
+}
+
+// ── Memories ──────────────────────────────────────────────────────────────────
+
+export async function syncMemories(userId: string, memories: any[]) {
+  const { error: delErr } = await supabase.from("memories" as any).delete().eq("user_id", userId);
+  if (delErr) { console.error("[Melo] syncMemories delete failed:", delErr.message); return; }
+  if (memories.length > 0) {
+    const rows = memories.map(m => ({ id: m.id, user_id: userId, date: m.date, role: m.role, text: m.text }));
+    const { error: insErr } = await supabase.from("memories" as any).insert(rows);
+    if (insErr) console.error("[Melo] syncMemories insert failed:", insErr.message);
+  }
+}
+
+export async function fetchMemories(userId: string): Promise<any[] | null> {
+  const { data, error } = await supabase.from("memories" as any).select("*").eq("user_id", userId).order("date", { ascending: false });
+  if (error || !data) return null;
+  return data.map((m: any) => ({ id: m.id, date: m.date, role: m.role, text: m.text }));
+}
+
+// ── Appreciations ─────────────────────────────────────────────────────────────
+
+export async function syncAppreciations(userId: string, appreciations: any[]) {
+  const { error: delErr } = await supabase.from("appreciations" as any).delete().eq("user_id", userId);
+  if (delErr) { console.error("[Melo] syncAppreciations delete failed:", delErr.message); return; }
+  if (appreciations.length > 0) {
+    const rows = appreciations.map(a => ({ id: a.id, user_id: userId, date: a.date, from: a.from, text: a.text }));
+    const { error: insErr } = await supabase.from("appreciations" as any).insert(rows);
+    if (insErr) console.error("[Melo] syncAppreciations insert failed:", insErr.message);
+  }
+}
+
+export async function fetchAppreciations(userId: string): Promise<any[] | null> {
+  const { data, error } = await supabase.from("appreciations" as any).select("*").eq("user_id", userId).order("date", { ascending: false });
+  if (error || !data) return null;
+  return data.map((a: any) => ({ id: a.id, date: a.date, from: a.from, text: a.text }));
 }
 
 // ── Nursing logs ──────────────────────────────────────────────────────────────
@@ -268,7 +308,13 @@ export function useDebouncedSync(data: any, syncFn: (userId: string, data: any) 
     if (isInitialLoad.current) { isInitialLoad.current = false; return; }
     if (!user) return;
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    timeoutRef.current = setTimeout(() => { syncFn(user.id, data); }, delay);
+    timeoutRef.current = setTimeout(async () => {
+      try {
+        await syncFn(user.id, data);
+      } catch (err) {
+        console.error("[Melo] Supabase sync failed:", err);
+      }
+    }, delay);
     return () => { if (timeoutRef.current) clearTimeout(timeoutRef.current); };
   }, [data, user, syncFn, delay]);
 }

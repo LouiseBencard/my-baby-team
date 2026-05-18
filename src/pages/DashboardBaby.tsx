@@ -179,20 +179,19 @@ function NeedsCardConditional() {
   const { profile, isOnLeave, setNeed } = useFamily();
   const { role } = profile;
   const hasPartner = profile.hasPartner !== false;
-  if (!hasPartner) return null;
+
+  const myNeed = profile.activeNeed?.[role];
+  const isStale = !!myNeed && (Date.now() - new Date(myNeed.setAt).getTime()) / 3600000 > 24;
+
+  useEffect(() => {
+    if (isStale) setNeed(null);
+  }, [isStale, setNeed]);
+
+  if (!hasPartner || isStale) return null;
 
   const hour = new Date().getHours();
   const myOnLeave = isOnLeave(role);
   const partnerOnLeave = isOnLeave(role === "mor" ? "far" : "mor");
-
-  const myNeed = profile.activeNeed?.[role];
-  if (myNeed) {
-    const ageHours = (Date.now() - new Date(myNeed.setAt).getTime()) / 3600000;
-    if (ageHours > 24) {
-      setNeed(null);
-      return null;
-    }
-  }
 
   if (myOnLeave && partnerOnLeave) return <NeedsCard />;
   if (myOnLeave && !partnerOnLeave && hour >= 7 && hour < 15) return <NeedsCard />;
