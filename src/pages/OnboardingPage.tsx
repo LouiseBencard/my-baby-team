@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { useFamily, type ParentRole, type BirthType, type FeedingMethod } from "@/context/FamilyContext";
 import { useAuth } from "@/context/AuthContext";
 import { ArrowRight, ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react";
@@ -14,18 +13,6 @@ import { MeloWordmark } from "@/components/MeloWordmark";
 // Calculate due date from LMP (last menstrual period): LMP + 280 days
 function lmpToDueDate(lmp: Date): Date {
   return addDays(lmp, 280);
-}
-
-// Onboarding-kladde: gemmes løbende i localStorage, så intet går tabt hvis appen lukkes
-const ONBOARDING_DRAFT_KEY = "melo-onboarding-draft";
-
-function loadOnboardingDraft(): Record<string, unknown> {
-  try {
-    const raw = localStorage.getItem(ONBOARDING_DRAFT_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
 }
 
 type Step =
@@ -53,49 +40,30 @@ const complications = [
 export default function OnboardingPage() {
   const { setProfile } = useFamily();
   const { signUp, signIn, user } = useAuth();
-  const navigate = useNavigate();
 
-  // Indlæs evt. gemt kladde én gang ved mount
-  const [draft] = useState(loadOnboardingDraft);
-
-  const [step, setStep] = useState<Step>(() => (draft.step as Step) || "phase");
-  const [phase, setPhase] = useState<"pregnant" | "born" | null>(() => (draft.phase as "pregnant" | "born") ?? null);
-  const [lmpDate, setLmpDate] = useState<Date | undefined>(() => draft.lmpDate ? new Date(draft.lmpDate as string) : undefined);
-  const [birthDate, setBirthDate] = useState<Date | undefined>(() => draft.birthDate ? new Date(draft.birthDate as string) : undefined);
-  const [babyName, setBabyName] = useState(() => (draft.babyName as string) || "");
-  const [role, setRole] = useState<ParentRole>(() => (draft.role as ParentRole) || "mor");
-  const [hasPartner, setHasPartner] = useState(() => (draft.hasPartner as boolean) ?? true);
-  const [yourName, setYourName] = useState(() => (draft.yourName as string) || "");
-  const [partnerName, setPartnerName] = useState(() => (draft.partnerName as string) || "");
-  const [birthType, setBirthType] = useState<BirthType | undefined>(() => (draft.birthType as BirthType) || undefined);
-  const [selectedComplications, setSelectedComplications] = useState<string[]>(() => (draft.selectedComplications as string[]) || []);
-  const [feedingMethod, setFeedingMethod] = useState<FeedingMethod | undefined>(() => (draft.feedingMethod as FeedingMethod) || undefined);
-  const [morLeave, setMorLeave] = useState(() => (draft.morLeave as boolean) ?? true);
-  const [farLeave, setFarLeave] = useState(() => (draft.farLeave as boolean) ?? false);
+  const [step, setStep] = useState<Step>("phase");
+  const [phase, setPhase] = useState<"pregnant" | "born" | null>(null);
+  const [lmpDate, setLmpDate] = useState<Date | undefined>();
+  const [birthDate, setBirthDate] = useState<Date | undefined>();
+  const [babyName, setBabyName] = useState("");
+  const [role, setRole] = useState<ParentRole>("mor");
+  const [hasPartner, setHasPartner] = useState(true);
+  const [yourName, setYourName] = useState("");
+  const [partnerName, setPartnerName] = useState("");
+  const [birthType, setBirthType] = useState<BirthType | undefined>();
+  const [selectedComplications, setSelectedComplications] = useState<string[]>([]);
+  const [feedingMethod, setFeedingMethod] = useState<FeedingMethod | undefined>();
+  const [morLeave, setMorLeave] = useState(true);
+  const [farLeave, setFarLeave] = useState(false);
 
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
   const [saveSuccess, setSaveSuccess] = useState<string | null>(null);
 
-  // Account step state — adgangskode gemmes bevidst ALDRIG i kladden
-  const [email, setEmail] = useState(() => (draft.email as string) || "");
+  // Account step state
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-
-  // Gem kladden løbende, hver gang et felt ændres
-  useEffect(() => {
-    try {
-      localStorage.setItem(ONBOARDING_DRAFT_KEY, JSON.stringify({
-        step, phase,
-        lmpDate: lmpDate?.toISOString(),
-        birthDate: birthDate?.toISOString(),
-        babyName, role, hasPartner, yourName, partnerName,
-        birthType, selectedComplications, feedingMethod,
-        morLeave, farLeave, email,
-      }));
-    } catch { /* localStorage utilgængelig — ignorér */ }
-  }, [step, phase, lmpDate, birthDate, babyName, role, hasPartner, yourName,
-      partnerName, birthType, selectedComplications, feedingMethod, morLeave, farLeave, email]);
 
   // Sensitive steps that can be skipped
   const skippable: Step[] = ["birthtype", "feeding", "leave"];
@@ -187,7 +155,6 @@ export default function OnboardingPage() {
         // signIn succeeded — onAuthStateChange will re-render the app.
         // Save profile to localStorage so the new FamilyProvider picks it up.
         setProfile(newProfile);
-        localStorage.removeItem(ONBOARDING_DRAFT_KEY);
         // Save to Supabase using user from auth (will be set by onAuthStateChange shortly)
         // We do this optimistically — the debounced sync will handle it too.
         if (user) await upsertProfile(user.id, newProfile);
@@ -201,14 +168,12 @@ export default function OnboardingPage() {
 
     if (needsConfirmation) {
       setSaveSuccess("Vi har sendt en bekræftelsesmail til " + email.trim() + ". Klik på linket i mailen og log derefter ind.");
-      localStorage.removeItem(ONBOARDING_DRAFT_KEY);
       setSaving(false);
       return;
     }
 
     // Signup succeeded and session is active — save profile
     setProfile(newProfile);
-    localStorage.removeItem(ONBOARDING_DRAFT_KEY);
     if (userId) await upsertProfile(userId, newProfile);
 
     setSaving(false);
@@ -259,18 +224,6 @@ export default function OnboardingPage() {
                   emoji="👶" title="Barnet er født" sub="Nyfødt eller baby"
                 />
               </div>
-              {/* Login-genvej for tilbagevendende brugere — særligt vigtigt for ny enhed */}
-              <p className="text-center text-[0.72rem] text-muted-foreground pt-2">
-                Har du allerede en konto?{" "}
-                <button
-                  type="button"
-                  onClick={() => navigate("/login")}
-                  className="font-medium hover:underline"
-                  style={{ color: "hsl(var(--moss))" }}
-                >
-                  Log ind
-                </button>
-              </p>
             </div>
           )}
 
@@ -385,7 +338,7 @@ export default function OnboardingPage() {
                   </div>
                 </button>
                 <button
-                  onClick={() => { setRole("mor"); setHasPartner(false); }}
+                  onClick={() => { setHasPartner(false); }}
                   className={cn(
                     "w-full flex items-start gap-3.5 rounded-2xl border-[1.5px] text-left px-4 py-3.5 transition-all active:scale-[0.98]",
                     !hasPartner
@@ -399,6 +352,32 @@ export default function OnboardingPage() {
                     <p className="text-[0.62rem] tracking-[0.08em] text-muted-foreground mt-0.5">Du klarer det alene — vi er her for dig</p>
                   </div>
                 </button>
+                {!hasPartner && (
+                  <div className="flex gap-2 pl-1 pt-1 section-fade-in">
+                    <button
+                      onClick={() => setRole("mor")}
+                      className={cn(
+                        "flex-1 py-2.5 rounded-full text-[0.78rem] border-[1.5px] transition-all active:scale-[0.97]",
+                        role === "mor"
+                          ? "border-[hsl(var(--clay))] bg-[hsl(var(--clay))]/8 font-semibold"
+                          : "border-[hsl(var(--stone-light))] text-muted-foreground"
+                      )}
+                    >
+                      Jeg er den fødende
+                    </button>
+                    <button
+                      onClick={() => setRole("far")}
+                      className={cn(
+                        "flex-1 py-2.5 rounded-full text-[0.78rem] border-[1.5px] transition-all active:scale-[0.97]",
+                        role === "far"
+                          ? "border-[hsl(var(--sage))] bg-[hsl(var(--sage))]/8 font-semibold"
+                          : "border-[hsl(var(--stone-light))] text-muted-foreground"
+                      )}
+                    >
+                      Jeg er medforælder
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           )}
@@ -620,7 +599,10 @@ export default function OnboardingPage() {
           <p className="text-center text-[0.72rem] text-muted-foreground">
             Har du allerede en konto?{" "}
             <button
-              onClick={() => navigate("/login")}
+              onClick={() => {
+                localStorage.removeItem("lille-family");
+                window.location.href = "/";
+              }}
               className="font-medium underline"
               style={{ color: "hsl(var(--moss))" }}
             >

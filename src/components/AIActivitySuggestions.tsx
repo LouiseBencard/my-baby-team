@@ -91,7 +91,7 @@ export function AIActivitySuggestions({ category }: AIActivitySuggestionsProps) 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-end">
-        <button onClick={fetchActivities} className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl hover:bg-muted transition-colors text-[0.72rem] text-muted-foreground" title="Nye forslag">
+        <button onClick={fetchActivities} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-muted transition-colors text-[0.72rem] text-muted-foreground" title="Nye forslag">
           <RefreshCw className="w-3 h-3" />
           Nye forslag
         </button>

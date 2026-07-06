@@ -153,3 +153,41 @@ For ærlighedens skyld:
 
 Den vigtigste regel: **alt der lever som en fil, lever videre. Alt der
 kun lever i samtalen, går tabt.**
+# Tilføjelse til docs/SESSION-HANDOFF.md — 6. juli 2026
+
+Indsæt dette afsnit i SESSION-HANDOFF.md under "Hvad er der lavet i de foregående sessions".
+
+---
+
+## Session 6. juli 2026 — fuld app-audit (Fable 5)
+
+### Kritiske fixes (ligger i melo-audit-fixes.zip, skal kopieres ind + pushes)
+
+| Fix | Fil | Beskrivelse |
+|---|---|---|
+| **Fase-skift dato-styret** | `src/context/FamilyContext.tsx` | effectivePhase tjekkede profile.phase FØR datoen → brugere sad fast i "Uge 40" efter termin. Nu: dato i fremtiden = gravid, termin passeret <14 dage = "gået over termin" (uge 41-42), derefter automatisk nyfødt. |
+| **D-vitamin faktafejl** | `src/pages/TjeklistePage.tsx` | "fra dag 1" → "fra 2-ugers alderen" (SST). phaseData.ts havde det korrekt. |
+| **Solo-forælder inklusion** | `src/pages/OnboardingPage.tsx` | "Alene forælder" hardcodede role="mor". Nu vælges "Jeg er den fødende / Jeg er medforælder". |
+| **Dashboard-redesign mor** | `src/pages/DashboardPregnant.tsx` | Clay/bark hero (mor-palet), uge-specifik overskrift (bullets[0]), progress-bjælke i stedet for cirkelring, 2×2 quick-genveje, rounded-full CTA'er, guide-ikoner rounded-xl, 60ms animation-stagger, CircularRing-kode fjernet. |
+| **Baby-dashboard 3-zone** | `src/pages/DashboardBaby.tsx` | WhatMattersNow øverst (Lige nu) → QuickLog/Appreciation/TaskList (I dag) → viden nederst (Ressourcer). |
+| **Nav-labels** | `src/components/BottomNav.tsx` | "Graviditet"→"Gravid", "Samarbejde"→"Sammen" (klippede på 10px). |
+| **Knap-radius** | `src/components/AIActivitySuggestions.tsx` | Sidste rounded-xl CTA → rounded-full. |
+
+### Audit-resultater (verificeret OK)
+- Routing: 24 ruter, alle Link/navigate-mål krydstjekket, nul brudte links
+- i18n: da.json + en.json i perfekt sync (886 nøgler hver, 656 t()-kald alle definerede)
+- Vaccinationsprogram korrekt (3/5/12 mdr + MFR 15), Naegele-beregning korrekt (LMP+280)
+- Onboarding-flowlogik, localStorage-kladde og konto-oprettelse hænger korrekt sammen
+
+### Dokumenter fra sessionen
+- `melo-audit-rapport.md` — fuld rapport med installations-kommandoer
+- `melo-status-14jun.md` — design-audit fra tidligere session (prioriteret handleliste)
+
+### Vigtigt opdaget
+- Louises lokale mappe var NYERE end GitHub på 3 filer (Dashboard.tsx, SplashScreen.tsx, phaseData.ts) — tjek git status / husk push
+- Test fase-skiftet på iPhone: sæt termin 3 uger tilbage i Indstillinger → appen skal automatisk vise baby-interface
+
+### Konkurrent-indsigt (juli 2026, til pitch)
+- Privatliv er blevet DET store slagsmål: Flo har FTC-forlig, BabyCenter var i Senats-undersøgelse 2024, What to Expect kritiseres for ad-tyngde. Melos ingen-annoncer + EU-data + GDPR-RLS er en aktiv konkurrencefordel — brug den i marketing OG pitch.
+- Partner-features er stadig en eftertanke hos alle store spillere. Ingen har ægte to-forældre-arkitektur. Melos position er valideret og åben.
+- "Fjerde trimester" (postpartum) kaldes underserveret — Melos gravid→nyfødt→baby-kontinuum er et aktivt salgsargument.

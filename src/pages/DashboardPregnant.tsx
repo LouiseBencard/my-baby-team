@@ -57,47 +57,6 @@ function getWeeklyGuides(week: number, trimester: number): Guide[] {
   ];
 }
 
-// ── Circular progress ring ─────────────────────────────────────────────────────
-function CircularRing({ progress }: { progress: number }) {
-  const size = 72;
-  const strokeWidth = 5;
-  const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
-  const offset = circumference - (progress / 100) * circumference;
-
-  return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ flexShrink: 0 }}>
-      {/* Track */}
-      <circle
-        cx={size / 2} cy={size / 2} r={radius}
-        fill="none"
-        stroke="hsl(var(--stone-lighter))"
-        strokeWidth={strokeWidth}
-      />
-      {/* Progress */}
-      <circle
-        cx={size / 2} cy={size / 2} r={radius}
-        fill="none"
-        stroke="hsl(var(--moss))"
-        strokeWidth={strokeWidth}
-        strokeDasharray={circumference}
-        strokeDashoffset={offset}
-        strokeLinecap="round"
-        transform={`rotate(-90 ${size / 2} ${size / 2})`}
-        style={{ transition: "stroke-dashoffset 0.7s ease" }}
-      />
-      {/* Label */}
-      <text
-        x={size / 2} y={size / 2 + 5}
-        textAnchor="middle"
-        style={{ fontSize: "13px", fontWeight: 600, fill: "hsl(var(--moss))" }}
-      >
-        {progress}%
-      </text>
-    </svg>
-  );
-}
-
 // ── Main component ─────────────────────────────────────────────────────────────
 export default function DashboardPregnant() {
   const { profile, currentWeek, totalWeeks, trimester, tasks, morName, farName, takeTask } = useFamily();
@@ -134,14 +93,14 @@ export default function DashboardPregnant() {
             <NotificationBell />
             <div
               className="w-9 h-9 rounded-full flex items-center justify-center text-[0.75rem] font-semibold overflow-hidden"
-              style={{ background: "hsl(var(--sage-light))", color: "hsl(var(--moss))" }}
+              style={{ background: "hsl(var(--clay-light))", color: "hsl(var(--clay-text))" }}
             >
               {profile.parentName?.charAt(0)?.toUpperCase() || <User className="w-4 h-4" />}
             </div>
           </div>
         </div>
 
-        <h1 className="font-serif text-[1.9rem] leading-tight">
+        <h1 className="font-serif text-[1.9rem] leading-tight" style={{ color: "hsl(var(--bark))" }}>
           {getGreeting()}, {profile.parentName}
         </h1>
         <p className="text-[0.9rem] text-muted-foreground mt-1">Ét skridt ad gangen.</p>
@@ -154,8 +113,8 @@ export default function DashboardPregnant() {
       <div
         className="rounded-[20px] overflow-hidden section-fade-in"
         style={{
-          background: "linear-gradient(145deg, hsl(154 22% 28%), hsl(154 27% 20%))",
-          animationDelay: "40ms",
+          background: "linear-gradient(155deg, hsl(22 28% 25%), hsl(32 22% 17%))",
+          animationDelay: "60ms",
         }}
       >
         <div className="px-5 pt-5 pb-4">
@@ -163,7 +122,7 @@ export default function DashboardPregnant() {
             <div>
               <div className="flex items-center gap-2 mb-0.5">
                 <span className="text-[0.68rem] font-semibold px-2.5 py-1 rounded-full text-white"
-                  style={{ background: "hsl(154 22% 38% / 0.5)" }}>
+                  style={{ background: "rgba(255,255,255,0.14)" }}>
                   Uge {currentWeek}
                 </span>
                 <span className="text-[0.75rem] text-white/70">{trimesterLabel}</span>
@@ -172,8 +131,8 @@ export default function DashboardPregnant() {
             <span className="text-[3.5rem] leading-none">{size.emoji}</span>
           </div>
 
-          <p className="font-serif text-[1.4rem] font-medium text-white leading-snug mb-2">
-            Din baby udvikler sig hver dag
+          <p className="font-serif text-[1.45rem] font-medium text-white leading-snug mb-2">
+            {bullets[0]}
           </p>
           <p className="text-[0.85rem] text-white/75 mb-1">
             På størrelse med {size.label.toLowerCase()}
@@ -185,10 +144,10 @@ export default function DashboardPregnant() {
           </div>
 
           <div className="space-y-1.5 mb-4">
-            {bullets.map((b, i) => (
+            {bullets.slice(1).map((b, i) => (
               <div key={i} className="flex items-center gap-2">
                 <div className="w-4 h-4 rounded-full flex items-center justify-center flex-shrink-0"
-                  style={{ background: "hsl(140 22% 55% / 0.35)" }}>
+                  style={{ background: "rgba(255,255,255,0.13)" }}>
                   <Check className="w-2.5 h-2.5 text-white" />
                 </div>
                 <p className="text-[0.8rem] text-white/80">{b}</p>
@@ -198,7 +157,7 @@ export default function DashboardPregnant() {
 
           <Link
             to="/graviditet/uge"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[0.78rem] font-medium text-[hsl(var(--moss))] transition-all active:scale-95"
+            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[0.78rem] font-medium text-[hsl(var(--bark))] transition-all active:scale-95"
             style={{ background: "hsl(var(--warm-white))" }}
           >
             Læs mere om uge {currentWeek} <ArrowRight className="w-3.5 h-3.5" />
@@ -207,34 +166,72 @@ export default function DashboardPregnant() {
 
         {insight.milestone && (
           <div className="px-5 py-2.5 border-t border-white/10"
-            style={{ background: "hsl(154 27% 16% / 0.5)" }}>
+            style={{ background: "rgba(0,0,0,0.18)" }}>
             <p className="text-[0.72rem] text-white/70">🎯 {insight.milestone}</p>
           </div>
         )}
       </div>
 
-      {/* ── D. Progress Card (circular ring) ────────────────────────────────── */}
+      {/* ── D. Progress — horisontal bjælke ─────────────────────────────────── */}
       <div
         className="rounded-2xl px-5 py-4 section-fade-in"
         style={{
-          background: "hsl(var(--warm-white))",
+          background: "hsl(var(--cream))",
           border: "1px solid hsl(var(--stone-light))",
-          animationDelay: "80ms",
+          animationDelay: "240ms",
         }}
       >
+        <div className="flex items-baseline justify-between mb-2.5">
+          <p className="text-[0.72rem] font-medium tracking-[0.1em] uppercase text-muted-foreground">
+            Din graviditet
+          </p>
+          <p className="text-[0.82rem] font-semibold tabular-nums" style={{ color: "hsl(var(--clay-text))" }}>
+            {progress}%
+          </p>
+        </div>
+        <div className="w-full h-[5px] rounded-full overflow-hidden mb-2.5" style={{ background: "hsl(var(--stone-light))" }}>
+          <div
+            className="h-full rounded-full transition-all duration-700 ease-out"
+            style={{ width: `${progress}%`, background: "hsl(var(--clay))" }}
+          />
+        </div>
         <div className="flex items-center justify-between">
-          <div>
-            <p className="text-[0.72rem] font-medium tracking-[0.1em] uppercase text-muted-foreground mb-1">
-              Din graviditet
-            </p>
-            <p className="font-serif text-[1.5rem] font-medium leading-tight" style={{ color: "hsl(var(--moss))" }}>
-              Du er {progress}% igennem
-            </p>
-            <p className="text-[0.78rem] text-muted-foreground mt-1">
-              {daysLeft} dage tilbage til termin
-            </p>
-          </div>
-          <CircularRing progress={progress} />
+          <p className="text-[0.72rem] text-muted-foreground">
+            Uge <span className="font-semibold" style={{ color: "hsl(var(--bark))" }}>{currentWeek}</span> af {totalWeeks}
+          </p>
+          <p className="text-[0.72rem] text-muted-foreground">
+            <span className="font-semibold" style={{ color: "hsl(var(--clay-text))" }}>{daysLeft}</span> dage til termin
+          </p>
+        </div>
+      </div>
+
+      {/* ── D2. Quick genveje ────────────────────────────────────────────────── */}
+      <div className="section-fade-in" style={{ animationDelay: "390ms" }}>
+        <p className="text-[0.7rem] font-medium tracking-[0.12em] uppercase text-muted-foreground mb-2.5">
+          Genveje
+        </p>
+        <div className="grid grid-cols-2 gap-2">
+          {[
+            { emoji: "📅", label: "Kalender",  sub: "Scanninger & aftaler",  path: "/gravid-kalender", bg: "hsl(var(--sage-light))" },
+            { emoji: "📝", label: "Dagbog",    sub: "Skriv om i dag",         path: "/gravid-dagbog",   bg: "hsl(var(--clay-light))" },
+            { emoji: "✅", label: "Tjekliste", sub: "Hvad mangler I?",        path: "/tjekliste",       bg: "hsl(var(--sand-light))" },
+            currentWeek >= 30
+              ? { emoji: "🌿", label: "Fødselsplan", sub: "Jeres ønsker",   path: "/foedselsplan",    bg: "hsl(var(--sage-light))" }
+              : { emoji: "💬", label: "Spørg MELO",  sub: "Din AI-guide",   path: "/chat",            bg: "hsl(var(--stone-lighter))" },
+          ].map((tile, i) => (
+            <Link
+              key={i}
+              to={tile.path}
+              className="flex flex-col gap-2 rounded-2xl p-3.5 transition-all active:scale-[0.97]"
+              style={{ background: tile.bg, border: "1px solid hsl(var(--stone-light) / 0.6)" }}
+            >
+              <span className="text-[1.35rem] leading-none">{tile.emoji}</span>
+              <div>
+                <p className="text-[0.82rem] font-semibold leading-snug" style={{ color: "hsl(var(--bark))" }}>{tile.label}</p>
+                <p className="text-[0.68rem] mt-0.5 text-muted-foreground">{tile.sub}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
 
@@ -244,7 +241,7 @@ export default function DashboardPregnant() {
         style={{
           background: "hsl(var(--warm-white))",
           border: "1px solid hsl(var(--stone-light))",
-          animationDelay: "120ms",
+          animationDelay: "240ms",
         }}
       >
         <div className="flex items-center justify-between px-5 pt-4 pb-3">
@@ -254,8 +251,8 @@ export default function DashboardPregnant() {
           </div>
           <Link
             to="/graviditet/uge"
-            className="text-[0.72rem] font-medium px-3 py-1.5 rounded-xl transition-all active:scale-95"
-            style={{ background: "hsl(var(--stone-lighter))", color: "hsl(var(--foreground))" }}
+            className="text-[0.72rem] font-medium px-3.5 py-1.5 rounded-full transition-all active:scale-95"
+            style={{ background: "hsl(var(--clay-light))", color: "hsl(var(--clay-text))" }}
           >
             Læs mere
           </Link>
@@ -269,7 +266,7 @@ export default function DashboardPregnant() {
               className="flex items-center gap-3.5 px-5 py-3.5 transition-all active:bg-[hsl(var(--stone-lighter))]"
             >
               <div
-                className="w-9 h-9 rounded-full flex items-center justify-center flex-shrink-0 text-[1.1rem]"
+                className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0 text-[1.1rem]"
                 style={{ background: guide.bgColor }}
               >
                 {guide.emoji}
@@ -286,7 +283,7 @@ export default function DashboardPregnant() {
 
       {/* ── E. Tasks Preview ────────────────────────────────────────────────── */}
       {previewTasks.length > 0 && (
-        <div className="section-fade-in" style={{ animationDelay: "160ms" }}>
+        <div className="section-fade-in" style={{ animationDelay: "300ms" }}>
           <div className="flex items-center justify-between mb-3">
             <p className="text-[0.82rem] font-semibold">Det I er i gang med</p>
             <Link to="/sammen" className="text-[0.72rem] font-medium" style={{ color: "hsl(var(--moss))" }}>
@@ -349,7 +346,7 @@ export default function DashboardPregnant() {
                     ) : (
                       <button
                         onClick={() => takeTask(task.id)}
-                        className="text-[0.72rem] font-semibold px-3.5 py-1.5 rounded-xl text-white transition-all active:scale-95 flex-shrink-0"
+                        className="text-[0.72rem] font-semibold px-3.5 py-1.5 rounded-full text-white transition-all active:scale-95 flex-shrink-0"
                         style={{ background: "hsl(var(--moss))" }}
                       >
                         Tag den
@@ -370,7 +367,7 @@ export default function DashboardPregnant() {
         style={{
           background: "hsl(var(--warm-white))",
           border: "1px solid hsl(var(--stone-light))",
-          animationDelay: "165ms",
+          animationDelay: "330ms",
         }}
       >
         <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 text-2xl"
@@ -392,7 +389,7 @@ export default function DashboardPregnant() {
           style={{
             background: "hsl(var(--warm-white))",
             border: "1px solid hsl(var(--stone-light))",
-            animationDelay: "170ms",
+            animationDelay: "360ms",
           }}
         >
           <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 text-2xl"
@@ -415,7 +412,7 @@ export default function DashboardPregnant() {
           style={{
             background: "linear-gradient(135deg, hsl(var(--clay-light)), hsl(var(--sand-light)))",
             border: "1px solid hsl(var(--clay) / 0.3)",
-            animationDelay: "180ms",
+            animationDelay: "390ms",
           }}
         >
           <div className="w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 text-2xl"
@@ -433,7 +430,7 @@ export default function DashboardPregnant() {
       {/* ── G. Disclaimer ───────────────────────────────────────────────────── */}
       <div
         className="rounded-xl px-4 py-3 section-fade-in flex items-start gap-2.5"
-        style={{ background: "hsl(var(--stone-lighter))", animationDelay: "200ms" }}
+        style={{ background: "hsl(var(--stone-lighter))", animationDelay: "420ms" }}
       >
         <span className="text-[0.75rem] text-muted-foreground/60 flex-shrink-0 mt-0.5">ⓘ</span>
         <p className="text-[0.72rem] text-muted-foreground leading-relaxed">

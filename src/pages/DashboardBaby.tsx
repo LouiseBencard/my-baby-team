@@ -124,21 +124,26 @@ export default function DashboardBaby() {
         </div>
       </div>
 
+      {/* Zone 1 — Lige nu */}
+      <WhatMattersNow />
       <NattenKort />
       <LiveSleepTracker childName={childName || "Baby"} />
-      <WhatMattersNow />
+
+      {/* Zone 2 — I dag */}
       <QuickLog />
-      <DiarySnapshot childName={childName || "Baby"} />
+      <AppreciationCard />
       <TaskList />
+      <DiarySnapshot childName={childName || "Baby"} />
+
+      {/* Zone 3 — Ressourcer */}
       <NeedsCardConditional />
       <NatteplanCard />
       <UgensRecap />
-      <JordemoderCard />
       <BabyDevCard />
       {!isMor && (
         <VidsteDuCard ageWeeks={babyAgeWeeks} morName={morName} />
       )}
-      <AppreciationCard />
+      <JordemoderCard />
       <MemoryKeeper />
       <DagensSpørgsmål />
       <NotificationPrompt childName={childName || "Baby"} />

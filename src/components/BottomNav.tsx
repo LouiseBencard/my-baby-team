@@ -19,9 +19,9 @@ export function BottomNav() {
 
   const pregnantItems = [
     { label: "Hjem",        icon: Home,      path: "/",        center: false },
-    { label: "Graviditet",  icon: Baby,      path: "/barn",    center: false },
+    { label: "Gravid",      icon: Baby,      path: "/barn",    center: false },
     { label: "MELO",        icon: Sparkles,  path: "/chat",    center: true  },
-    { label: "Samarbejde",  icon: Users,     path: "/sammen",   center: false },
+    { label: "Sammen",      icon: Users,     path: "/sammen",  center: false },
     { label: "Menu",        icon: Menu,      path: "/mere",    center: false },
   ];
 
