@@ -337,6 +337,11 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
   const futureBabyDateStr = profile.children?.find(c => c.birthDate && new Date(c.birthDate) > now)?.birthDate;
   const date = futureBabyDateStr ? new Date(futureBabyDateStr) : profile.dueOrBirthDate ? new Date(profile.dueOrBirthDate) : now;
 
+  // Datoen er den eneste sandhed for fasen — så en bruger med åben app, hvis termin
+  // passerer i sessionen, ikke sidder fast i "pregnant", og en nybagt forælder med en
+  // gammel "pregnant"-profil i Supabase ikke bliver vist graviditetsindhold.
+  const dateIsFuture = date > now;
+
   let currentWeek = 0;
   let totalWeeks = 40;
   let trimester = 1;
@@ -344,7 +349,7 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
   let babyAgeMonths = 0;
   let phaseLabel = "";
 
-  if (profile.phase === "pregnant" || !!futureBabyDateStr) {
+  if (dateIsFuture) {
     const weeksUntilDue = calcWeeksBetween(now, date);
     currentWeek = Math.max(1, Math.min(40, 40 - weeksUntilDue));
     trimester = currentWeek <= 12 ? 1 : currentWeek <= 27 ? 2 : 3;
@@ -359,8 +364,9 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
     }
   }
 
-  const effectivePhase: LifePhase =
-    (profile.phase === "pregnant" || !!futureBabyDateStr) ? "pregnant" : babyAgeMonths < 3 ? "newborn" : "baby";
+  const effectivePhase: LifePhase = dateIsFuture
+    ? "pregnant"
+    : babyAgeMonths < 3 ? "newborn" : "baby";
 
   const morName = profile.role === "mor" ? profile.parentName : profile.partnerName;
   const farName = profile.role === "far" ? profile.parentName : profile.partnerName;
@@ -438,11 +444,12 @@ export function FamilyProvider({ children }: { children: ReactNode }) {
   };
 
   const joinFamilyByCode = async (code: string): Promise<{ success: boolean; partnerName?: string; error?: string }> => {
-    const { data, error } = await supabase
-      .from("profiles")
-      .select("user_id, parent_name, family_id, invite_code")
-      .eq("invite_code", code.toUpperCase())
-      .maybeSingle();
+    // Bruger lookup_invite SECURITY DEFINER-funktionen i stedet for en direkte
+    // profiles-SELECT, så vi ikke har brug for en åben RLS-politik der eksponerer
+    // alle profiler. Se supabase/migrations/20260530_rls_hardening.sql.
+    const { data, error } = await (supabase
+      .rpc("lookup_invite" as any, { code: code.toUpperCase() })
+      .maybeSingle() as any);
     if (error || !data) return { success: false, error: "Koden blev ikke fundet. Tjek at du har tastet korrekt." };
     if (data.user_id === user?.id) return { success: false, error: "Det er din egen kode — del den med din partner." };
     const partnerUserId = data.user_id;

@@ -331,7 +331,7 @@ export function getTasksForPhase(phase: "pregnant" | "newborn" | "baby", week: n
     { id: "n2", title: "Book sundhedsplejerske", assignee: "mor", category: "health" },
     { id: "n3", title: "Planlæg besøgstider", assignee: "fælles", category: "relationship" },
     { id: "n4", title: "Tummy time · 5 min × 3", assignee: "fælles", category: "health" },
-    { id: "n5", title: "Bestil D-vitamin dråber", assignee: "far", category: "health" },
+    { id: "n5", title: "Bestil D-vitamin dråber (10 µg dagligt fra 2-ugers alderen og til 4 år)", assignee: "far", category: "health" },
   ];
 
   return [
@@ -341,7 +341,10 @@ export function getTasksForPhase(phase: "pregnant" | "newborn" | "baby", week: n
   ];
 }
 
-// Health visit suggestions based on baby age — shown as suggested tasks in checklist
+// Health visit suggestions based on baby age — shown as suggested tasks in checklist.
+// Følger Sundhedsstyrelsens program: lægeundersøgelser ved 5 uger, 5 mdr, 12 mdr
+// (+ 2, 3, 4, 5 år) og børnevaccinationer ved 3, 5 og 12 mdr (DiTeKiPolHib),
+// plus MFR ved 15 mdr.
 export function getHealthSuggestions(ageWeeks: number): PhaseTask[] {
   const tasks: PhaseTask[] = [];
 
@@ -354,17 +357,23 @@ export function getHealthSuggestions(ageWeeks: number): PhaseTask[] {
   if (ageWeeks >= 2 && ageWeeks < 4) {
     tasks.push({ id: "h_sp3u", title: "Sundhedsplejerske uge 3 — book tid", assignee: "mor", category: "health" });
   }
-  if (ageWeeks >= 7 && ageWeeks < 10) {
-    tasks.push({ id: "h_2mdr", title: "2-måneders undersøgelse + første vaccination — book hos læge", assignee: "fælles", category: "health" });
+  if (ageWeeks >= 4 && ageWeeks < 7) {
+    tasks.push({ id: "h_5u_laege", title: "5-ugers undersøgelse hos egen læge — book tid", assignee: "fælles", category: "health" });
   }
   if (ageWeeks >= 5 && ageWeeks < 9) {
     tasks.push({ id: "h_8u_mor", title: "8-ugers kontrol hos læge (mor) — husk at booke", assignee: "mor", category: "health" });
   }
-  if (ageWeeks >= 19 && ageWeeks < 23) {
-    tasks.push({ id: "h_5mdr", title: "5-måneders undersøgelse + anden vaccination — book hos læge", assignee: "fælles", category: "health" });
+  if (ageWeeks >= 11 && ageWeeks < 15) {
+    tasks.push({ id: "h_3mdr_vacc", title: "1. vaccination (3-måneders alderen) — book hos læge", assignee: "fælles", category: "health" });
   }
-  if (ageWeeks >= 33 && ageWeeks < 37) {
-    tasks.push({ id: "h_8mdr", title: "8–10-måneders undersøgelse + tredje vaccination — book hos læge", assignee: "fælles", category: "health" });
+  if (ageWeeks >= 19 && ageWeeks < 23) {
+    tasks.push({ id: "h_5mdr", title: "5-måneders undersøgelse + 2. vaccination — book hos læge", assignee: "fælles", category: "health" });
+  }
+  if (ageWeeks >= 50 && ageWeeks < 54) {
+    tasks.push({ id: "h_12mdr", title: "12-måneders undersøgelse + 3. vaccination — book hos læge", assignee: "fælles", category: "health" });
+  }
+  if (ageWeeks >= 63 && ageWeeks < 67) {
+    tasks.push({ id: "h_15mdr_mfr", title: "MFR-vaccination (15-måneders alderen) — book hos læge", assignee: "fælles", category: "health" });
   }
 
   return tasks;

@@ -14,7 +14,7 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
     <div
       className="fixed inset-0 z-[999] flex items-center justify-center"
       style={{
-        background: "linear-gradient(145deg, #dff2d4, #c4e2b0)",
+        background: "linear-gradient(145deg, hsl(var(--cream)), hsl(var(--sage-light)))",
         opacity: fading ? 0 : 1,
         transition: "opacity 0.5s ease-out",
         pointerEvents: "none",
@@ -34,7 +34,7 @@ export function SplashScreen({ onDone }: { onDone: () => void }) {
             width: "120px",
             height: "120px",
             borderRadius: "28px",
-            boxShadow: "0 8px 40px hsl(140 30% 30% / 0.18)",
+            boxShadow: "0 8px 40px hsl(var(--moss) / 0.18)",
             mixBlendMode: "multiply",
           }}
         />

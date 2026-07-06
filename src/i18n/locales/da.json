@@ -1089,7 +1089,20 @@
     "hasAccount": "Har du allerede en konto?",
     "checkEmail": "Tjek din e-mail ✉️",
     "checkEmailBody": "Vi har sendt et bekræftelseslink til {{email}}. Klik på linket for at aktivere din konto.",
-    "backToLogin": "Tilbage til login"
+    "backToLogin": "Tilbage til login",
+    "forgotPassword": "Glemt adgangskode?",
+    "resetTitle": "Nulstil adgangskode",
+    "resetIntro": "Indtast din e-mail, så sender vi dig et link til at vælge en ny adgangskode.",
+    "sendResetLink": "Send nulstillingslink",
+    "resetSentTitle": "Tjek din e-mail ✉️",
+    "resetSentBody": "Vi har sendt et nulstillingslink til {{email}}. Klik på linket for at vælge en ny adgangskode.",
+    "newPasswordTitle": "Vælg en ny adgangskode",
+    "newPassword": "Ny adgangskode",
+    "confirmPassword": "Gentag adgangskode",
+    "savePassword": "Gem ny adgangskode",
+    "passwordMismatch": "Adgangskoderne er ikke ens.",
+    "passwordUpdated": "Din adgangskode er opdateret.",
+    "toApp": "Gå til appen"
   },
   "memory": {
     "title": "Jeres øjeblikke",

@@ -224,7 +224,7 @@ const CHECKLIST_ITEMS: ChecklistItem[] = [
   { id: "b28", title: "Navngivning (inden 15 dage efter fødsel)", hint: "borger.dk — kan gøres direkte fra telefonen", priority: "nødvendig", phase: "before", category: "Praktisk & vigtigt", emoji: "📋" },
 
   // ── NÅR BABY ER KOMMET ──
-  { id: "a1", title: "D-vitamin dråber", hint: "Sundhedsstyrelsen anbefaler fra dag 1", priority: "nødvendig", phase: "after", category: "Første uger", emoji: "🌿" },
+  { id: "a1", title: "D-vitamin dråber", hint: "Sundhedsstyrelsen: 10 µg dagligt fra 2-ugers alderen og til 4 år", priority: "nødvendig", phase: "after", category: "Første uger", emoji: "🌿" },
   { id: "a2", title: "Bekræft sundhedsplejerske-besøg", hint: "Sker automatisk — ring og bekræft tidspunkt", priority: "nødvendig", phase: "after", category: "Første uger", emoji: "🌿" },
   { id: "a3", title: "PKU-blodprøve & hørescreening", hint: "Tages på hospitalet — bekræft at det er sket", priority: "nødvendig", phase: "after", category: "Første uger", emoji: "🌿" },
 

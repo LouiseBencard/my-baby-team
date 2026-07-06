@@ -9,6 +9,10 @@ interface AuthContextType {
   signUp: (email: string, password: string) => Promise<{ error: string | null; needsConfirmation: boolean; userId: string | null }>;
   signIn: (email: string, password: string) => Promise<{ error: string | null }>;
   signOut: () => Promise<void>;
+  resetPassword: (email: string) => Promise<{ error: string | null }>;
+  updatePassword: (password: string) => Promise<{ error: string | null }>;
+  recoveryMode: boolean;
+  clearRecoveryMode: () => void;
 }
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -17,6 +21,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  // true når brugeren er kommet ind via et adgangskode-nulstillingslink fra mail
+  const [recoveryMode, setRecoveryMode] = useState(false);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -25,7 +31,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event === "PASSWORD_RECOVERY") setRecoveryMode(true);
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
@@ -54,8 +61,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     await supabase.auth.signOut();
   };
 
+  // Sender en nulstillingsmail; linket fører tilbage til /reset-password
+  const resetPassword = async (email: string) => {
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + "/reset-password",
+    });
+    return { error: error?.message ?? null };
+  };
+
+  // Sætter en ny adgangskode for den aktuelle (recovery-)session
+  const updatePassword = async (password: string) => {
+    const { error } = await supabase.auth.updateUser({ password });
+    return { error: error?.message ?? null };
+  };
+
+  const clearRecoveryMode = () => setRecoveryMode(false);
+
   return (
-    <AuthContext.Provider value={{ user, session, loading, signUp, signIn, signOut }}>
+    <AuthContext.Provider value={{ user, session, loading, signUp, signIn, signOut, resetPassword, updatePassword, recoveryMode, clearRecoveryMode }}>
       {children}
     </AuthContext.Provider>
   );

@@ -51,6 +51,7 @@ import ContractionTimerPage from "@/pages/ContractionTimerPage";
 import BirthPlanPage from "@/pages/BirthPlanPage";
 import PregnancyCalendarPage from "@/pages/PregnancyCalendarPage";
 import AuthPage from "@/pages/AuthPage";
+import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import NotFound from "@/pages/NotFound";
 import PrivacyPage from "@/pages/PrivacyPage";
 import OenskelistePage from "@/pages/OenskelistePage";
@@ -84,9 +85,18 @@ function PushRegistrar() {
 }
 
 function AuthenticatedApp() {
-  const { user, loading } = useAuth();
+  const { user, loading, recoveryMode } = useAuth();
 
   if (loading) return <Spinner />;
+
+  // Bruger er kommet ind via et nulstillingslink fra mail → vælg ny adgangskode
+  if (recoveryMode) {
+    return (
+      <Routes>
+        <Route path="*" element={<ResetPasswordPage />} />
+      </Routes>
+    );
+  }
 
   if (!user) {
     // New user: go through onboarding first (account created at the end)
@@ -102,6 +112,9 @@ function AuthenticatedApp() {
     return (
       <FamilyProvider>
         <Routes>
+          {/* Direkte vej fra onboarding til login — ingen hard reload eller storage-rydning */}
+          <Route path="/login" element={<AuthPage />} />
+          <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="*" element={<OnboardingPage />} />
         </Routes>
       </FamilyProvider>

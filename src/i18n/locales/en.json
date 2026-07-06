@@ -1089,7 +1089,20 @@
     "hasAccount": "Already have an account?",
     "checkEmail": "Check your email ✉️",
     "checkEmailBody": "We've sent a confirmation link to {{email}}. Click the link to activate your account.",
-    "backToLogin": "Back to login"
+    "backToLogin": "Back to login",
+    "forgotPassword": "Forgot password?",
+    "resetTitle": "Reset password",
+    "resetIntro": "Enter your email and we'll send you a link to choose a new password.",
+    "sendResetLink": "Send reset link",
+    "resetSentTitle": "Check your email ✉️",
+    "resetSentBody": "We've sent a reset link to {{email}}. Click the link to choose a new password.",
+    "newPasswordTitle": "Choose a new password",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat password",
+    "savePassword": "Save new password",
+    "passwordMismatch": "The passwords don't match.",
+    "passwordUpdated": "Your password has been updated.",
+    "toApp": "Go to the app"
   },
   "memory": {
     "title": "Your moments",
