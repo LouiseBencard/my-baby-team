@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		221D307D2FFE440500BE1B54 /* MeloViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D307C2FFE440500BE1B54 /* MeloViewController.swift */; };
+		221D307F2FFE5E1900BE1B54 /* LiveActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221D307E2FFE5E1900BE1B54 /* LiveActivityPlugin.swift */; };
 		2224C6982F9EBD310067125D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2224C6972F9EBD300067125D /* WidgetKit.framework */; };
 		2224C69A2F9EBD310067125D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2224C6992F9EBD310067125D /* SwiftUI.framework */; };
 		2224C6A52F9EBD340067125D /* SleepWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 2224C6952F9EBD300067125D /* SleepWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		2224C6B12F9F47190067125D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2224C6972F9EBD300067125D /* WidgetKit.framework */; };
-		2224C6B72F9F49D20067125D /* LiveActivityPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 2224C6B32F9F49D20067125D /* LiveActivityPlugin.m */; };
-		2224C6B82F9F49D20067125D /* LiveActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2224C6B42F9F49D20067125D /* LiveActivityPlugin.swift */; };
 		2FAD9763203C412B000D30F8 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = 2FAD9762203C412B000D30F8 /* config.xml */; };
 		4D22ABE92AF431CB00220026 /* CapApp-SPM in Frameworks */ = {isa = PBXBuildFile; productRef = 4D22ABE82AF431CB00220026 /* CapApp-SPM */; };
 		50379B232058CBB4000EE86E /* capacitor.config.json in Resources */ = {isa = PBXBuildFile; fileRef = 50379B222058CBB4000EE86E /* capacitor.config.json */; };
@@ -48,13 +48,13 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		221D307C2FFE440500BE1B54 /* MeloViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeloViewController.swift; sourceTree = "<group>"; };
+		221D307E2FFE5E1900BE1B54 /* LiveActivityPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityPlugin.swift; sourceTree = "<group>"; };
 		2224C6902F9E79730067125D /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
 		2224C6952F9EBD300067125D /* SleepWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SleepWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		2224C6972F9EBD300067125D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		2224C6992F9EBD310067125D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 		2224C6B22F9F47B10067125D /* SleepWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SleepWidgetExtension.entitlements; sourceTree = "<group>"; };
-		2224C6B32F9F49D20067125D /* LiveActivityPlugin.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LiveActivityPlugin.m; sourceTree = "<group>"; };
-		2224C6B42F9F49D20067125D /* LiveActivityPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiveActivityPlugin.swift; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -72,6 +72,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Info.plist,
+				SleepLiveActivityView.swift,
+				SleepWidget.swift,
 			);
 			target = 2224C6942F9EBD300067125D /* SleepWidgetExtension */;
 		};
@@ -85,6 +87,7 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		221D30632FFC601700BE1B54 /* SleepWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = SleepWidget; sourceTree = "<group>"; };
 		2224C69B2F9EBD310067125D /* SleepWidget */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (2224C6B02F9F452A0067125D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, 2224C6A62F9EBD340067125D /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = SleepWidget; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
@@ -122,12 +125,11 @@
 		504EC2FB1FED79650016851F = {
 			isa = PBXGroup;
 			children = (
-				2224C6B32F9F49D20067125D /* LiveActivityPlugin.m */,
-				2224C6B42F9F49D20067125D /* LiveActivityPlugin.swift */,
 				2224C6B22F9F47B10067125D /* SleepWidgetExtension.entitlements */,
 				958DCC722DB07C7200EA8C5F /* debug.xcconfig */,
 				504EC3061FED79650016851F /* App */,
 				2224C69B2F9EBD310067125D /* SleepWidget */,
+				221D30632FFC601700BE1B54 /* SleepWidget */,
 				2224C6962F9EBD300067125D /* Frameworks */,
 				504EC3051FED79650016851F /* Products */,
 			);
@@ -145,6 +147,7 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				221D307C2FFE440500BE1B54 /* MeloViewController.swift */,
 				2224C6902F9E79730067125D /* App.entitlements */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
@@ -154,6 +157,7 @@
 				504EC3131FED79650016851F /* Info.plist */,
 				2FAD9762203C412B000D30F8 /* config.xml */,
 				50B271D01FEDC1A000F3C39B /* public */,
+				221D307E2FFE5E1900BE1B54 /* LiveActivityPlugin.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -212,7 +216,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
-				LastSwiftUpdateCheck = 2640;
+				LastSwiftUpdateCheck = 2660;
 				LastUpgradeCheck = 2640;
 				TargetAttributes = {
 					2224C6942F9EBD300067125D = {
@@ -283,9 +287,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2224C6B72F9F49D20067125D /* LiveActivityPlugin.m in Sources */,
-				2224C6B82F9F49D20067125D /* LiveActivityPlugin.swift in Sources */,
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
+				221D307D2FFE440500BE1B54 /* MeloViewController.swift in Sources */,
+				221D307F2FFE5E1900BE1B54 /* LiveActivityPlugin.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,7 +340,7 @@
 				INFOPLIST_FILE = SleepWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SleepWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -377,7 +381,7 @@
 				INFOPLIST_FILE = SleepWidget/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = SleepWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

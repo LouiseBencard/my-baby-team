@@ -1,29 +1,30 @@
-import { Capacitor } from "@capacitor/core";
+import { Capacitor, registerPlugin } from "@capacitor/core";
 
 interface StartSleepActivityOptions {
   childName: string;
-  startTime: number; // Unix milliseconds
+  startTime: number;
   sleepType: "nap" | "night";
 }
+
+interface LiveActivityPlugin {
+  startSleepActivity(options: StartSleepActivityOptions): Promise<void>;
+  endSleepActivity(): Promise<void>;
+}
+
+const LiveActivity = registerPlugin<LiveActivityPlugin>("LiveActivity");
 
 export async function startSleepActivity(options: StartSleepActivityOptions): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
   try {
-    const { Plugins } = await import("@capacitor/core");
-    const LiveActivity = (Plugins as any)["LiveActivity"];
-    if (!LiveActivity) return;
     await LiveActivity.startSleepActivity(options);
   } catch {
-    // silent fail — Live Activities are a nice-to-have
+    // Live Activities er nice-to-have (kræver iOS 16.2+)
   }
 }
 
 export async function endSleepActivity(): Promise<void> {
   if (!Capacitor.isNativePlatform()) return;
   try {
-    const { Plugins } = await import("@capacitor/core");
-    const LiveActivity = (Plugins as any)["LiveActivity"];
-    if (!LiveActivity) return;
     await LiveActivity.endSleepActivity();
   } catch {
     // silent fail
