@@ -1,40 +1,47 @@
+import meloMark from "@/assets/melo-mark.png";
+
 interface MeloWordmarkProps {
   size?: string;
   color?: string;
 }
 
-/**
- * Melo wordmark: uses the official logo PNG (MEL + spiral O).
- * `size` controls the height of the logo image.
- */
-export function MeloWordmark({ size = "2.6rem" }: MeloWordmarkProps) {
+export function MeloWordmark({ size = "1.8rem" }: MeloWordmarkProps) {
+  const px = parseFloat(size) * 16;
+  const markHeight = Math.round(px * 0.92);
+
   return (
-    <img
-      src="/melo-wordmark.png"
-      alt="Melo"
-      style={{ height: size, width: "auto", display: "block", objectFit: "contain" }}
-      draggable={false}
-    />
+    <div className="flex items-center gap-2 select-none" aria-label="Melo">
+      <img
+        src={meloMark}
+        alt=""
+        aria-hidden="true"
+        style={{ height: markHeight, width: "auto", display: "block" }}
+        draggable={false}
+      />
+      <span
+        className="font-serif lowercase"
+        style={{
+          fontSize: size,
+          color: "hsl(var(--moss))",
+          letterSpacing: "-0.02em",
+          lineHeight: 1,
+          marginTop: "0.08em",
+        }}
+      >
+        melo
+      </span>
+    </div>
   );
 }
 
-/**
- * Standalone spiral icon (for app icon, favicon, small badges).
- */
 export function MeloIcon({ size = 28, color = "hsl(var(--moss))" }: { size?: number; color?: string }) {
   return (
-    <svg
-      viewBox="0 0 100 100"
-      width={size}
-      height={size}
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
+    <img
+      src={meloMark}
+      alt=""
       aria-hidden="true"
-    >
-      <path d="M 50 8 A 42 42 0 1 1 9 39" stroke={color} strokeWidth="8.5" strokeLinecap="round" />
-      <path d="M 50 22 A 28 28 0 1 1 22 45" stroke={color} strokeWidth="7" strokeLinecap="round" />
-      <path d="M 56 35 A 16 16 0 1 1 35 45" stroke={color} strokeWidth="5.5" strokeLinecap="round" />
-      <circle cx="50" cy="50" r="5.5" fill={color} />
-    </svg>
+      style={{ width: size, height: "auto" }}
+      draggable={false}
+    />
   );
 }

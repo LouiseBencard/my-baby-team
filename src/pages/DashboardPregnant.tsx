@@ -4,6 +4,7 @@ import { MeloWordmark } from "@/components/MeloWordmark";
 import { NotificationBell } from "@/components/NotificationCenter";
 import { WeekUnlockModal } from "@/components/WeekUnlockModal";
 import { CheckInCard } from "@/components/PregnancyCheckIn";
+import { BabyStageIllustration } from "@/components/BabyStageIllustration";
 import { User, ArrowRight, Check, ChevronRight, Timer, FileText, Moon } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
@@ -128,7 +129,13 @@ export default function DashboardPregnant() {
                 <span className="text-[0.75rem] text-white/70">{trimesterLabel}</span>
               </div>
             </div>
-            <span className="text-[3.5rem] leading-none">{size.emoji}</span>
+            <BabyStageIllustration
+  week={currentWeek}
+  fruitEmoji={size.emoji}
+  fruitLabel={size.label.toLowerCase()}
+  lengthLabel={`ca. ${size.lengthCm} cm`}
+  weightLabel={`ca. ${size.weightG} g`}
+/>
           </div>
 
           <p className="font-serif text-[1.45rem] font-medium text-white leading-snug mb-2">
