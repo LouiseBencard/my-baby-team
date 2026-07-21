@@ -695,7 +695,18 @@
     "themeDesc": "Vælg mellem lyst og mørkt tema. Mørkt tema er rart om natten.",
     "light": "☀️ Lyst",
     "dark": "🌙 Mørkt",
-    "languagePerRole": "Vælg dit foretrukne sprog. Hver forælder kan have sit eget sprog."
+    "languagePerRole": "Vælg dit foretrukne sprog. Hver forælder kan have sit eget sprog.",
+    "notifications": "Notifikationer",
+    "notificationsDesc": "Vælg hvad Melo må minde jer om. Vi sender højst et par stykker om ugen — og aldrig med dårlig samvittighed.",
+    "notifWeekly": "Ny uge er klar",
+    "notifWeeklyDesc": "Søndag aften, når ugens indhold åbner",
+    "notifPhase": "Vigtige påmindelser",
+    "notifPhaseDesc": "D-vitamin og vaccinationer på de rigtige tidspunkter",
+    "notifAppreciation": "Jer to",
+    "notifAppreciationDesc": "En ugentlig anledning til at påskønne din partner",
+    "privacy": "Privatliv",
+    "privacyAnalytics": "Anonym brugsstatistik",
+    "privacyAnalyticsDesc": "Hjælper os med at forbedre appen. Gemmes kun på vores egne EU-servere, deles aldrig og indeholder aldrig navne eller indhold."
   },
   "sidebarSections": {
     "overview": "OVERSIGT",

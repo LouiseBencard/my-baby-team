@@ -1,9 +1,13 @@
 import { useEffect, useRef } from "react";
+import { Capacitor } from "@capacitor/core";
 import { useDiary } from "@/context/DiaryContext";
 import { useFamily } from "@/context/FamilyContext";
+import { scheduleSleepNotification, cancelSleepNotification } from "@/lib/notifications";
 
 /**
- * Sends browser notifications when baby's wake window is closing.
+ * Notifies when baby's wake window is closing.
+ * Native iOS: scheduled local notification (works with locked screen).
+ * Web: browser Notification API (works while the tab is open).
  * Only notifies the parent who is "on duty" (on leave = default on duty,
  * weekends = both parents get notified).
  */
@@ -12,17 +16,24 @@ export function useSleepNotifications() {
   const { profile, babyAgeWeeks, isOnLeave } = useFamily();
   const notifiedRef = useRef<string | null>(null);
   const childName = profile.children?.[0]?.name || "Baby";
+  const lang = (profile.languages?.[profile.role] || "da") as "da" | "en";
+  const isNative = Capacitor.isNativePlatform();
 
-  // Request permission on mount
+  // Request permission on mount (web only — native handled by NotificationScheduler)
   useEffect(() => {
+    if (isNative) return;
     if ("Notification" in window && Notification.permission === "default") {
       Notification.requestPermission();
     }
-  }, []);
+  }, [isNative]);
 
   useEffect(() => {
-    if (activeSleep) return; // baby is sleeping, no need to notify
-    if (!("Notification" in window) || Notification.permission !== "granted") return;
+    if (activeSleep) {
+      // Baby is sleeping — cancel any pending sweetspot notification
+      if (isNative) void cancelSleepNotification();
+      return;
+    }
+    if (!isNative && (!("Notification" in window) || Notification.permission !== "granted")) return;
 
     // Determine if this parent should receive notifications
     const dayOfWeek = new Date().getDay();
@@ -51,6 +62,18 @@ export function useSleepNotifications() {
     const minutesSinceWake = (Date.now() - lastEnd) / 60000;
     const timeLeft = maxWakeMin - minutesSinceWake;
 
+    // ── Native iOS: schedule a local notification at sweetspot-minus-15 ──
+    // Fires even if the app is closed or the screen is locked.
+    if (isNative) {
+      if (timeLeft > 15 && notifiedRef.current !== lastSleepId) {
+        notifiedRef.current = lastSleepId;
+        const notifyAt = new Date(lastEnd + (maxWakeMin - 15) * 60000);
+        void scheduleSleepNotification(notifyAt, childName, lang);
+      }
+      return;
+    }
+
+    // ── Web: browser notification ──
     // Notify ~15 min before sweetspot closes
     if (timeLeft > 0 && timeLeft <= 15 && notifiedRef.current !== lastSleepId) {
       notifiedRef.current = lastSleepId;

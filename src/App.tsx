@@ -28,6 +28,8 @@ import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { FamilyProvider } from "@/context/FamilyContext";
 import { DiaryProvider } from "@/context/DiaryContext";
 import { usePushNotifications } from "@/hooks/usePushNotifications";
+import { PageViewTracker } from "@/components/PageViewTracker";
+import { NotificationScheduler } from "@/components/NotificationScheduler";
 import AppLayout from "@/components/AppLayout";
 import Dashboard from "@/pages/Dashboard";
 import BarnPage from "@/pages/BarnPage";
@@ -125,6 +127,7 @@ function AuthenticatedApp() {
     <FamilyProvider>
       <DiaryProvider>
         <PushRegistrar />
+        <NotificationScheduler />
         <Routes>
           <Route path="/onboarding" element={<OnboardingPage />} />
           <Route element={<AppLayout />}>
@@ -172,6 +175,7 @@ const App = () => {
             {!splashDone && <SplashScreen onDone={() => setSplashDone(true)} />}
             <BrowserRouter>
               <ErrorBoundary>
+                <PageViewTracker />
                 <AuthenticatedApp />
               </ErrorBoundary>
             </BrowserRouter>

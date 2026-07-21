@@ -695,7 +695,18 @@
     "themeDesc": "Choose between light and dark theme. Dark mode is great at night.",
     "light": "☀️ Light",
     "dark": "🌙 Dark",
-    "languagePerRole": "Choose your preferred language. Each parent can have their own language."
+    "languagePerRole": "Choose your preferred language. Each parent can have their own language.",
+    "notifications": "Notifications",
+    "notificationsDesc": "Choose what Melo may remind you about. We send at most a few per week — and never with guilt.",
+    "notifWeekly": "New week is ready",
+    "notifWeeklyDesc": "Sunday evening, when the week's content unlocks",
+    "notifPhase": "Important reminders",
+    "notifPhaseDesc": "Vitamin D and vaccinations at the right times",
+    "notifAppreciation": "The two of you",
+    "notifAppreciationDesc": "A weekly nudge to appreciate your partner",
+    "privacy": "Privacy",
+    "privacyAnalytics": "Anonymous usage statistics",
+    "privacyAnalyticsDesc": "Helps us improve the app. Stored only on our own EU servers, never shared, and never contains names or content."
   },
   "sidebarSections": {
     "overview": "OVERVIEW",

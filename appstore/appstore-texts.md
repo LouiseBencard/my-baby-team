@@ -4,10 +4,11 @@ Klar til indsætning i App Store Connect
 ---
 
 ## APP NAVN (30 tegn maks)
-**Melo: Baby & Family Tracker**
-(29 tegn — inkluderer primære søgeord)
+**Dansk:** `Melo — gravid & nye forældre` *(28 tegn)*
+**English:** `Melo — pregnancy & new parents` *(30 tegn)*
 
-Alternativ: **Melo – Gravid & Baby Tracker** (38 tegn — for langt, brug ovenstående)
+Begge navne indeholder bevidst "gravid/pregnancy" + "nye forældre/new parents"
+— de to mest søgte termer i kategorien, og dem målgruppen identificerer sig med.
 
 ---
 
@@ -20,7 +21,12 @@ Engelsk: **Sleep, Feeding & Co-Parenting**
 ---
 
 ## KATEGORI
-**Medical** (ikke Health & Fitness — alle top graviditets- og baby-apps ligger her)
+**Primær:** Health & Fitness
+**Sekundær:** Lifestyle
+
+(Bevidst flyttet fra "Medical" — Apple presser pregnancy/baby-apps ud af
+Medical-kategorien medmindre de har medicinsk udstyrs-godkendelse. Health &
+Fitness er hvor Preglife, Flo, Glow m.fl. ligger og er det sikre valg.)
 
 ---
 
@@ -208,17 +214,20 @@ This is our first release — thank you for being here from the start.
 
 | Felt | Værdi |
 |------|-------|
-| App Name | Melo: Baby & Family Tracker |
-| Subtitle | Søvn, amning og babytracker |
+| App Name (DA) | Melo — gravid & nye forældre |
+| App Name (EN) | Melo — pregnancy & new parents |
+| Subtitle (DA) | Søvn, amning og babytracker |
+| Subtitle (EN) | Sleep, feeding & co-parenting |
 | Bundle ID | dk.meloparents.app |
 | SKU | melo-parents-001 |
 | Primary Language | Danish |
-| Category | Medical |
+| Category | Health & Fitness |
 | Secondary Category | Lifestyle |
 | Age Rating | 4+ |
 | Price | Free |
-| Privacy Policy URL | https://[din-domain]/privacy |
-| Support URL | https://[din-domain] |
+| Privacy Policy URL | https://meloparents.com/privacy |
+| Support URL | https://meloparents.com/support |
+| Marketing URL | https://meloparents.com |
 
 ---
 

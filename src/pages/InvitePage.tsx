@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useFamily } from "@/context/FamilyContext";
+import { track } from "@/lib/analytics";
 import { Copy, Share2, Check, ArrowLeft } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -18,12 +19,14 @@ export default function InvitePage() {
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(myCode);
+    track("invite_code_copied", { via: "invite_page" });
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
 
   const handleShare = async () => {
     if (navigator.share) {
+      track("invite_code_shared", { via: "invite_page" });
       await navigator.share({
         title: "Melo — forbind os",
         text: `Brug denne kode til at forbinde dig med mig i Melo: ${myCode}`,
@@ -40,6 +43,7 @@ export default function InvitePage() {
     const result = await joinFamilyByCode(code.trim());
     setJoining(false);
     if (result.success) {
+      track("partner_linked", { via: "invite_page" });
       setJoinedName(result.partnerName || "din partner");
     } else {
       setJoinError(result.error || "Noget gik galt. Prøv igen.");

@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useFamily, type ParentRole, type BirthType, type FeedingMethod } from "@/context/FamilyContext";
+import { track } from "@/lib/analytics";
 import { useAuth } from "@/context/AuthContext";
 import { ArrowRight, ArrowLeft, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { format, addDays } from "date-fns";
@@ -104,6 +105,12 @@ export default function OnboardingPage() {
     );
   };
 
+  // Onboarding-funnel: ét event pr. skridt brugeren når frem til.
+  // Ingen PII — kun step-navnet.
+  useEffect(() => {
+    track("onboarding_step", { step });
+  }, [step]);
+
   const goNext = () => {
     const i = steps.indexOf(step);
     if (i < steps.length - 1) setStep(steps[i + 1]);
@@ -158,6 +165,7 @@ export default function OnboardingPage() {
         // Save to Supabase using user from auth (will be set by onAuthStateChange shortly)
         // We do this optimistically — the debounced sync will handle it too.
         if (user) await upsertProfile(user.id, newProfile);
+        track("onboarding_completed", { phase: newProfile.phase, role, hasPartner, via: "signin" });
         setSaving(false);
         return;
       }
@@ -175,6 +183,7 @@ export default function OnboardingPage() {
     // Signup succeeded and session is active — save profile
     setProfile(newProfile);
     if (userId) await upsertProfile(userId, newProfile);
+    track("onboarding_completed", { phase: newProfile.phase, role, hasPartner });
 
     setSaving(false);
     // onAuthStateChange will fire and re-render App.tsx → user is authenticated → Dashboard shown

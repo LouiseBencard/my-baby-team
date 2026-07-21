@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useFamily } from "@/context/FamilyContext";
+import headerImg from "@/assets/header-mor-baby.webp";
 import { useDiary } from "@/context/DiaryContext";
 import { useTranslation } from "react-i18next";
 import { QuickLog } from "@/components/QuickLog";

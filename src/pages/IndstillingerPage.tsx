@@ -1,10 +1,29 @@
 import { useFamily, type LifePhase } from "@/context/FamilyContext";
 import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
-import { Globe, Sun, Moon, ChevronLeft, User, Calendar } from "lucide-react";
+import { Globe, Sun, Moon, ChevronLeft, User, Calendar, Bell, ShieldCheck } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { FamilyLinkCard } from "@/components/FamilyLinkCard";
+import { getNotifPrefs, setNotifPref, rescheduleAll, ensureNotifPermission, type NotifCategory, type NotifPrefs } from "@/lib/notifications";
+import { isAnalyticsEnabled, setAnalyticsEnabled } from "@/lib/analytics";
+
+function Toggle({ on, onChange }: { on: boolean; onChange: (v: boolean) => void }) {
+  return (
+    <button
+      role="switch"
+      aria-checked={on}
+      onClick={() => onChange(!on)}
+      className="relative w-11 h-6 rounded-full transition-colors flex-shrink-0"
+      style={{ background: on ? "hsl(var(--moss))" : "hsl(var(--stone-light))" }}
+    >
+      <span
+        className="absolute top-0.5 w-5 h-5 rounded-full bg-white transition-all shadow-sm"
+        style={{ left: on ? "calc(100% - 22px)" : "2px" }}
+      />
+    </button>
+  );
+}
 
 type Theme = "light" | "dark";
 
@@ -43,6 +62,28 @@ export default function IndstillingerPage() {
   const [dateValue, setDateValue] = useState(profile.dueOrBirthDate || "");
   const [dateSaved, setDateSaved] = useState(false);
   const [phaseSwitched, setPhaseSwitched] = useState<"pregnant" | "baby" | null>(null);
+  const [notifPrefs, setNotifPrefs] = useState<NotifPrefs>(getNotifPrefs);
+  const [analyticsOn, setAnalyticsOn] = useState<boolean>(isAnalyticsEnabled);
+
+  const toggleNotif = (category: NotifCategory, enabled: boolean) => {
+    const prefs = setNotifPref(category, enabled);
+    setNotifPrefs(prefs);
+    // Genplanlæg med det samme, så ændringen slår igennem
+    void (async () => {
+      if (enabled) await ensureNotifPermission();
+      await rescheduleAll({
+        dueOrBirthDate: profile.dueOrBirthDate,
+        phase: profile.phase,
+        babyName: profile.children?.[0]?.name,
+        lang: (profile.languages?.[profile.role] || "da") as "da" | "en",
+      });
+    })();
+  };
+
+  const toggleAnalytics = (enabled: boolean) => {
+    setAnalyticsEnabled(enabled);
+    setAnalyticsOn(enabled);
+  };
 
   const currentLang = profile.languages?.[profile.role] || "da";
 
@@ -262,6 +303,49 @@ export default function IndstillingerPage() {
               {th.label}
             </button>
           ))}
+        </div>
+      </div>
+
+      {/* Notifications */}
+      <div className="card-soft section-fade-in" style={{ animationDelay: "100ms" }}>
+        <div className="flex items-center gap-2 mb-2">
+          <Bell className="w-4 h-4" style={{ color: "hsl(var(--moss))" }} />
+          <p className="text-[1rem] font-semibold">{t("settingsPage.notifications")}</p>
+        </div>
+        <p className="text-[0.72rem] text-muted-foreground mb-4">
+          {t("settingsPage.notificationsDesc")}
+        </p>
+        <div className="space-y-4">
+          {([
+            { key: "weekly" as NotifCategory, label: t("settingsPage.notifWeekly"), desc: t("settingsPage.notifWeeklyDesc") },
+            { key: "phase" as NotifCategory, label: t("settingsPage.notifPhase"), desc: t("settingsPage.notifPhaseDesc") },
+            ...(profile.hasPartner !== false
+              ? [{ key: "appreciation" as NotifCategory, label: t("settingsPage.notifAppreciation"), desc: t("settingsPage.notifAppreciationDesc") }]
+              : []),
+          ]).map(item => (
+            <div key={item.key} className="flex items-center justify-between gap-3">
+              <div className="min-w-0">
+                <p className="text-[0.85rem] font-medium">{item.label}</p>
+                <p className="text-[0.68rem] text-muted-foreground leading-relaxed">{item.desc}</p>
+              </div>
+              <Toggle on={notifPrefs[item.key]} onChange={v => toggleNotif(item.key, v)} />
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Privacy */}
+      <div className="card-soft section-fade-in" style={{ animationDelay: "110ms" }}>
+        <div className="flex items-center gap-2 mb-4">
+          <ShieldCheck className="w-4 h-4" style={{ color: "hsl(var(--moss))" }} />
+          <p className="text-[1rem] font-semibold">{t("settingsPage.privacy")}</p>
+        </div>
+        <div className="flex items-center justify-between gap-3">
+          <div className="min-w-0">
+            <p className="text-[0.85rem] font-medium">{t("settingsPage.privacyAnalytics")}</p>
+            <p className="text-[0.68rem] text-muted-foreground leading-relaxed">{t("settingsPage.privacyAnalyticsDesc")}</p>
+          </div>
+          <Toggle on={analyticsOn} onChange={toggleAnalytics} />
         </div>
       </div>
 

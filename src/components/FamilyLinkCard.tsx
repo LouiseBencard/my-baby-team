@@ -3,6 +3,7 @@ import { useFamily } from "@/context/FamilyContext";
 import { Link2, Copy, Check, UserPlus } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { track } from "@/lib/analytics";
 
 export function FamilyLinkCard() {
   const { profile, joinFamilyByCode } = useFamily();
@@ -18,6 +19,7 @@ export function FamilyLinkCard() {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(inviteCode);
+      track("invite_code_copied", { via: "family_card" });
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
@@ -30,6 +32,7 @@ export function FamilyLinkCard() {
     setLoading(true);
     setResult(null);
     const res = await joinFamilyByCode(code.trim());
+    if (res.success) track("partner_linked", { via: "family_card" });
     setLoading(false);
     setResult({
       success: res.success,
