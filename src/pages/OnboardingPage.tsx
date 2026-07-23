@@ -29,6 +29,8 @@ type Step =
   | "leave"       // Hvem er på barsel
   | "account";    // Opret konto (email + adgangskode) — altid sidst
 
+const DRAFT_KEY = "melo-onboarding-draft";
+
 const complications = [
   { id: "rift", label: "Bristning / klip", emoji: "🩹" },
   { id: "blødning", label: "Stor blødning", emoji: "🩸" },
@@ -65,6 +67,46 @@ export default function OnboardingPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+
+  // ── Kladde: gem løbende så intet går tabt hvis appen lukkes ──
+  // (en træt forælder må aldrig straffes for at blive afbrudt)
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(DRAFT_KEY);
+      if (!raw) return;
+      const d = JSON.parse(raw);
+      if (d.phase) setPhase(d.phase);
+      if (d.step) setStep(d.step);
+      if (d.lmpDate) setLmpDate(new Date(d.lmpDate));
+      if (d.birthDate) setBirthDate(new Date(d.birthDate));
+      if (d.babyName) setBabyName(d.babyName);
+      if (d.role) setRole(d.role);
+      if (typeof d.hasPartner === "boolean") setHasPartner(d.hasPartner);
+      if (d.yourName) setYourName(d.yourName);
+      if (d.partnerName) setPartnerName(d.partnerName);
+      if (d.birthType) setBirthType(d.birthType);
+      if (Array.isArray(d.selectedComplications)) setSelectedComplications(d.selectedComplications);
+      if (d.feedingMethod) setFeedingMethod(d.feedingMethod);
+      if (typeof d.morLeave === "boolean") setMorLeave(d.morLeave);
+      if (typeof d.farLeave === "boolean") setFarLeave(d.farLeave);
+    } catch {
+      // korrupt kladde — start forfra uden at fejle
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(DRAFT_KEY, JSON.stringify({
+        step, phase, lmpDate, birthDate, babyName, role, hasPartner,
+        yourName, partnerName, birthType, selectedComplications,
+        feedingMethod, morLeave, farLeave,
+      }));
+    } catch {
+      // ignore
+    }
+  }, [step, phase, lmpDate, birthDate, babyName, role, hasPartner, yourName,
+    partnerName, birthType, selectedComplications, feedingMethod, morLeave, farLeave]);
 
   // Sensitive steps that can be skipped
   const skippable: Step[] = ["birthtype", "feeding", "leave"];
