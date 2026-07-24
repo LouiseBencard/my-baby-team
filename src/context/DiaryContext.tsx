@@ -4,6 +4,7 @@ import { useFamily } from "@/context/FamilyContext";
 import { supabase } from "@/integrations/supabase/client";
 import { notifyPartner } from "@/lib/pushNotify";
 import { startSleepActivity, endSleepActivity } from "@/plugins/liveActivity";
+import { track } from "@/lib/analytics";
 import {
   syncNursingLogs, fetchNursingLogs,
   syncDiaperLogs, fetchDiaperLogs,
@@ -224,6 +225,7 @@ export function DiaryProvider({ children }: { children: ReactNode }) {
   const myName = profile.parentName || (profile.role === "mor" ? "Mor" : "Far");
 
   const addNursing = (side: "left" | "right" | "bottle", ml?: number) => {
+    track("log_nursing", { side }); // ingen mængde/PII — kun at der blev logget
     setMyNursingLogs(prev => [{ id: genId(), side, ml, timestamp: new Date().toISOString() }, ...prev]);
     if (partnerUserId) {
       const label = side === "left" ? "venstre bryst" : side === "right" ? "højre bryst" : ml ? `flaske (${ml} ml)` : "flaske";
@@ -233,6 +235,7 @@ export function DiaryProvider({ children }: { children: ReactNode }) {
   const removeNursingLog = (id: string) => setMyNursingLogs(prev => prev.filter(l => l.id !== id));
 
   const addDiaper = (type: "wet" | "dirty" | "both", color?: StoolColor, consistency?: StoolConsistency) => {
+    track("log_diaper", { type }); // ingen sundhedsdetaljer (farve/konsistens) sendes
     setMyDiaperLogs(prev => [{ id: genId(), type, stoolColor: color, stoolConsistency: consistency, timestamp: new Date().toISOString() }, ...prev]);
     if (partnerUserId) {
       const label = type === "wet" ? "våd ble" : type === "dirty" ? "beskidt ble" : "våd + beskidt ble";
@@ -242,6 +245,7 @@ export function DiaryProvider({ children }: { children: ReactNode }) {
   const removeDiaperLog = (id: string) => setMyDiaperLogs(prev => prev.filter(l => l.id !== id));
 
   const addSleep = (type: "nap" | "night", start: string, end?: string) => {
+    track("log_sleep", { type, ongoing: !end }); // kun type + om den kører — ingen tidspunkter
     setMySleepLogs(prev => [{ id: genId(), type, startTime: start, endTime: end, source: "manual" }, ...prev]);
     if (!end) {
       const childName = profile.children?.[0]?.name || "Baby";

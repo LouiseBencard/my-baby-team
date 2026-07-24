@@ -12,3 +12,5 @@
 ## 2026-07-24 10:39 — Fix far-baby-dashboard: ret VidsteDuCard-sti + byg NotificationPrompt-kort (283cf8b)
 
 ## 2026-07-24 11:59 — Polish: chat- og samarbejds-analytics, i18n-fixes, sovn-animation, onboarding-kladde (ffbd562)
+
+## 2026-07-24 14:32 — i18n-polish: gentagne dashboard-labels til noegler (Spoerg Melo, 3 ting, Melo foreslaar) (449891f)
