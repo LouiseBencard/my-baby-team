@@ -39,7 +39,10 @@
     "collaboration": "Samarbejde",
     "tasksDistribution": "Opgaver & fordeling",
     "playActivities": "Leg & aktiviteter",
-    "adaptedToAge": "Tilpasset {{childName}}s alder"
+    "adaptedToAge": "Tilpasset {{childName}}s alder",
+    "threeThings": "3 ting der gør en forskel",
+    "meloSuggests": "Melo foreslår",
+    "howYouHelp": "Sådan hjælper du"
   },
   "notifications": {
     "title": "Få besked om søvnvinduer",

@@ -63,7 +63,7 @@ export default function DashboardBabyFar() {
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div className="flex-1">
-            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>Spørg Melo</p>
+            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>{t("dashboard.askMelo")}</p>
             <p className="text-[0.72rem]" style={{ color: "hsl(var(--sage-dark))" }}>Fx om din rolle, søvn eller hvad {childName || "Baby"} har brug for</p>
           </div>
           <div className="w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "hsl(var(--moss))" }}>

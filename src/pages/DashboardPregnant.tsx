@@ -126,7 +126,7 @@ export default function DashboardPregnant() {
               <p className="text-[0.92rem] font-semibold" style={{ color: "hsl(var(--bark))" }}>I dag</p>
               <Link to="/sammen" className="text-[0.72rem] font-medium" style={{ color: "hsl(var(--moss))" }}>Se alle</Link>
             </div>
-            <p className="text-[0.72rem] mb-3" style={{ color: "hsl(var(--stone))" }}>3 ting der gør en forskel</p>
+            <p className="text-[0.72rem] mb-3" style={{ color: "hsl(var(--stone))" }}>{t("dashboard.threeThings")}</p>
             <div className="space-y-2.5">
               {previewTasks.map(task => {
                 const isMyTask = task.assignee === myRole || task.takenBy === myRole;
@@ -199,7 +199,7 @@ export default function DashboardPregnant() {
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div className="flex-1">
-            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>Spørg Melo</p>
+            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>{t("dashboard.askMelo")}</p>
             <p className="text-[0.72rem]" style={{ color: "hsl(var(--sage-dark))" }}>
               Har du spørgsmål om graviditet, fødsel eller din krop?
             </p>

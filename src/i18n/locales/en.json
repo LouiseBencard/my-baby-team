@@ -39,7 +39,10 @@
     "collaboration": "Collaboration",
     "tasksDistribution": "Tasks & distribution",
     "playActivities": "Play & activities",
-    "adaptedToAge": "Adapted to {{childName}}'s age"
+    "adaptedToAge": "Adapted to {{childName}}'s age",
+    "threeThings": "3 things that make a difference",
+    "meloSuggests": "Melo suggests",
+    "howYouHelp": "How you can help"
   },
   "notifications": {
     "title": "Get sleep window alerts",

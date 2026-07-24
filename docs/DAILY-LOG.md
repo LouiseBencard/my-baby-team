@@ -10,3 +10,5 @@
 ## 2026-07-24 09:53 — Fix: WhatMattersNow-import pegede paa ikke-eksisterende fil (767e7f4)
 
 ## 2026-07-24 10:39 — Fix far-baby-dashboard: ret VidsteDuCard-sti + byg NotificationPrompt-kort (283cf8b)
+
+## 2026-07-24 11:59 — Polish: chat- og samarbejds-analytics, i18n-fixes, sovn-animation, onboarding-kladde (ffbd562)

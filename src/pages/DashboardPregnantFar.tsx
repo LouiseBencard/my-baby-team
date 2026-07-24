@@ -98,7 +98,7 @@ export default function DashboardPregnantFar() {
         >
           <div className="flex items-center gap-1.5 mb-2">
             <Sparkles className="w-3.5 h-3.5" style={{ color: "hsl(var(--sage-dark))" }} />
-            <p className="text-[0.68rem] font-semibold tracking-[0.1em] uppercase" style={{ color: "hsl(var(--sage-dark))" }}>Melo foreslår</p>
+            <p className="text-[0.68rem] font-semibold tracking-[0.1em] uppercase" style={{ color: "hsl(var(--sage-dark))" }}>{t("dashboard.meloSuggests")}</p>
           </div>
           <p className="font-serif text-[1.1rem] font-medium leading-snug mb-1" style={{ color: "hsl(var(--bark))" }}>
             {content.focus}
@@ -115,7 +115,7 @@ export default function DashboardPregnantFar() {
               <p className="text-[0.92rem] font-semibold" style={{ color: "hsl(var(--bark))" }}>I dag</p>
               <Link to="/sammen" className="text-[0.72rem] font-medium" style={{ color: "hsl(var(--moss))" }}>Se alle</Link>
             </div>
-            <p className="text-[0.72rem] mb-3" style={{ color: "hsl(var(--stone))" }}>3 ting der gør en forskel</p>
+            <p className="text-[0.72rem] mb-3" style={{ color: "hsl(var(--stone))" }}>{t("dashboard.threeThings")}</p>
             <div className="space-y-2.5">
               {myTasks.map(task => (
                 <div key={task.id}
@@ -159,7 +159,7 @@ export default function DashboardPregnantFar() {
             </div>
           </div>
           <div className="border-t px-4 py-3 space-y-2.5" style={{ borderColor: "hsl(var(--stone-lighter))" }}>
-            <p className="text-[0.75rem] font-semibold mb-1" style={{ color: "hsl(var(--bark))" }}>Sådan hjælper du</p>
+            <p className="text-[0.75rem] font-semibold mb-1" style={{ color: "hsl(var(--bark))" }}>{t("dashboard.howYouHelp")}</p>
             {content.helpTips.map((tip, i) => (
               <div key={i} className="flex items-start gap-2">
                 <CheckCircle2 className="w-4 h-4 flex-shrink-0 mt-0.5" style={{ color: "hsl(var(--moss))" }} />
@@ -179,7 +179,7 @@ export default function DashboardPregnantFar() {
             <Sparkles className="w-5 h-5 text-white" />
           </div>
           <div className="flex-1">
-            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>Spørg Melo</p>
+            <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>{t("dashboard.askMelo")}</p>
             <p className="text-[0.72rem]" style={{ color: "hsl(var(--sage-dark))" }}>
               Fx om din rolle, fødslen eller hvad {morName} har brug for
             </p>
