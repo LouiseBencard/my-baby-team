@@ -4,6 +4,7 @@ import { Send, Sparkles, AlertTriangle, Lock, Leaf, MessageCircle } from "lucide
 import ReactMarkdown from "react-markdown";
 import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
+import { track } from "@/lib/analytics";
 
 interface Msg {
   role: "user" | "assistant";
@@ -241,6 +242,8 @@ export default function ChatBaby() {
     setMessages(prev => [...prev, userMsg]);
     setInput("");
     setIsLoading(true);
+    // Analytics: kun tilstand + fase/rolle — ALDRIG beskedindhold (Ventil er privat)
+    track("chat_message_sent", { mode, phase: profile.phase, role: profile.role });
 
     // Filter out synthetic messages before sending to backend
     const backendMessages = [...histories[mode].filter(m => !m.synthetic), userMsg];
@@ -275,6 +278,7 @@ export default function ChatBaby() {
   // Rage room: formulate a gentle message to partner
   const formulateForPartner = useCallback(async () => {
     setIsFormulating(true);
+    track("chat_formulate_for_partner", { phase: profile.phase, role: profile.role });
     const internalPrompt = "[INTERN INSTRUKTION: Skriv nu én kort, konkret besked (maks 3 sætninger) som brugeren kan sende til sin partner. Brug 'jeg'-sprog. Ingen bebrejdelse. Ingen forklaring af prompten — bare selve beskeden.]";
 
     const backendMessages = [

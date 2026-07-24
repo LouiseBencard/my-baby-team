@@ -6,6 +6,7 @@ import { format, addDays, subDays, isToday, isTomorrow, isYesterday, startOfWeek
 import { da, enUS } from "date-fns/locale";
 import confetti from "canvas-confetti";
 import { useTranslation } from "react-i18next";
+import { track } from "@/lib/analytics";
 
 type ViewMode = "day" | "week";
 
@@ -280,12 +281,14 @@ export function TaskList({ externalShowAdd, onExternalShowAddChange }: { externa
         scalar: 0.7,
         gravity: 1.2,
       });
+      track("task_completed", { assignee: task.assignee });
     }
     toggleTask(id);
   };
 
   const handleAdd = (title: string, assignee: TaskAssignee, recurrence: TaskRecurrence) => {
     addTask(title, assignee, recurrence, selectedDateStr);
+    track("task_added", { assignee, recurrence });
     setShowAdd(false);
     setInlineAddFilter(null);
   };

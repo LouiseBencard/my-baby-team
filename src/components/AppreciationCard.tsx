@@ -3,6 +3,7 @@ import { useFamily } from "@/context/FamilyContext";
 import { Heart } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useTranslation } from "react-i18next";
+import { track } from "@/lib/analytics";
 
 const DATE_NIGHT_KEY = "melo-datenight-dream";
 
@@ -51,6 +52,8 @@ export function AppreciationCard() {
   const handleSend = () => {
     if (!text.trim()) return;
     addAppreciation(text.trim());
+    // Analytics: kun at der blev sendt en påskønnelse — aldrig teksten
+    track("appreciation_sent", { role });
     setText("");
     setSent(true);
     setTimeout(() => setSent(false), 3000);
@@ -93,7 +96,7 @@ export function AppreciationCard() {
                   className="text-[0.6rem] font-medium"
                   style={{ color: accentText }}
                 >
-                  {showHistory ? "Skjul" : `+${fromPartner.length - 1} flere`}
+                  {showHistory ? t("appreciation.hide") : t("appreciation.showMore", { count: fromPartner.length - 1 })}
                 </button>
               )}
             </div>

@@ -374,7 +374,8 @@
     "swap": "Swap",
     "plan": "Plan",
     "talkAboutIt": "Talk about it",
-    "conversationStarter": "Conversation starter — to strengthen your bond 💛"
+    "conversationStarter": "Conversation starter — to strengthen your bond 💛",
+    "getMeloHelp": "Get Melo's help with the conversation"
   },
   "chat": {
     "title": "Ask Melo",
@@ -1000,6 +1001,8 @@
   },
   "appreciation": {
     "title": "Appreciate each other",
+    "hide": "Hide",
+    "showMore": "+{{count}} more",
     "noticeLabel": "{{name}} noticed:",
     "hint": "One thing you noticed today — specific and concrete makes it more.",
     "placeholder": "E.g. \"I noticed that you got up even though you were exhausted\"",

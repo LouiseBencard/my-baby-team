@@ -247,10 +247,11 @@ function WakeWindowSweetspot({
 
           {/* Indicator dot */}
           <div
-            className="absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-full shadow-md border-2 border-white transition-all duration-[1200ms] ease-out"
+            className="absolute top-1/2 -translate-y-1/2 w-6 h-6 rounded-full shadow-md border-2 border-white transition-all ease-out"
             style={{
               left: `calc(${elapsedPct}% - 12px)`,
               background: phaseColor,
+              transitionDuration: "1200ms",
             }}
           />
         </div>

@@ -374,7 +374,8 @@
     "swap": "Byt",
     "plan": "Planlæg",
     "talkAboutIt": "Tal om det",
-    "conversationStarter": "Samtalestart — for at styrke jeres bånd 💛"
+    "conversationStarter": "Samtalestart — for at styrke jeres bånd 💛",
+    "getMeloHelp": "Få hjælp af Melo til samtalen"
   },
   "chat": {
     "title": "Spørg Melo",
@@ -1000,6 +1001,8 @@
   },
   "appreciation": {
     "title": "Sæt pris på hinanden",
+    "hide": "Skjul",
+    "showMore": "+{{count}} flere",
     "noticeLabel": "{{name}} lagde mærke til:",
     "hint": "Ét ting du lagde mærke til i dag — konkret og specifikt gør det mere.",
     "placeholder": "F.eks. \"Jeg lagde mærke til at du stod op selvom du var udmattet\"",

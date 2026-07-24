@@ -8,3 +8,5 @@
 ## 2026-07-23 23:22 — Onboarding: gem kladde lobende sa intet gar tabt ved app-lukning (48e833d)
 
 ## 2026-07-24 09:53 — Fix: WhatMattersNow-import pegede paa ikke-eksisterende fil (767e7f4)
+
+## 2026-07-24 10:39 — Fix far-baby-dashboard: ret VidsteDuCard-sti + byg NotificationPrompt-kort (283cf8b)

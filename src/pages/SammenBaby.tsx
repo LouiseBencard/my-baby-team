@@ -283,7 +283,7 @@ export default function SammenBaby() {
           style={{ background: "hsl(var(--sage-light))", color: "hsl(var(--moss))" }}
         >
           <MessageCircle className="w-3.5 h-3.5" />
-          Få hjælp af MELO til samtalen
+          {t("together.getMeloHelp")}
         </Link>
       </div>
 
