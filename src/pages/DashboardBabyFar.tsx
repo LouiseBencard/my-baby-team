@@ -1,12 +1,12 @@
 import { useFamily } from "@/context/FamilyContext";
 import { NotificationBell } from "@/components/NotificationCenter";
-import { WhatMattersNow } from "@/components/WhatMattersNow";
+import { WhatMattersNow } from "@/components/CommandCenter";
 import { QuickLog } from "@/components/QuickLog";
 import { TaskList } from "@/components/TaskList";
 import { AppreciationCard } from "@/components/AppreciationCard";
 import { NattenKort } from "@/components/NattenKort";
 import { BabyDevCard } from "@/components/BabyDevCard";
-import { VidsteDuCard } from "@/components/VidsteDuCard";
+import { VidsteDuCard } from "@/components/FarDashboardCards";
 import { DagensSpørgsmål } from "@/components/DagensSpørgsmål";
 import { NotificationPrompt } from "@/components/NotificationPrompt";
 import { User, ArrowRight, Sparkles } from "lucide-react";
