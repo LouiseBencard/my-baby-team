@@ -13,7 +13,7 @@ export default function PrivacyPage() {
     <div className="min-h-screen bg-background px-6 py-12 max-w-2xl mx-auto">
       <h1 className="font-serif text-[2rem] font-medium mb-2">Privatlivspolitik</h1>
       <p className="text-[0.72rem] text-muted-foreground mb-8">
-        Senest opdateret: 30. maj 2026 · Melo Parents ApS
+        Senest opdateret: 21. juli 2026 · Melo Parents ApS
       </p>
 
       <div className="space-y-7 text-[0.92rem] leading-relaxed text-foreground/85">
@@ -41,11 +41,14 @@ export default function PrivacyPage() {
             "Logninger fra dagligdagen: amninger, bleskift, søvn, milepæle, dagbogs­tekster, daglige check-ins, anerkendelser, “øjeblikke”.",
             "Familie­sammenkobling: en invitationskode du selv deler med din partner, og en henvisning til partnerens konto når I er forbundet.",
             "Teknisk: device-token til push-notifikationer, og automatisk genererede fejl-logs hvis appen skulle gå ned.",
+            "Anonym brugsstatistik: hvilke skærme og funktioner der bruges, samt et tilfældigt genereret enheds- og sessions-id. Denne statistik indeholder ALDRIG dit navn, din e-mail, dine beskeder, dine dagbogs­tekster eller andre helbreds­oplysninger — kun handlingen (fx “åbnede chatten”) og hvornår. Du kan slå den fra i Indstillinger under Privatliv.",
           ]} />
           <p>
             Vi henter <em>ingen</em> oplysninger om dig fra tredjeparter. Vi
-            tilkøber ingen data. Vi bruger ingen reklame-cookies eller
-            tredjeparts-analyse-værktøjer.
+            tilkøber ingen data. Vi bruger ingen reklame-cookies. Vores
+            brugsstatistik er <em>first-party</em> — den ligger på vores egne
+            EU-servere (Supabase) og deles aldrig med eksterne analyse- eller
+            reklamenetværk.
           </p>
         </Section>
 
@@ -64,6 +67,13 @@ export default function PrivacyPage() {
             har givet samtykke til det ved at udfylde dem i appen (artikel
             9(2)(a)). Du kan til enhver tid trække samtykket tilbage ved at
             slette felterne i appen eller bede os om at slette din konto.
+          </p>
+          <p>
+            Den anonyme brugsstatistik behandler vi på grundlag af vores
+            berettigede interesse i at forbedre appen (GDPR artikel 6(1)(f)).
+            Fordi statistikken er anonymiseret og kan slås fra i Indstillinger,
+            er indgrebet i dit privatliv minimalt. Slår du den fra, virker appen
+            præcis som før.
           </p>
         </Section>
 

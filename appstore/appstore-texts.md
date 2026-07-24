@@ -109,7 +109,7 @@ Melo fungerer for alle — par, enlige forældre, regnbuefamilier og alle derime
 ─────────────────────────────
 PRIVATLIVS-FIRST
 ─────────────────────────────
-Dine data tilhører dig. Vi sælger aldrig data til tredjeparter. Alt gemmes sikkert og krypteret.
+Vi tjener penge på abonnementer — ikke på jeres data. Ingen reklamer. Ingen tredjeparts-sporing. Ingen salg af data. Jeres oplysninger ligger krypteret på EU-servere, og jeres graviditet er jeres — ikke et produkt vi videresælger.
 
 ─────────────────────────────
 
@@ -171,7 +171,7 @@ Melo works for everyone — couples, single parents, rainbow families and everyt
 ─────────────────────────────
 PRIVACY-FIRST
 ─────────────────────────────
-Your data belongs to you. We never sell data to third parties. Everything is stored securely and encrypted.
+We make money from subscriptions — not from your data. No ads. No third-party tracking. No selling of data. Your information is encrypted on EU servers, and your pregnancy is yours — not a product we resell.
 
 ─────────────────────────────
 
