@@ -16,3 +16,7 @@
 ## 2026-07-24 14:32 — i18n-polish: gentagne dashboard-labels til noegler (Spoerg Melo, 3 ting, Melo foreslaar) (449891f)
 
 ## 2026-07-24 15:21 — Analytics: daglig logning (amning, ble, soevn) - retention-metrik (066ff7b)
+
+## 2026-07-24 16:39 — Privatlivspolitik: oplys om anonym analytics + retsgrundlag; skaerp App Store privacy-tekst; launch-readiness-doc (4e3a3df)
+
+## 2026-07-24 18:20 — Tilfoej privacy + support HTML og launch-readiness-doc (f90cc26)
