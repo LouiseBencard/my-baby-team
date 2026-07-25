@@ -16,7 +16,6 @@ import { DagensSpørgsmål } from "@/components/DagensSpørgsmål";
 import { UgensRecap } from "@/components/UgensRecap";
 import { BabyDevCard } from "@/components/BabyDevCard";
 import { NattenKort } from "@/components/NattenKort";
-import { MeloWordmark } from "@/components/MeloWordmark";
 import { NotificationBell } from "@/components/NotificationCenter";
 import { MessageCircle, Heart, Gamepad2, Square, User } from "lucide-react";
 import { format } from "date-fns";
@@ -68,61 +67,50 @@ export default function DashboardBaby() {
   return (
     <div className="space-y-4">
 
-      {/* ── Header ───────────────────────────────────────────────────────── */}
-      <div className="section-fade-in">
-        <div className="flex items-center justify-between mb-5">
-          <MeloWordmark size="1.8rem" />
-          <div className="flex items-center gap-3">
+      {/* ── ILLUSTRATION HEADER ─────────────────────────────────────────────── */}
+      <div className="relative overflow-hidden section-fade-in" style={{ height: 240 }}>
+        <img src={headerImg} alt="" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover object-top" />
+        <div className="absolute inset-0" style={{ background: "linear-gradient(to bottom, rgba(251,248,242,0) 20%, rgba(251,248,242,0.55) 62%, rgba(251,248,242,1) 100%)" }} />
+        <div className="absolute top-0 left-0 right-0 flex items-center justify-between px-5 pt-4">
+          <img src="/melo-wordmark.png" alt="melo" style={{ height: 22 }} />
+          <div className="flex items-center gap-2.5">
             <NotificationBell />
-            <div
-              className="w-9 h-9 rounded-full flex items-center justify-center text-[0.75rem] font-semibold"
-              style={{ background: isMor ? "hsl(var(--clay-light))" : "hsl(var(--sage-light))", color: isMor ? "hsl(var(--bark))" : "hsl(var(--moss))" }}
-            >
+            <div className="w-8 h-8 rounded-full flex items-center justify-center text-[0.72rem] font-semibold" style={{ background: "rgba(251,248,242,0.88)", color: "hsl(var(--bark))" }}>
               {profile.parentName?.charAt(0)?.toUpperCase() || <User className="w-4 h-4" />}
             </div>
           </div>
         </div>
-        <h1 className="font-serif text-[1.9rem] leading-tight" style={{ color: "hsl(var(--bark))" }}>
-          {getGreeting()}, {profile.parentName} <span className="text-[1.4rem]">🌿</span>
-        </h1>
-        <p className="text-[0.82rem] text-muted-foreground mt-1">{ageLabel} — I klarer det.</p>
+        <div className="absolute bottom-0 left-0 right-0 px-5 pb-4">
+          <h1 className="font-serif text-[1.75rem] leading-tight" style={{ color: "hsl(var(--bark))" }}>
+            {getGreeting()}, {profile.parentName}
+          </h1>
+          <p className="text-[0.82rem] mt-0.5" style={{ color: "hsl(var(--stone))" }}>{ageLabel} — I klarer det.</p>
+        </div>
       </div>
 
-      {/* ── Hero card ────────────────────────────────────────────────────── */}
+      {/* ── Milepæl ──────────────────────────────────────────────────────── */}
       <div
-        className="rounded-[20px] overflow-hidden section-fade-in"
-        style={{
-          background: isMor
-            ? "linear-gradient(145deg, hsl(22 35% 32%), hsl(22 30% 22%))"
-            : "linear-gradient(145deg, hsl(154 22% 28%), hsl(154 27% 20%))",
-          animationDelay: "30ms",
-        }}
+        className="rounded-2xl p-4 section-fade-in"
+        style={{ background: "hsl(var(--clay-light))", border: "1px solid hsl(var(--clay) / 0.25)", animationDelay: "30ms" }}
       >
-        <div className="px-5 pt-5 pb-4">
-          <div className="flex items-start justify-between mb-3">
-            <span className="text-[0.68rem] font-semibold px-2.5 py-1 rounded-full text-white"
-              style={{ background: "rgba(255,255,255,0.15)" }}>
-              {ageLabel}
-            </span>
-            <span className="text-[3.2rem] leading-none">{milestone.emoji}</span>
-          </div>
-          <p className="font-serif text-[1.35rem] font-medium text-white leading-snug mb-1.5">
-            {milestone.headline}
-          </p>
-          <p className="text-[0.82rem] text-white/75 mb-4">{milestone.sub}</p>
-          <Link
-            to="/barn"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[0.78rem] font-medium transition-all active:scale-95"
-            style={{ background: "rgba(255,255,255,0.15)", color: "white" }}
-          >
-            Se {childName || "babys"} udvikling →
-          </Link>
+        <div className="flex items-start justify-between mb-1.5">
+          <span className="text-[0.62rem] tracking-[0.14em] uppercase font-semibold px-2.5 py-1 rounded-full"
+            style={{ background: "hsl(var(--clay) / 0.18)", color: "hsl(var(--bark))" }}>
+            {ageLabel}
+          </span>
+          <span className="text-[2.6rem] leading-none">{milestone.emoji}</span>
         </div>
-        <div className="px-5 py-2.5 border-t border-white/10 flex items-center justify-between"
-          style={{ background: "rgba(0,0,0,0.12)" }}>
-          <p className="text-[0.68rem] text-white/50">{dateStr}</p>
-          <p className="text-[0.68rem] text-white/50">{displayPhase}</p>
-        </div>
+        <p className="font-serif text-[1.3rem] font-medium leading-snug mb-1" style={{ color: "hsl(var(--bark))" }}>
+          {milestone.headline}
+        </p>
+        <p className="text-[0.82rem] mb-4" style={{ color: "hsl(var(--bark) / 0.7)" }}>{milestone.sub}</p>
+        <Link
+          to="/barn"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[0.78rem] font-medium text-white transition-all active:scale-95"
+          style={{ background: "hsl(var(--moss))" }}
+        >
+          Se {childName || "babys"} udvikling →
+        </Link>
       </div>
 
       {/* Zone 1 — Lige nu */}

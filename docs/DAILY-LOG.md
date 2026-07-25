@@ -20,3 +20,5 @@
 ## 2026-07-24 16:39 — Privatlivspolitik: oplys om anonym analytics + retsgrundlag; skaerp App Store privacy-tekst; launch-readiness-doc (4e3a3df)
 
 ## 2026-07-24 18:20 — Tilfoej privacy + support HTML og launch-readiness-doc (f90cc26)
+
+## 2026-07-24 19:35 — Fix: genindsat de fire header-illustrationer (var tomme 0-byte filer) (05c92a8)
