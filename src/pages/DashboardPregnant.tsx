@@ -3,7 +3,7 @@ import { getBabySize, getWeekInsight } from "@/lib/phaseData";
 import { NotificationBell } from "@/components/NotificationCenter";
 import { WeekUnlockModal } from "@/components/WeekUnlockModal";
 import { CheckInCard } from "@/components/PregnancyCheckIn";
-import { User, ArrowRight, ChevronRight, Sparkles } from "lucide-react";
+import { User, ArrowRight, ChevronRight, Sparkles, Timer } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import headerImg from "@/assets/header-mor-gravid.webp";
@@ -89,6 +89,24 @@ export default function DashboardPregnant() {
       </div>
 
       <div className="space-y-4 px-4">
+
+        {/* ── VE-TÆLLER — fase-bevidst: kun fra uge 36+ ─────────────────────── */}
+        {currentWeek >= 36 && (
+          <Link
+            to="/veer"
+            className="flex items-center gap-3 rounded-2xl px-4 py-3.5 section-fade-in transition-all active:scale-[0.98]"
+            style={{ background: "hsl(var(--clay-light))", border: "1px solid hsl(var(--clay) / 0.4)" }}
+          >
+            <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "hsl(var(--clay-text))" }}>
+              <Timer className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--clay-text))" }}>{t("dashboard.contractionTimer")}</p>
+              <p className="text-[0.72rem]" style={{ color: "hsl(var(--bark))" }}>{t("dashboard.contractionTimerDesc")}</p>
+            </div>
+            <ArrowRight className="w-4 h-4 flex-shrink-0" style={{ color: "hsl(var(--clay-text))" }} />
+          </Link>
+        )}
 
         {/* ── CHECK-IN ──────────────────────────────────────────────────────── */}
         <CheckInCard />

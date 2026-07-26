@@ -1,7 +1,7 @@
 import { useFamily } from "@/context/FamilyContext";
 import { NotificationBell } from "@/components/NotificationCenter";
 import { CheckInCard } from "@/components/PregnancyCheckIn";
-import { User, ArrowRight, ChevronRight, Sparkles, Heart, CheckCircle2 } from "lucide-react";
+import { User, ArrowRight, ChevronRight, Sparkles, Heart, CheckCircle2, Timer } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import headerImg from "@/assets/header-far-gravid.webp";
@@ -89,6 +89,25 @@ export default function DashboardPregnantFar() {
       </div>
 
       <div className="space-y-4 px-4">
+
+        {/* ── VE-TÆLLER — fase-bevidst: kun fra uge 36+ (partneren tager ofte tid) ─ */}
+        {currentWeek >= 36 && (
+          <Link
+            to="/veer"
+            className="flex items-center gap-3 rounded-2xl px-4 py-3.5 section-fade-in transition-all active:scale-[0.98]"
+            style={{ background: "hsl(var(--sage-light))", border: "1px solid hsl(var(--sage) / 0.45)" }}
+          >
+            <div className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0" style={{ background: "hsl(var(--moss))" }}>
+              <Timer className="w-5 h-5 text-white" />
+            </div>
+            <div className="flex-1">
+              <p className="text-[0.88rem] font-semibold" style={{ color: "hsl(var(--moss))" }}>{t("dashboard.contractionTimer")}</p>
+              <p className="text-[0.72rem]" style={{ color: "hsl(var(--sage-dark))" }}>{t("dashboard.contractionTimerDescFar", { name: morName || "din partner" })}</p>
+            </div>
+            <ArrowRight className="w-4 h-4 flex-shrink-0" style={{ color: "hsl(var(--moss))" }} />
+          </Link>
+        )}
+
         <CheckInCard />
 
         {/* ── MELO FORESLÅR ─────────────────────────────────────────────────── */}

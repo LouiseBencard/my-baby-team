@@ -42,7 +42,10 @@
     "adaptedToAge": "Adapted to {{childName}}'s age",
     "threeThings": "3 things that make a difference",
     "meloSuggests": "Melo suggests",
-    "howYouHelp": "How you can help"
+    "howYouHelp": "How you can help",
+    "contractionTimer": "Contraction timer",
+    "contractionTimerDesc": "Find the pattern — time your contractions",
+    "contractionTimerDescFar": "Time {{name}}'s contractions and see the pattern"
   },
   "notifications": {
     "title": "Get sleep window alerts",

@@ -24,3 +24,5 @@
 ## 2026-07-24 19:35 — Fix: genindsat de fire header-illustrationer (var tomme 0-byte filer) (05c92a8)
 
 ## 2026-07-25 10:06 — Mor-baby-dashboard: illustrations-header som de tre andre + milepael-kort (de05535)
+
+## 2026-07-26 10:32 — Design: lavendel milepael-kort paa mor-dashboard + lavendel-token (lyst+moerkt) (f15fc13)

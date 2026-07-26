@@ -42,7 +42,10 @@
     "adaptedToAge": "Tilpasset {{childName}}s alder",
     "threeThings": "3 ting der gør en forskel",
     "meloSuggests": "Melo foreslår",
-    "howYouHelp": "Sådan hjælper du"
+    "howYouHelp": "Sådan hjælper du",
+    "contractionTimer": "Ve-tæller",
+    "contractionTimerDesc": "Mærk et mønster — tæl dine veer her",
+    "contractionTimerDescFar": "Tæl {{name}}s veer og se mønsteret"
   },
   "notifications": {
     "title": "Få besked om søvnvinduer",
