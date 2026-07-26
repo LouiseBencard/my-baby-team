@@ -48,8 +48,19 @@ export default function DashboardPregnantFar() {
   const { profile, currentWeek, morName, farName, tasks, takeTask } = useFamily();
   const { t } = useTranslation();
 
-  const content = getWeekContent(currentWeek);
-  const extraDays = new Date().getDay() % 6;
+  const rawContent = getWeekContent(currentWeek);
+  // Erstat hardcoded "Louise" med mors faktiske navn i alt tekstindhold
+  const morRef = morName || "din partner";
+  const content = {
+    ...rawContent,
+    focus: rawContent.focus.replace(/Louise/g, morRef),
+    tip: rawContent.tip.replace(/Louise/g, morRef),
+  };
+  // Dag-i-ugen: deterministisk fra terminsdato, aldrig tilfældigt
+  const gestDays = profile.dueOrBirthDate
+    ? Math.max(0, 280 - Math.ceil((new Date(profile.dueOrBirthDate).getTime() - Date.now()) / 86400000))
+    : currentWeek * 7;
+  const extraDays = Math.max(0, Math.min(6, gestDays - currentWeek * 7));
   const weekLabel = `${currentWeek}+${extraDays}`;
   const daysLeft = Math.max(0, (40 - currentWeek) * 7);
   const myTasks = tasks.filter(t => !t.completed && (t.assignee === "far" || t.takenBy === "far")).slice(0, 3);

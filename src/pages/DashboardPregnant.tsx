@@ -34,7 +34,12 @@ export default function DashboardPregnant() {
 
   const progress = Math.round((currentWeek / totalWeeks) * 100);
   const daysLeft = Math.max(0, (totalWeeks - currentWeek) * 7);
-  const extraDays = new Date().getDay() % 6;
+  // Dag-i-ugen udregnes deterministisk fra terminsdatoen (280 dages gestation),
+  // bundet til currentWeek fra konteksten — ALDRIG tilfældigt.
+  const gestDays = profile.dueOrBirthDate
+    ? Math.max(0, 280 - Math.ceil((new Date(profile.dueOrBirthDate).getTime() - Date.now()) / 86400000))
+    : currentWeek * 7;
+  const extraDays = Math.max(0, Math.min(6, gestDays - currentWeek * 7));
   const weekLabel = `${currentWeek}+${extraDays}`;
 
   const getGreeting = (): string => {

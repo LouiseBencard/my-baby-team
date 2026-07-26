@@ -1,6 +1,0 @@
-import{c as g,r as m}from"./index-DlrQhDt_.js";/**
- * @license lucide-react v0.462.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */const I=g("ShoppingCart",[["circle",{cx:"8",cy:"21",r:"1",key:"jimo8o"}],["circle",{cx:"19",cy:"21",r:"1",key:"13723u"}],["path",{d:"M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12",key:"9zh506"}]]),c="melo-wishlist";function f(){const[r,a]=m.useState(()=>{try{return JSON.parse(localStorage.getItem(c)||"[]")}catch{return[]}}),o=e=>{a(e),localStorage.setItem(c,JSON.stringify(e))},d=e=>{const t={...e,id:`wish-${Date.now()}`,addedAt:new Date().toISOString()};return o([...r,t]),t},l=e=>o(r.filter(t=>t.id!==e)),i=(e,t)=>{o(r.map(s=>s.id===e?{...s,...t}:s))},n=e=>r.some(t=>t.title===e);return{items:r,addItem:d,removeItem:l,isWished:n,toggleWish:(e,t)=>{if(n(e))o(r.filter(s=>s.title!==e));else{const s={id:`wish-${Date.now()}`,title:e,emoji:t,addedAt:new Date().toISOString()};o([...r,s])}},updateItem:i,toggleReserve:e=>{const t=r.find(s=>s.id===e);t&&(t.reservedBy==="self"?i(e,{reservedBy:void 0,reservedAt:void 0}):i(e,{reservedBy:"self",reservedAt:new Date().toISOString()}))}}}export{I as S,f as u};

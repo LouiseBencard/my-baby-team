@@ -32,3 +32,5 @@
 ## 2026-07-26 15:41 — Fase-audit: fjern gammelt brand 'Lille' fra tjekliste + fase-relevans-audit doc (e6e67a1)
 
 ## 2026-07-26 18:58 — Fase-bevidst tjekliste: default foelger brugerens fase + fjern gammelt brand Lille (ed8a920)
+
+## 2026-07-26 22:02 — Perf: route lazy-loading + optimeret splash-ikon (988KB -> 123KB) (0b9c101)

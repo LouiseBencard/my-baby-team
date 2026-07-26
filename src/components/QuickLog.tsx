@@ -141,10 +141,10 @@ export function QuickLog() {
       <div className="grid grid-cols-3 gap-2.5">
         {/* Nursing / Bottle */}
         <button onClick={() => {
-          if (feedingMethod === "flaske") { handleBottle(0); return; }
           const next = !showNursingPicker;
           setShowNursingPicker(next);
-          if (next) setFeedingStep(feedingMethod === "begge" ? "type" : "nursing");
+          // Flaske: åbn ml-vælgeren (ALDRIG log 0 ml). Begge: vælg type først.
+          if (next) setFeedingStep(feedingMethod === "flaske" ? "bottle" : feedingMethod === "begge" ? "type" : "nursing");
           setShowDiaperPicker(false);
         }}
           className="flex flex-col items-center gap-2 py-4 px-2 rounded-2xl border transition-all active:scale-95 hover:-translate-y-0.5 hover:shadow-md relative"
@@ -185,7 +185,7 @@ export function QuickLog() {
       </div>
 
       {/* ── Feeding picker ── */}
-      {showNursingPicker && feedingMethod !== "flaske" && (
+      {showNursingPicker && (
         <div className="card-soft animate-fade-in space-y-3">
 
           {/* Step 1 (begge only): choose nursing or bottle */}
@@ -394,12 +394,15 @@ export function QuickLog() {
 // ── Sleep overview card ──
 function SleepOverviewCard() {
   const { sleepLogs, todaySleepMinutes, activeSleep } = useDiary();
+  const { babyAgeWeeks } = useFamily();
   const { t } = useTranslation();
   const today = new Date().toDateString();
   const todayLogs = sleepLogs.filter(l => new Date(l.startTime).toDateString() === today && l.endTime);
   const napCount = todayLogs.filter(l => l.type === "nap").length;
 
-  const recMinutes = 8 * 60;
+  // Alders-korrekt anbefalet døgnsøvn (matcher SovnPage) — ALDRIG hardcoded 8 t.
+  const recHours = babyAgeWeeks < 4 ? 16 : babyAgeWeeks < 16 ? 15 : babyAgeWeeks < 52 ? 14 : 12;
+  const recMinutes = recHours * 60;
   const pct = Math.min((todaySleepMinutes / recMinutes) * 100, 100);
   const done = pct >= 100;
   const sleepH = Math.floor(todaySleepMinutes / 60);
