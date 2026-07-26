@@ -88,26 +88,26 @@ export default function DashboardBaby() {
         </div>
       </div>
 
-      {/* ── Milepæl ──────────────────────────────────────────────────────── */}
+      {/* ── Milepæl — lavendel-accent (særligt øjeblik) ──────────────────── */}
       <div
         className="rounded-2xl p-4 section-fade-in"
-        style={{ background: "hsl(var(--clay-light))", border: "1px solid hsl(var(--clay) / 0.25)", animationDelay: "30ms" }}
+        style={{ background: "hsl(var(--lavender-light))", border: "1px solid hsl(var(--lavender) / 0.3)", animationDelay: "30ms" }}
       >
         <div className="flex items-start justify-between mb-1.5">
           <span className="text-[0.62rem] tracking-[0.14em] uppercase font-semibold px-2.5 py-1 rounded-full"
-            style={{ background: "hsl(var(--clay) / 0.18)", color: "hsl(var(--bark))" }}>
+            style={{ background: "hsl(var(--lavender) / 0.18)", color: "hsl(var(--lavender-text))" }}>
             {ageLabel}
           </span>
           <span className="text-[2.6rem] leading-none">{milestone.emoji}</span>
         </div>
-        <p className="font-serif text-[1.3rem] font-medium leading-snug mb-1" style={{ color: "hsl(var(--bark))" }}>
+        <p className="font-serif text-[1.3rem] font-medium leading-snug mb-1" style={{ color: "hsl(var(--lavender-text))" }}>
           {milestone.headline}
         </p>
-        <p className="text-[0.82rem] mb-4" style={{ color: "hsl(var(--bark) / 0.7)" }}>{milestone.sub}</p>
+        <p className="text-[0.82rem] mb-4" style={{ color: "hsl(var(--lavender-text) / 0.8)" }}>{milestone.sub}</p>
         <Link
           to="/barn"
           className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-[0.78rem] font-medium text-white transition-all active:scale-95"
-          style={{ background: "hsl(var(--moss))" }}
+          style={{ background: "hsl(var(--lavender-text))" }}
         >
           Se {childName || "babys"} udvikling →
         </Link>

@@ -85,6 +85,10 @@
     --sand-light: 36 20% 92%;
     --clay: 30 35% 64%;
     --clay-light: 30 38% 88%;
+    /* Lavendel — milepæls-accent (kølig, "fejrende") */
+    --lavender: 255 28% 66%;
+    --lavender-light: 255 33% 93%;
+    --lavender-text: 255 24% 40%;
     --bark: 32 24% 34%;
     --moss: 154 27% 20%;
     --stone: 30 6% 58%;
@@ -155,6 +159,10 @@
     --sand-light: 36 12% 20%;
     --clay: 30 25% 45%;
     --clay-light: 30 20% 24%;
+    /* Lavendel — milepæls-accent (mørkt tema) */
+    --lavender: 255 25% 60%;
+    --lavender-light: 255 18% 24%;
+    --lavender-text: 255 35% 82%;
     --bark: 32 16% 64%;
     --moss: 154 22% 42%;
     --stone: 30 6% 45%;
