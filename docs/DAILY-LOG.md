@@ -26,3 +26,5 @@
 ## 2026-07-25 10:06 — Mor-baby-dashboard: illustrations-header som de tre andre + milepael-kort (de05535)
 
 ## 2026-07-26 10:32 — Design: lavendel milepael-kort paa mor-dashboard + lavendel-token (lyst+moerkt) (f15fc13)
+
+## 2026-07-26 11:18 — Fase-bevidst ve-taeller paa gravid-dashboards (uge 36+), mor og far (ad7260b)

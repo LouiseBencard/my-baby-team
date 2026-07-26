@@ -191,7 +191,7 @@ const CHECKLIST_ITEMS: ChecklistItem[] = [
   { id: "b1", title: "Barneseng", hint: "Skal have inden hjemsendelse fra hospital", priority: "nødvendig", phase: "before", category: "Søvn & hvile", emoji: "🌙" },
   { id: "b2", title: "Madras til barneseng", hint: "Fast og flad uden huller — sikkerhedskrav", priority: "nødvendig", phase: "before", category: "Søvn & hvile", emoji: "🌙" },
   { id: "b3", title: "Sovepose 0–6 mdr.", hint: "TOG 1.0 sommer · TOG 2.5 vinter — sikrere end dyne", priority: "nødvendig", phase: "before", category: "Søvn & hvile", emoji: "🌙" },
-  { id: "b4", title: "Babylydovervågning", hint: "Moonboon synkroniserer automatisk med Lille", priority: "nødvendig", phase: "before", category: "Søvn & hvile", emoji: "🌙" },
+  { id: "b4", title: "Babylydovervågning", hint: "Så I kan høre baby fra et andet rum", priority: "nødvendig", phase: "before", category: "Søvn & hvile", emoji: "🌙" },
   { id: "b5", title: "White noise maskine", hint: "34% færre opvågninger — meget effektivt", priority: "valgfri", phase: "before", category: "Søvn & hvile", emoji: "🌙" },
 
   { id: "b6", title: "Klapvogn", hint: "Den vigtigste investering — vælg én I er glade for i årevis", priority: "nødvendig", phase: "before", category: "Klapvogn & transport", emoji: "🚗" },
@@ -230,7 +230,7 @@ const CHECKLIST_ITEMS: ChecklistItem[] = [
 
   { id: "a4", title: "4 mdr. lægetjek booket", hint: "Anbefales uge 16–17 — book tidligt, det fyldes hurtigt", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
   { id: "a5", title: "Vaccinationer planlagt", hint: "MFR 1 ved 5 mdr. — Sundhedsstyrelsen.dk", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
-  { id: "a6", title: "Bleer str. 3 klar", hint: "Skift typisk ved ca. 6–7 kg — lad Lille minde dig", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
+  { id: "a6", title: "Bleer str. 3 klar", hint: "Skift typisk ved ca. 6–7 kg — vi minder dig", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
   { id: "a7", title: "Tummy time dagligt (5 min × 3)", hint: "Fundamentalt for motorisk udvikling — start nu", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
 
   { id: "a8", title: "Højstol", hint: "Bruges dagligt i årevis — invester klogt", priority: "nødvendig", phase: "after", category: "Fast føde (fra ca. 6 mdr.)", emoji: "🍽️" },
@@ -297,7 +297,9 @@ export default function TjeklistePage() {
   const { checked, toggle, customItems, addCustom, removeCustom } = useChecklist();
   const { isWished, toggleWish } = useWishlist();
   const [mainTab, setMainTab] = useState<"opgaver" | "forberedelse">("opgaver");
-  const [phase, setPhase] = useState<Phase>("before");
+  // Fase-bevidst standard: gravide starter på "før fødsel", baby-forældre på
+  // "efter fødsel" — men omskifteren bevares, så man kan kigge på den anden fase.
+  const [phase, setPhase] = useState<Phase>(profile.phase === "pregnant" ? "before" : "after");
   const [selectedCat, setSelectedCat] = useState<string | null>(null);
   const [addingTo, setAddingTo] = useState<string | null>(null);
   const [newTitle, setNewTitle] = useState("");
