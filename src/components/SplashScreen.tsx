@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import meloIcon from "@/assets/melo-app-icon.png";
+import meloIcon from "@/assets/melo-splash-icon.png";
 
 export function SplashScreen({ onDone }: { onDone: () => void }) {
   const [fading, setFading] = useState(false);

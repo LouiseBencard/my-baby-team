@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { useState, Component, type ReactNode, type ErrorInfo } from "react";
+import { useState, lazy, Suspense, Component, type ReactNode, type ErrorInfo } from "react";
 
 class ErrorBoundary extends Component<{ children: ReactNode }, { error: Error | null }> {
   state = { error: null };
@@ -31,33 +31,35 @@ import { usePushNotifications } from "@/hooks/usePushNotifications";
 import { PageViewTracker } from "@/components/PageViewTracker";
 import { NotificationScheduler } from "@/components/NotificationScheduler";
 import AppLayout from "@/components/AppLayout";
+// Eager: første-skærme (vises straks efter auth/onboarding)
 import Dashboard from "@/pages/Dashboard";
-import BarnPage from "@/pages/BarnPage";
-import SammenPage from "@/pages/SammenPage";
-import MerePage from "@/pages/MerePage";
-import DagbogPage from "@/pages/DagbogPage";
 import OnboardingPage from "@/pages/OnboardingPage";
-import TjeklistePage from "@/pages/TjeklistePage";
-import KalenderPage from "@/pages/KalenderPage";
-import RaadGuidesPage from "@/pages/RaadGuidesPage";
-import BabynavnePage from "@/pages/BabynavnePage";
-import ShopPage from "@/pages/ShopPage";
-import SovnPage from "@/pages/SovnPage";
-import ChatPage from "@/pages/ChatPage";
-import LegPage from "@/pages/LegPage";
-import IndstillingerPage from "@/pages/IndstillingerPage";
-import PregnancyWeekPage from "@/pages/PregnancyWeekPage";
-import PregnancyFruitsPage from "@/pages/PregnancyFruitsPage";
-import PregnancyDiaryPage from "@/pages/PregnancyDiaryPage";
-import ContractionTimerPage from "@/pages/ContractionTimerPage";
-import BirthPlanPage from "@/pages/BirthPlanPage";
-import PregnancyCalendarPage from "@/pages/PregnancyCalendarPage";
 import AuthPage from "@/pages/AuthPage";
 import ResetPasswordPage from "@/pages/ResetPasswordPage";
 import NotFound from "@/pages/NotFound";
-import PrivacyPage from "@/pages/PrivacyPage";
-import OenskelistePage from "@/pages/OenskelistePage";
-import InvitePage from "@/pages/InvitePage";
+// Lazy: sekundære skærme — parses først når de faktisk åbnes (hurtigere opstart)
+const BarnPage = lazy(() => import("@/pages/BarnPage"));
+const SammenPage = lazy(() => import("@/pages/SammenPage"));
+const MerePage = lazy(() => import("@/pages/MerePage"));
+const DagbogPage = lazy(() => import("@/pages/DagbogPage"));
+const TjeklistePage = lazy(() => import("@/pages/TjeklistePage"));
+const KalenderPage = lazy(() => import("@/pages/KalenderPage"));
+const RaadGuidesPage = lazy(() => import("@/pages/RaadGuidesPage"));
+const BabynavnePage = lazy(() => import("@/pages/BabynavnePage"));
+const ShopPage = lazy(() => import("@/pages/ShopPage"));
+const SovnPage = lazy(() => import("@/pages/SovnPage"));
+const ChatPage = lazy(() => import("@/pages/ChatPage"));
+const LegPage = lazy(() => import("@/pages/LegPage"));
+const IndstillingerPage = lazy(() => import("@/pages/IndstillingerPage"));
+const PregnancyWeekPage = lazy(() => import("@/pages/PregnancyWeekPage"));
+const PregnancyFruitsPage = lazy(() => import("@/pages/PregnancyFruitsPage"));
+const PregnancyDiaryPage = lazy(() => import("@/pages/PregnancyDiaryPage"));
+const ContractionTimerPage = lazy(() => import("@/pages/ContractionTimerPage"));
+const BirthPlanPage = lazy(() => import("@/pages/BirthPlanPage"));
+const PregnancyCalendarPage = lazy(() => import("@/pages/PregnancyCalendarPage"));
+const PrivacyPage = lazy(() => import("@/pages/PrivacyPage"));
+const OenskelistePage = lazy(() => import("@/pages/OenskelistePage"));
+const InvitePage = lazy(() => import("@/pages/InvitePage"));
 
 const queryClient = new QueryClient();
 
@@ -176,7 +178,9 @@ const App = () => {
             <BrowserRouter>
               <ErrorBoundary>
                 <PageViewTracker />
-                <AuthenticatedApp />
+                <Suspense fallback={<Spinner />}>
+                  <AuthenticatedApp />
+                </Suspense>
               </ErrorBoundary>
             </BrowserRouter>
           </TooltipProvider>

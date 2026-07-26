@@ -30,3 +30,5 @@
 ## 2026-07-26 11:18 — Fase-bevidst ve-taeller paa gravid-dashboards (uge 36+), mor og far (ad7260b)
 
 ## 2026-07-26 15:41 — Fase-audit: fjern gammelt brand 'Lille' fra tjekliste + fase-relevans-audit doc (e6e67a1)
+
+## 2026-07-26 18:58 — Fase-bevidst tjekliste: default foelger brugerens fase + fjern gammelt brand Lille (ed8a920)
