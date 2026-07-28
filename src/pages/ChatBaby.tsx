@@ -10,7 +10,35 @@ interface Msg {
   role: "user" | "assistant";
   content: string;
   synthetic?: boolean; // opening messages not sent to backend
+  triage?: boolean;    // akut faresignal-svar (vises altid, aldrig flettet i AI-stream)
 }
+
+// ── Akut-triage (spejlet fra graviditets-chatten) ──────────────────────────────
+// Baby-fasen er den mest sårbare — chatten SKAL fange faresignaler før AI'en svarer.
+const BABY_URGENT_KEYWORDS = [
+  "feber", "krampe", "kramper", "trækker ikke vejret", "vejrtrækningsbesvær",
+  "kan ikke trække vejret", "blå læber", "blå om munden", "helt slap", "slap baby",
+  "vil ikke vågne", "reagerer ikke", "bevidstløs", "livløs",
+  "ingen våde bleer", "ingen ble i", "blod i afføring", "blod i bleen",
+  "faldet ned", "slået hovedet", "ramt hovedet", "gulsot",
+  "skade mig selv", "skade barnet", "gøre barnet noget", "gøre mig selv noget",
+  "orker ikke mere", "kan ikke mere",
+];
+
+function isUrgentBabyMessage(msg: string): boolean {
+  const l = msg.toLowerCase();
+  return BABY_URGENT_KEYWORDS.some(kw => l.includes(kw));
+}
+
+const BABY_TRIAGE_RESPONSE = `🚨 **Det her skal vurderes hurtigt — vent ikke.**
+
+Ved et lille barn er det altid bedre at ringe og få det tjekket end at vente.
+
+- Ring **1813** (lægevagten) og fortæl hvad du ser.
+- Ved livstruende tegn — barnet trækker ikke vejret, er blåt, livløst eller får kramper — ring **112** med det samme.
+- **Feber hos en baby under 3 måneder** skal altid ses af en læge straks.
+
+Har du tanker om at skade dig selv eller barnet, er du ikke alene — ring 1813 eller Livslinien på **70 201 201**. Der er hjælp at få nu.`;
 
 type ChatMode = "normal" | "oracle" | "rage";
 
@@ -239,7 +267,13 @@ export default function ChatBaby() {
     setError(null);
     setActiveSuggestions([]);
     const userMsg: Msg = { role: "user", content: text.trim() };
-    setMessages(prev => [...prev, userMsg]);
+    // Akut-triage: hvis beskeden rammer et faresignal, vis 1813/112-svaret
+    // MED DET SAMME — uanset hvad AI'en senere svarer. Gælder alle tilstande.
+    const urgent = isUrgentBabyMessage(text);
+    setMessages(prev => urgent
+      ? [...prev, userMsg, { role: "assistant", content: BABY_TRIAGE_RESPONSE, triage: true }]
+      : [...prev, userMsg]);
+    if (urgent) track("chat_triage_shown", { mode });
     setInput("");
     setIsLoading(true);
     // Analytics: kun tilstand + fase/rolle — ALDRIG beskedindhold (Ventil er privat)
@@ -257,7 +291,7 @@ export default function ChatBaby() {
         const { text: visibleText } = parseSuggestions(assistantSoFar);
         setMessages(prev => {
           const last = prev[prev.length - 1];
-          if (last?.role === "assistant" && !last.synthetic) {
+          if (last?.role === "assistant" && !last.synthetic && !last.triage) {
             return prev.map((m, i) => i === prev.length - 1 ? { ...m, content: visibleText } : m);
           }
           return [...prev, { role: "assistant", content: visibleText }];
@@ -266,7 +300,7 @@ export default function ChatBaby() {
       onDone: () => {
         const { text: finalText, suggestions } = parseSuggestions(assistantSoFar);
         setMessages(prev =>
-          prev.map((m, i) => i === prev.length - 1 && m.role === "assistant" && !m.synthetic ? { ...m, content: finalText } : m)
+          prev.map((m, i) => i === prev.length - 1 && m.role === "assistant" && !m.synthetic && !m.triage ? { ...m, content: finalText } : m)
         );
         if (suggestions.length > 0) setActiveSuggestions(suggestions);
         setIsLoading(false);
@@ -416,9 +450,12 @@ export default function ChatBaby() {
               style={{
                 background: msg.role === "user"
                   ? accentColor
+                  : msg.triage ? "hsl(4 78% 96%)"
                   : msg.synthetic ? `hsl(var(${cfg.bgVar}) / 0.4)` : "hsl(var(--warm-white))",
                 color: msg.role === "user" ? "white" : undefined,
-                border: msg.role === "assistant" ? `1px solid hsl(var(${cfg.accentVar}) / 0.15)` : undefined,
+                border: msg.role === "assistant"
+                  ? (msg.triage ? "1.5px solid hsl(4 70% 78%)" : `1px solid hsl(var(${cfg.accentVar}) / 0.15)`)
+                  : undefined,
               }}
             >
               {msg.role === "assistant" ? (

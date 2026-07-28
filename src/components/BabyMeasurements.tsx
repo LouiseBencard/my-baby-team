@@ -170,16 +170,22 @@ export default function BabyMeasurements({ childName, ageWeeks }: Props) {
         </div>
       )}
 
-      {/* Simple growth indicator */}
-      {measurements.length >= 2 && measurements[0].weight && measurements[1].weight && (
-        <div className="rounded-xl px-3 py-2 flex items-center gap-2" style={{ background: "hsl(var(--sage-light))" }}>
-          <TrendingUp className="w-3.5 h-3.5" style={{ color: "hsl(var(--moss))" }} />
-          <p className="text-[0.72rem]">
-            {((measurements[0].weight - measurements[1].weight) / 1000).toFixed(1)} kg taget på siden sidst 
-            {((measurements[0].weight - measurements[1].weight) > 0) ? " — flot! 💚" : ""}
-          </p>
-        </div>
-      )}
+      {/* Growth indicator — ærlig: fejrer ikke ukritisk, flagger manglende vægtøgning */}
+      {measurements.length >= 2 && measurements[0].weight && measurements[1].weight && (() => {
+        const deltaKg = (measurements[0].weight! - measurements[1].weight!) / 1000;
+        const gained = deltaKg > 0;
+        return (
+          <div className="rounded-xl px-3 py-2 flex items-center gap-2"
+            style={{ background: gained ? "hsl(var(--sage-light))" : "hsl(38 58% 91%)" }}>
+            <TrendingUp className="w-3.5 h-3.5" style={{ color: gained ? "hsl(var(--moss))" : "hsl(32 45% 40%)" }} />
+            <p className="text-[0.72rem]">
+              {gained
+                ? `+${deltaKg.toFixed(1)} kg siden sidste måling`
+                : "Vægten er ikke steget siden sidst. Det kan være helt normalt — men vend det med din sundhedsplejerske for en trygheds skyld."}
+            </p>
+          </div>
+        );
+      })()}
     </div>
   );
 }

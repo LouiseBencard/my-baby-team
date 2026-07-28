@@ -95,9 +95,9 @@ function getNursingInsight(nursingLogs: any[], feedingMethod: string | undefined
 
 function getHealthVisitReminder(ageWeeks: number, en: boolean): { icon: string; text: string } | null {
   if (ageWeeks >= 1 && ageWeeks < 3) return { icon: "📋", text: en ? "Health visitor at day 14 is approaching — book it if you haven't got an appointment yet." : "Sundhedsplejerske-besøg dag 14 nærmer sig — book det hvis du ikke har fået tid endnu." };
-  if (ageWeeks >= 7 && ageWeeks < 10) return { icon: "💉", text: en ? "2-month check-up + first vaccinations are approaching. Book an appointment with your GP now." : "2-måneders undersøgelse + første vaccination nærmer sig. Book tid hos din læge nu." };
+  if (ageWeeks >= 7 && ageWeeks < 12) return { icon: "💉", text: en ? "The 3-month vaccination is coming up. Book an appointment with your GP." : "3-måneders vaccinationen nærmer sig. Book tid hos din læge." };
   if (ageWeeks >= 19 && ageWeeks < 23) return { icon: "💉", text: en ? "5-month check-up + second vaccinations. Remember to book an appointment with your GP." : "5-måneders undersøgelse + anden vaccination. Husk at booke tid hos din læge." };
-  if (ageWeeks >= 33 && ageWeeks < 37) return { icon: "💉", text: en ? "8–10-month check-up + third vaccinations. Remember to book an appointment with your GP." : "8–10-måneders undersøgelse + tredje vaccination. Husk at booke tid hos din læge." };
+  if (ageWeeks >= 48 && ageWeeks < 53) return { icon: "💉", text: en ? "The 12-month check-up + third vaccination are coming up. Remember to book an appointment with your GP." : "12-måneders undersøgelse + tredje vaccination nærmer sig. Husk at booke tid hos din læge." };
   return null;
 }
 

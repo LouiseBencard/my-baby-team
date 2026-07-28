@@ -34,3 +34,5 @@
 ## 2026-07-26 18:58 — Fase-bevidst tjekliste: default foelger brugerens fase + fjern gammelt brand Lille (ed8a920)
 
 ## 2026-07-26 22:02 — Perf: route lazy-loading + optimeret splash-ikon (988KB -> 123KB) (0b9c101)
+
+## 2026-07-27 00:24 — Trust-fixes: deterministisk uge-taeller, mors navn (ikke hardcoded), alders-korrekt soevn-maal, flaske ml-vaelger (7c86868)

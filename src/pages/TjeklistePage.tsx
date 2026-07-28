@@ -228,8 +228,8 @@ const CHECKLIST_ITEMS: ChecklistItem[] = [
   { id: "a2", title: "Bekræft sundhedsplejerske-besøg", hint: "Sker automatisk — ring og bekræft tidspunkt", priority: "nødvendig", phase: "after", category: "Første uger", emoji: "🌿" },
   { id: "a3", title: "PKU-blodprøve & hørescreening", hint: "Tages på hospitalet — bekræft at det er sket", priority: "nødvendig", phase: "after", category: "Første uger", emoji: "🌿" },
 
-  { id: "a4", title: "4 mdr. lægetjek booket", hint: "Anbefales uge 16–17 — book tidligt, det fyldes hurtigt", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
-  { id: "a5", title: "Vaccinationer planlagt", hint: "MFR 1 ved 5 mdr. — Sundhedsstyrelsen.dk", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
+  { id: "a4", title: "5 mdr. børneundersøgelse booket", hint: "Børneundersøgelser: 5 uger, 5 mdr. og 12 mdr. — book i god tid", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
+  { id: "a5", title: "Vaccinationer planlagt", hint: "Vaccination ved 3, 5 og 12 mdr. · MFR ved 15 mdr. — Sundhedsstyrelsen.dk", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
   { id: "a6", title: "Bleer str. 3 klar", hint: "Skift typisk ved ca. 6–7 kg — vi minder dig", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
   { id: "a7", title: "Tummy time dagligt (5 min × 3)", hint: "Fundamentalt for motorisk udvikling — start nu", priority: "nødvendig", phase: "after", category: "3–6 måneder", emoji: "📅" },
 
